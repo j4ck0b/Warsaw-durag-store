@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Warsaw Durag Store - Ekskluzywne jedwabne i aksamitne duragi oraz akcesoria premium inspirowane estetyką haute couture. Zadbaj o swoje fale i styl z produktami najwyższej jakości.">
+  <meta name="keywords" content="durag, warsaw durag, waves 360, jedwabny durag, aksamitny durag, wave brush, szczotka do fal, streetwear polska">
+  <meta name="author" content="Warsaw Durag Store">
+  
+  <title>Warsaw Durag Store — Luksusowe Duragi i Akcesoria Streetwear</title>
+  
+  <!-- Modern Styling -->
+  <link rel="stylesheet" href="./style.css">
+  
+  <!-- Tab Icon -->
+  <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 font-family=%22serif%22>W</text></svg>">
+</head>
+<body>
+
+  <!-- ================= PRELOADER ================= -->
+  <div id="preloader">
+    <div class="loader-logo">Warsaw Durag Store</div>
+    <div class="loader-bar"></div>
+  </div>
+
+  <!-- ================= STICKY HEADER ================= -->
+  <header class="site-header" id="siteHeader">
+    <div class="nav-container">
+      <!-- Logo -->
+      <a href="#" class="logo" id="logoLink">
+        Warsaw <span class="logo-sub">Durag Store</span>
+      </a>
+      
+      <!-- Desktop Navigation Links -->
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#kolekcja" data-filter="all">Wszystko</a></li>
+          <li><a href="#kolekcja" data-filter="silk">Jedwab</a></li>
+          <li><a href="#kolekcja" data-filter="velvet">Aksamit</a></li>
+          <li><a href="#kolekcja" data-filter="accessories">Akcesoria</a></li>
+          <li><a href="#o-nas">O Nas</a></li>
+        </ul>
+      </nav>
+      
+      <!-- Navigation Actions -->
+      <div class="nav-actions">
+        <!-- Search trigger -->
+        <button class="action-btn" id="searchBtn" aria-label="Szukaj">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+        
+        <!-- Cart trigger -->
+        <button class="action-btn" id="cartTrigger" aria-label="Koszyk">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Otwórz menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MOBILE NAVIGATION DRAWER ================= -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+    <ul class="mobile-menu-links">
+      <li><a href="#kolekcja" data-filter="all" class="mobile-nav-link">Kolekcja</a></li>
+      <li><a href="#kolekcja" data-filter="silk" class="mobile-nav-link">Czysty Jedwab</a></li>
+      <li><a href="#kolekcja" data-filter="velvet" class="mobile-nav-link">Luksusowy Aksamit</a></li>
+      <li><a href="#kolekcja" data-filter="accessories" class="mobile-nav-link">Pielęgnacja & Akcesoria</a></li>
+      <li><a href="#o-nas" class="mobile-nav-link">Nasza Filozofia</a></li>
+    </ul>
+    
+    <div class="mobile-drawer-footer">
+      <div class="mobile-drawer-info">
+        <p><strong>Warsaw Durag Store</strong></p>
+        <p>Showroom: ul. Mokotowska 42, Warszawa</p>
+        <p>Email: contact@warsawduragstore.pl</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero-section" id="heroSection">
+    <div class="hero-bg">
+      <img src="./assets/hero_bg.png" alt="Editorial fashion portrait featuring Warsaw Durag Store Silk Black collection">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container" style="position: relative; z-index: 5;">
+      <div class="hero-content">
+        <span class="script-accent" style="font-size: 3.2rem; margin-bottom: 5px;">le soin du cheveu</span>
+        <span class="hero-subtitle">Premium Headwear & Care</span>
+        <h1 class="hero-title">Nowa definicja <br><span>luxury streetwear</span>.</h1>
+        <div class="hero-actions">
+          <a href="#kolekcja" class="btn-minimal">Odkryj kolekcję</a>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-down" id="scrollDownIndicator" aria-label="Przewiń w dół">
+      <span>Przewiń</span>
+    </div>
+  </section>
+
+  <main>
+    
+    <!-- ================= PRODUCTS COLLECTION ================= -->
+    <section class="section-padding" id="kolekcja">
+      <div class="container">
+        
+        <div class="section-header reveal">
+          <span class="script-accent">le rituel de la vague</span>
+          <span class="subtitle">Nasze produkty</span>
+          <h2 class="title">Rzemiosło i Estetyka</h2>
+        </div>
+        
+        <!-- Filter Tabs -->
+        <ul class="filter-tabs reveal" role="tablist">
+          <li><button class="filter-btn active" data-category="all" role="tab" aria-selected="true">Wszystko</button></li>
+          <li><button class="filter-btn" data-category="silk" role="tab" aria-selected="false">Jedwab morwowy</button></li>
+          <li><button class="filter-btn" data-category="velvet" role="tab" aria-selected="false">Luksusowy aksamit</button></li>
+          <li><button class="filter-btn" data-category="accessories" role="tab" aria-selected="false">Akcesoria</button></li>
+        </ul>
+        
+        <!-- Grid list of products -->
+        <div class="product-grid reveal" id="productGrid">
+          <!-- Products will be dynamically generated by JS for a high-fidelity interaction, and fallbacks are here for SEO structure -->
+          <noscript>
+            <p style="grid-column: 1 / -1; text-align: center; color: var(--color-secondary);">Twoja przeglądarka ma wyłączony JavaScript. Włącz go, aby w pełni korzystać z interaktywnego katalogu sklepu.</p>
+          </noscript>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ================= EDITORIAL LOOKBOOK SECTION ================= -->
+    <section class="section-padding lookbook-section" id="lookbook">
+      <div class="container">
+        <div class="lookbook-container">
+          
+          <div class="lookbook-media reveal">
+            <img src="./assets/lookbook_editorial.png" alt="Editorial lookbook style showcase - trench coat and luxury silk durag">
+          </div>
+          
+          <div class="lookbook-content reveal">
+            <span class="script-accent">l'art de la soie</span>
+            <span class="subtitle">WDS Campaign '26</span>
+            <h2 class="title">Kampania Editorial: <br><span>Jedwab w Mieście</span>.</h2>
+            <p class="desc">
+              Nasza najnowsza linia to hołd dla kultury streetwearu połączony z rzemiosłem najwyższej próby. Każdy durag został uszyty ręcznie z wyselekcjonowanych tkanin, aby zapewnić nie tylko kultowy wygląd, ale przede wszystkim maksymalną ochronę struktury włosów i perfekcję fal 360 waves. Odkryj czysty jedwab morwowy oraz szlachetny welwet w minimalistycznym wydaniu.
+            </p>
+            <a href="#kolekcja" class="btn-minimal">Zobacz kolekcję</a>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BRAND PHILOSOPHY / MATERIALS ================= -->
+    <section class="section-padding" id="o-nas">
+      <div class="container">
+        
+        <div class="section-header reveal">
+          <span class="subtitle">Nasze standardy</span>
+          <h2 class="title">Filozofia Materiału</h2>
+        </div>
+        
+        <div class="philosophy-grid">
+          
+          <!-- Card 1 -->
+          <div class="philosophy-card reveal">
+            <div class="philosophy-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </div>
+            <h3 class="philosophy-card-title">Jedwab morwowy 19 Momme</h3>
+            <p class="philosophy-card-desc">
+              Używamy wyłącznie naturalnego jedwabiu o gęstości 19 momme. Zapewnia on absolutną gładkość fryzury, zapobiega plątaniu się i tarciu włosa podczas snu oraz doskonale zatrzymuje wilgoć wewnątrz łusek włosa, zapobiegając wysuszeniu.
+            </p>
+          </div>
+          
+          <!-- Card 2 -->
+          <div class="philosophy-card reveal">
+            <div class="philosophy-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h3 class="philosophy-card-title">Podwójny aksamit & satyna</h3>
+            <p class="philosophy-card-desc">
+              Nasze modele aksamitne łączą mięsistość i matowość luksusowego welwetu o podwójnej elastyczności z wewnętrznym wyścieleniem ze śliskiej satyny. To gwarancja optymalnej kompresji fal bez żadnych uszczerbków dla struktury włosa.
+            </p>
+          </div>
+          
+          <!-- Card 3 -->
+          <div class="philosophy-card reveal">
+            <div class="philosophy-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+              </svg>
+            </div>
+            <h3 class="philosophy-card-title">Bezszwowa ergonomia pasów</h3>
+            <p class="philosophy-card-desc">
+              Pasy w naszych duragach zostały zaprojektowane z myślą o ergonomii. Wszystkie szwy biegną wyłącznie na zewnątrz, a optymalna długość i szerokość pasów rozkłada nacisk równomiernie, nie pozostawiając odcisków na czole.
+            </p>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NEWSLETTER SECTION ================= -->
+    <section class="section-padding newsletter-section" id="newsletter">
+      <div class="container">
+        <div class="newsletter-container reveal">
+          <h2 class="newsletter-title">Dołącz do Klubu WDS</h2>
+          <p class="newsletter-desc">
+            Zapisz się do naszego ekskluzywnego klubu. Zyskaj 10% rabatu na pierwsze zakupy, wczesny dostęp do limitowanych kolekcji (dropów) oraz ekskluzywnych kampanii.
+          </p>
+          
+          <form class="newsletter-form" id="newsletterForm" novalidate>
+            <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Twój adres e-mail" aria-label="Adres e-mail do newslettera" required>
+            <button type="submit" class="newsletter-submit" id="newsletterSubmitBtn">Dołącz</button>
+          </form>
+          <div class="newsletter-message" id="newsletterMessage" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container">
+      
+      <div class="footer-grid">
+        
+        <!-- About -->
+        <div class="footer-col reveal">
+          <div class="footer-logo">Warsaw <span class="logo-sub">Durag Store</span></div>
+          <p class="footer-about-text">
+            Niezależny, warszawski brand dostarczający najwyższej jakości akcesoria do pielęgnacji fal oraz mody ulicznej. Fuzja kultury i rzemiosła najwyższej próby.
+          </p>
+        </div>
+        
+        <!-- Collection links -->
+        <div class="footer-col reveal" style="transition-delay: 0.1s;">
+          <h4 class="footer-col-title">Sklep</h4>
+          <ul class="footer-links">
+            <li><a href="#kolekcja" data-filter="silk">Kolekcja Jedwabna</a></li>
+            <li><a href="#kolekcja" data-filter="velvet">Kolekcja Aksamitna</a></li>
+            <li><a href="#kolekcja" data-filter="accessories">Wave Care & Akcesoria</a></li>
+            <li><a href="#kolekcja" data-filter="all">Wszystkie produkty</a></li>
+          </ul>
+        </div>
+        
+        <!-- Helper links -->
+        <div class="footer-col reveal" style="transition-delay: 0.2s;">
+          <h4 class="footer-col-title">Pomoc</h4>
+          <ul class="footer-links">
+            <li><a href="#">Dostawa i zwroty</a></li>
+            <li><a href="#">Jak pielęgnować fale? (Wave Guide)</a></li>
+            <li><a href="#">Tabela rozmiarów i materiały</a></li>
+            <li><a href="#">Formularz kontaktowy</a></li>
+          </ul>
+        </div>
+        
+        <!-- Location / Contact -->
+        <div class="footer-col reveal" style="transition-delay: 0.3s;">
+          <h4 class="footer-col-title">Kontakt</h4>
+          <div class="footer-contact-info">
+            <p><strong>WDS Showroom</strong></p>
+            <p>ul. Mokotowska 42</p>
+            <p>00-543 Warszawa, Polska</p>
+            <br>
+            <p>Poniedziałek - Sobota: 11:00 - 19:00</p>
+            <p>Email: contact@warsawduragstore.pl</p>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Footer bottom -->
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 Warsaw Durag Store. Wszelkie prawa zastrzeżone. Inspired by Elementy Wear. | <a href="#" id="adminPortalLink" style="font-weight: 500; text-decoration: underline;">WDS Admin</a>
+        </div>
+        <div class="footer-legal-links">
+          <a href="#">Regulamin</a>
+          <a href="#">Polityka Prywatności</a>
+        </div>
+      </div>
+      
+    </div>
+  </footer>
+
+  <!-- ================= SLIDE-OUT CART PANEL (KOSZYK) ================= -->
+  <div class="cart-overlay" id="cartOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <div class="cart-drawer">
+      
+      <!-- Cart Header -->
+      <div class="cart-header">
+        <h2 class="cart-title" id="cartTitle">Twój koszyk (<span id="cartHeaderCount">0</span>)</h2>
+        <button class="cart-close-btn" id="cartCloseBtn" aria-label="Zamknij koszyk">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Cart Step 1: Cart Items & Totals -->
+      <div id="cartStepCart" style="display: flex; flex-direction: column; flex-grow: 1; overflow: hidden;">
+        <!-- Cart Items List (Scrollable) -->
+        <div class="cart-items-container" id="cartItemsContainer">
+          <!-- Rendered dynamically in JS -->
+          <p class="cart-empty-message">Twój koszyk jest obecnie pusty.</p>
+        </div>
+        
+        <!-- Cart Footer / Totals -->
+        <div class="cart-footer" id="cartFooter">
+          
+          <!-- Promo Coupon Row -->
+          <div class="cart-promo-section">
+            <input type="text" class="cart-promo-input" id="cartPromoInput" placeholder="Kod rabatowy (np. WARSAW10)" aria-label="Kod rabatowy">
+            <button class="btn-promo-apply" id="cartPromoApplyBtn">Zastosuj</button>
+          </div>
+          <div class="promo-status-msg" id="promoStatusMsg"></div>
+          
+          <!-- Totals summary -->
+          <div class="cart-summary">
+            <div class="cart-summary-row">
+              <span>Suma częściowa</span>
+              <span id="cartSubtotal">0.00 PLN</span>
+            </div>
+            <div class="cart-summary-row" id="cartDiscountRow" style="display: none;">
+              <span>Rabat (<span id="cartDiscountPercent">0</span>%)</span>
+              <span class="discount-highlight" id="cartDiscountVal">-0.00 PLN</span>
+            </div>
+            <div class="cart-summary-row">
+              <span>Wysyłka</span>
+              <span id="cartShipping">Gratis</span>
+            </div>
+            <div class="cart-summary-row total">
+              <span>Razem</span>
+              <span id="cartTotal">0.00 PLN</span>
+            </div>
+          </div>
+          
+          <!-- Checkout Button -->
+          <button class="btn-checkout" id="checkoutBtn">Przejdź do kasy</button>
+          
+        </div>
+      </div>
+
+      <!-- Cart Step 2: Shipping Form & Checkout -->
+      <div id="cartStepCheckout" style="display: none; flex-direction: column; flex-grow: 1; overflow: hidden;">
+        <!-- Form container (Scrollable) -->
+        <div class="checkout-form-container" style="flex-grow: 1; overflow-y: auto; padding: 30px 40px; display: flex; flex-direction: column; gap: 20px;">
+          
+          <button class="btn-text" id="btnBackToCart" style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; width: fit-content; background: none; border: none; cursor: pointer; color: var(--color-secondary);">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 14px; height: 14px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Powrót do koszyka
+          </button>
+          
+          <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-primary); margin-bottom: 5px;">Dane dostawy</h3>
+          
+          <form id="checkoutForm" novalidate style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Full name -->
+            <div class="form-group-minimal">
+              <label for="checkoutName">Imię i Nazwisko</label>
+              <input type="text" id="checkoutName" required placeholder="np. Jan Kowalski">
+            </div>
+            
+            <!-- Email -->
+            <div class="form-group-minimal">
+              <label for="checkoutEmail">Adres E-mail</label>
+              <input type="email" id="checkoutEmail" required placeholder="np. jan.kowalski@gmail.com">
+            </div>
+            
+            <!-- Phone (strictly required for InPost) -->
+            <div class="form-group-minimal">
+              <label for="checkoutPhone">Numer telefonu</label>
+              <input type="tel" id="checkoutPhone" required placeholder="np. 500600700">
+            </div>
+            
+            <!-- Delivery Method Tabs -->
+            <div style="margin-top: 10px;">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary); display: block; margin-bottom: 8px;">Metoda dostawy</span>
+              <div class="delivery-tabs">
+                <button type="button" class="delivery-tab-btn active" data-method="courier">
+                  <strong>Kurier WDS</strong>
+                  <span>1-2 dni • Gratis</span>
+                </button>
+                <button type="button" class="delivery-tab-btn" data-method="paczkomat">
+                  <strong>Paczkomat InPost</strong>
+                  <span>1-2 dni • Gratis</span>
+                </button>
+              </div>
+            </div>
+            
+            <!-- InPost Selection Container -->
+            <div id="inpostSelectionContainer" style="display: none; border: 1px solid var(--border-color); padding: 18px; background-color: var(--bg-secondary); margin-top: 10px; flex-direction: column; gap: 12px;">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary);">Wyszukaj Paczkomat</span>
+              
+              <!-- Search box -->
+              <div class="inpost-search-box">
+                <input type="text" id="inpostSearchInput" placeholder="Miasto, ulica lub kod (np. Mokotowska)">
+                <button type="button" id="inpostSearchBtn">Szukaj</button>
+              </div>
+              
+              <!-- Selected Locker Card (validation) -->
+              <div id="selectedPaczkomatCard" style="display: none; border: 1px solid #2E7D32; background-color: rgba(46, 125, 50, 0.05); padding: 14px; position: relative;">
+                <div style="display: flex; gap: 10px; align-items: flex-start;">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#2E7D32" style="width: 20px; height: 20px; flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div>
+                    <h5 style="color: #2E7D32; font-size: 0.85rem; font-weight: 600; margin: 0 0 4px 0;" id="paczkomatCardCode">WAW15A</h5>
+                    <p style="font-size: 0.8rem; margin: 0 0 2px 0; color: var(--color-primary);" id="paczkomatCardAddress">Mokotowska 42, Warszawa</p>
+                    <p style="font-size: 0.75rem; color: var(--color-secondary); font-weight: 300; margin: 0;" id="paczkomatCardDesc">Obok Żabki</p>
+                  </div>
+                </div>
+                <button type="button" id="btnChangePaczkomat" style="position: absolute; top: 12px; right: 14px; background: none; border: none; font-size: 0.75rem; text-decoration: underline; color: var(--color-secondary); cursor: pointer;">Zmień</button>
+              </div>
+              
+              <!-- Results List -->
+              <div id="inpostResultsList" style="max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;">
+                <!-- Dynamically injected paczkomaty list items -->
+              </div>
+            </div>
+            
+            <div id="checkoutErrorMsg" style="color: #D32F2F; font-size: 0.8rem; min-height: 16px;"></div>
+          </form>
+        </div>
+        
+        <!-- Checkout Footer / Totals -->
+        <div class="cart-footer">
+          <div class="cart-summary">
+            <div class="cart-summary-row">
+              <span>Suma zakupów</span>
+              <span id="checkoutSubtotal">0.00 PLN</span>
+            </div>
+            <div class="cart-summary-row" id="checkoutDiscountRow" style="display: none;">
+              <span>Rabat</span>
+              <span class="discount-highlight" id="checkoutDiscountVal">-0.00 PLN</span>
+            </div>
+            <div class="cart-summary-row">
+              <span>Wysyłka</span>
+              <span>Gratis</span>
+            </div>
+            <div class="cart-summary-row total">
+              <span>Razem do zapłaty</span>
+              <span id="checkoutTotal">0.00 PLN</span>
+            </div>
+          </div>
+          <button class="btn-checkout" id="placeOrderBtn">Kupuję i płacę</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- ================= ACCESSIBLE DETAILED PRODUCT MODAL ================= -->
+  <div class="modal-overlay" id="productModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-container">
+      
+      <!-- Close button -->
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Zamknij okno">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      
+      <!-- Left: Modal Gallery image -->
+      <div class="modal-gallery">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="modal-gallery-img" id="modalImg" alt="Domyślne zdjęcie produktu">
+      </div>
+      
+      <!-- Right: Product Detail Details Info -->
+      <div class="modal-details" id="modalDetailsContainer">
+        
+        <span class="modal-category" id="modalCategory">Kolekcja</span>
+        <h2 class="modal-title" id="modalTitle">Nazwa Produktu</h2>
+        <div class="modal-price" id="modalPrice">0.00 PLN</div>
+        
+        <div class="modal-divider"></div>
+        
+        <!-- Material info -->
+        <div>
+          <h3 class="modal-section-title">Materiał</h3>
+          <p class="modal-description" id="modalMaterial">Opis materiału</p>
+        </div>
+        
+        <!-- Colors Selector -->
+        <div>
+          <h3 class="modal-section-title">Wykończenie / Kolor</h3>
+          <div class="modal-color-selectors" id="modalColors">
+            <!-- Rendered in JS -->
+          </div>
+        </div>
+        
+        <!-- Details descriptions text -->
+        <div>
+          <h3 class="modal-section-title">Opis</h3>
+          <p class="modal-description" id="modalDesc">Pełny opis produktu zostanie wstrzyknięty tutaj.</p>
+        </div>
+        
+        <div class="modal-divider"></div>
+        
+        <!-- Quantities selector & Add to cart button row -->
+        <div class="modal-actions-row">
+          <div class="modal-qty-selector">
+            <button class="qty-btn" id="modalQtyMinus" aria-label="Zmniejsz ilość">-</button>
+            <span class="qty-val" id="modalQtyVal">1</span>
+            <button class="qty-btn" id="modalQtyPlus" aria-label="Zwiększ ilość">+</button>
+          </div>
+          <button class="btn-minimal accent modal-add-btn" id="modalAddBtn">Dodaj do koszyka</button>
+        </div>
+        
+        <!-- Accordion details / Reviews tab panel list -->
+        <div class="modal-tabs">
+          <!-- Shipping info tab -->
+          <div class="tab-item">
+            <div class="tab-header" data-tab="shipping">
+              <h4>Dostawa i Zwroty</h4>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="tab-content" id="tabContentShipping">
+              <div class="tab-content-inner">
+                Darmowa dostawa kurierska na terenie całej Polski dla wszystkich zamówień. Czas realizacji wynosi 1-2 dni robocze. Możliwość bezproblemowego zwrotu nieużywanego towaru w ciągu 14 dni bez podawania przyczyny.
+              </div>
+            </div>
+          </div>
+          
+          <!-- Reviews tab -->
+          <div class="tab-item">
+            <div class="tab-header" data-tab="reviews">
+              <h4>Opinie Klientów (<span id="modalReviewsCount">0</span>)</h4>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="tab-content" id="tabContentReviews">
+              <div class="tab-content-inner">
+                <div class="reviews-list" id="modalReviewsList">
+                  <!-- Reviews populated dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- ================= ADMIN LOGIN MODAL ================= -->
+  <div class="modal-overlay" id="adminLoginModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="adminLoginTitle">
+    <div class="modal-container" style="width: 400px; padding: 40px; display: flex; flex-direction: column; gap: 20px; text-align: center; border: 1px solid var(--border-color); background-color: var(--bg-primary);">
+      <button class="modal-close-btn" id="adminLoginCloseBtn" aria-label="Zamknij logowanie">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <h2 class="cart-title" id="adminLoginTitle" style="font-size: 1.6rem; letter-spacing: 0.05em;">Panel Administratora</h2>
+      <p style="font-size: 0.85rem; color: var(--color-secondary); font-weight: 300; margin-top: -10px;">Autoryzacja luksusowej konsoli Warsaw Durag Store</p>
+      
+      <form id="adminLoginForm" style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;" novalidate>
+        <div style="display: flex; flex-direction: column; gap: 6px; text-align: left;">
+          <label for="adminPassword" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary);">Hasło dostępu</label>
+          <input type="password" id="adminPassword" style="width: 100%; border: 1px solid var(--border-color); padding: 12px; font-size: 0.95rem; outline: none; background-color: var(--bg-primary);" required placeholder="Wpisz hasło">
+        </div>
+        <button type="submit" class="btn-minimal" style="width: 100%; height: 48px;">Zaloguj się</button>
+      </form>
+      <div id="adminLoginMsg" style="font-size: 0.85rem; color: #D32F2F; min-height: 20px; transition: var(--transition-fast);"></div>
+    </div>
+  </div>
+
+  <!-- ================= ADMIN CMS DASHBOARD OVERLAY ================= -->
+  <div class="cart-overlay" id="adminDashboardOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cmsDashboardTitle" style="display: flex; align-items: center; justify-content: center; padding: 2% 4%;">
+    <div class="modal-container" style="width: 1200px; max-width: 100%; height: 85vh; display: grid; grid-template-columns: 240px 1fr; border: 1px solid var(--border-color); overflow: hidden; background-color: var(--bg-primary);">
+      
+      <!-- Close button -->
+      <button class="modal-close-btn" id="adminDashboardCloseBtn" aria-label="Zamknij panel">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Sidebar -->
+      <div style="background-color: var(--bg-secondary); border-right: 1px solid var(--border-color); padding: 40px 24px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div class="logo" style="font-size: 1.1rem; margin-bottom: 40px; letter-spacing: 0.05em; color: var(--color-primary);">WDS <span class="logo-sub">Console</span></div>
+          
+          <nav aria-label="CMS Navigation" style="display: flex; flex-direction: column; gap: 8px;">
+            <button class="filter-btn active" data-cms-tab="products" style="text-align: left; width: 100%; padding: 12px 16px; font-size: 0.85rem; border-bottom: none; display: flex; align-items: center; gap: 10px;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:16px; height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+              Produkty
+            </button>
+            <button class="filter-btn" data-cms-tab="promos" style="text-align: left; width: 100%; padding: 12px 16px; font-size: 0.85rem; border-bottom: none; display: flex; align-items: center; gap: 10px;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:16px; height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 16v1m-4-6h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Kody Rabatowe
+            </button>
+            <button class="filter-btn" data-cms-tab="stats" style="text-align: left; width: 100%; padding: 12px 16px; font-size: 0.85rem; border-bottom: none; display: flex; align-items: center; gap: 10px;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:16px; height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              Analizy & Logi
+            </button>
+            <button class="filter-btn" data-cms-tab="settings" style="text-align: left; width: 100%; padding: 12px 16px; font-size: 0.85rem; border-bottom: none; display: flex; align-items: center; gap: 10px;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:16px; height:16px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              Ustawienia
+            </button>
+          </nav>
+        </div>
+        
+        <div>
+          <button class="btn-text" id="adminLogoutBtn" style="font-size:0.75rem; color: #D32F2F;">Wyloguj się</button>
+        </div>
+      </div>
+
+      <!-- Main workspace -->
+      <div style="padding: 50px; overflow-y: auto; display: flex; flex-direction: column; gap: 30px; width: 100%;">
+        
+        <!-- Header area -->
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          <div>
+            <h2 class="cart-title" id="cmsDashboardTitle" style="font-size: 1.8rem; letter-spacing: 0.05em; color: var(--color-primary);">Panel Zarządzania</h2>
+            <p id="cmsDashboardSubtitle" style="font-size: 0.85rem; color: var(--color-secondary); font-weight: 300;">Katalog Twoich luksusowych produktów</p>
+          </div>
+          
+          <!-- Tab Actions -->
+          <div id="cmsActionArea">
+            <button class="btn-minimal" id="cmsAddNewBtn" style="padding: 10px 20px; font-size: 0.75rem;">Dodaj produkt</button>
+          </div>
+        </div>
+        
+        <div class="modal-divider" style="margin: 0;"></div>
+
+        <!-- ================= WORKSPACE TABS ================= -->
+        
+        <!-- TAB 1: PRODUCTS LIST -->
+        <div class="cms-tab-content" id="cmsTabProducts" style="width: 100%;">
+          <div style="overflow-x: auto; width: 100%;">
+            <table class="cms-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--border-color); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary);">
+                  <th style="padding: 12px 10px; font-weight:500;">Zdjęcie</th>
+                  <th style="padding: 12px 10px; font-weight:500;">Nazwa</th>
+                  <th style="padding: 12px 10px; font-weight:500;">Kategoria</th>
+                  <th style="padding: 12px 10px; font-weight:500;">Cena</th>
+                  <th style="padding: 12px 10px; font-weight:500;">Materiał</th>
+                  <th style="padding: 12px 10px; font-weight:500; text-align: right;">Akcje</th>
+                </tr>
+              </thead>
+              <tbody id="cmsProductListBody" style="font-size: 0.9rem; font-weight: 300;">
+                <!-- Dynamically injected -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 2: PROMO CODES -->
+        <div class="cms-tab-content" id="cmsTabPromos" style="display: none; width: 100%;">
+          <div style="display: grid; grid-template-columns: 350px 1fr; gap: 50px; align-items: start; width: 100%;">
+            
+            <!-- Add promo form -->
+            <form id="cmsAddPromoForm" style="display: flex; flex-direction: column; gap: 20px; padding: 30px; border: 1px solid var(--border-color); background-color: var(--bg-primary);" novalidate>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem;">Nowy Kod Rabatowy</h3>
+              
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <label for="cmsPromoCode" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary);">Kod kuponu</label>
+                <input type="text" id="cmsPromoCode" style="width:100%; border: 1px solid var(--border-color); padding: 10px; outline:none; font-size: 0.9rem; background-color: var(--bg-primary);" required placeholder="np. WDSFALL20">
+              </div>
+              
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <label for="cmsPromoRate" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary);">Wysokość zniżki (%)</label>
+                <input type="number" id="cmsPromoRate" min="1" max="100" style="width:100%; border: 1px solid var(--border-color); padding: 10px; outline:none; font-size: 0.9rem; background-color: var(--bg-primary);" required placeholder="np. 15">
+              </div>
+              
+              <button type="submit" class="btn-minimal" style="width: 100%; height: 44px; font-size:0.8rem;">Utwórz kupon</button>
+            </form>
+
+            <!-- Promos Table -->
+            <div style="overflow-x: auto;">
+              <table class="cms-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-color); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary);">
+                    <th style="padding: 12px 10px; font-weight:500;">Kod kuponu</th>
+                    <th style="padding: 12px 10px; font-weight:500;">Zniżka</th>
+                    <th style="padding: 12px 10px; font-weight:500; text-align: right;">Akcje</th>
+                  </tr>
+                </thead>
+                <tbody id="cmsPromoListBody" style="font-size: 0.9rem; font-weight: 300;">
+                  <!-- Dynamically injected -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: STATS & LOGS -->
+        <div class="cms-tab-content" id="cmsTabStats" style="display: none; width: 100%;">
+          <!-- Analytic cards -->
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px; width: 100%;">
+            <div style="border: 1px solid var(--border-color); padding: 30px; background-color: var(--bg-primary); text-align: center;">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary);">Całkowity Przychód</span>
+              <h3 id="cmsStatRevenue" style="font-size: 2.2rem; margin-top: 8px; color: var(--color-primary); font-weight: 500;">0.00 PLN</h3>
+            </div>
+            <div style="border: 1px solid var(--border-color); padding: 30px; background-color: var(--bg-primary); text-align: center;">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary);">Zrealizowane Zamówienia</span>
+              <h3 id="cmsStatOrders" style="font-size: 2.2rem; margin-top: 8px; color: var(--color-primary); font-weight: 500;">0</h3>
+            </div>
+            <div style="border: 1px solid var(--border-color); padding: 30px; background-color: var(--bg-primary); text-align: center;">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary);">Główny Bestseller</span>
+              <h3 id="cmsStatBestseller" style="font-size: 1.3rem; margin-top: 15px; color: var(--color-primary); font-family: var(--font-sans); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em;">Brak danych</h3>
+            </div>
+          </div>
+
+          <!-- Order Log Header -->
+          <h3 style="font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 16px; color: var(--color-primary);">Rejestr Transakcji Sklepu</h3>
+          
+          <!-- Orders Table -->
+          <div style="overflow-x: auto; width: 100%;">
+            <table class="cms-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--border-color); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary);">
+                  <th style="padding: 12px 10px; font-weight:500;">Zamówienie</th>
+                  <th style="padding: 12px 10px; font-weight:500;">Data i godzina</th>
+                  <th style="padding: 12px 10px; font-weight:500;">Zawartość</th>
+                  <th style="padding: 12px 10px; font-weight:500;">Rabat</th>
+                  <th style="padding: 12px 10px; font-weight:500; text-align: right;">Suma</th>
+                </tr>
+              </thead>
+              <tbody id="cmsOrderHistoryBody" style="font-size: 0.9rem; font-weight: 300;">
+                <!-- Dynamically injected -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 4: DATABASE SETTINGS -->
+        <div class="cms-tab-content" id="cmsTabSettings" style="display: none; width: 100%;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; width: 100%;">
+            
+            <!-- LEFT COLUMN: WOOCOMMERCE IMPORTER -->
+            <div style="display: flex; flex-direction: column; gap: 24px; padding: 40px; border: 1px solid var(--border-color); background-color: var(--bg-primary);">
+              <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-primary);">Migracja z WooCommerce</h3>
+              <p style="font-size: 0.85rem; color: var(--color-secondary); font-weight: 300; line-height: 1.6; margin-bottom: 10px;">
+                Zaimportuj produkty oraz historię zamówień ze swojego poprzedniego sklepu opartego na systemie WooCommerce za pomocą plików CSV lub kodu JSON. Dane zostaną połączone ze zbiorem lokalnym.
+              </p>
+              
+              <!-- 1. Products Importer -->
+              <div style="display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 24px;">
+                <h4 style="font-size: 0.95rem; font-weight: 500; color: var(--color-primary); margin: 0;">1. Importer Produktów</h4>
+                <div class="cms-dropzone" id="cmsWooProductsDropzone">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 28px; height: 28px; color: var(--color-secondary);"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                  <span>Przeciągnij plik produktów WooCommerce <strong>(CSV / JSON)</strong> lub kliknij tutaj</span>
+                  <input type="file" id="cmsWooProductsFile" accept=".csv,.json" style="display: none;">
+                </div>
+                <div id="cmsWooProductsStatus" style="font-size: 0.8rem; min-height: 16px; transition: var(--transition-fast);"></div>
+              </div>
+              
+              <!-- 2. Orders Importer -->
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <h4 style="font-size: 0.95rem; font-weight: 500; color: var(--color-primary); margin: 0;">2. Importer Zamówień</h4>
+                <div class="cms-dropzone" id="cmsWooOrdersDropzone">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 28px; height: 28px; color: var(--color-secondary);"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                  <span>Przeciągnij plik zamówień WooCommerce <strong>(CSV / JSON)</strong> lub kliknij tutaj</span>
+                  <input type="file" id="cmsWooOrdersFile" accept=".csv,.json" style="display: none;">
+                </div>
+                <div id="cmsWooOrdersStatus" style="font-size: 0.8rem; min-height: 16px; transition: var(--transition-fast);"></div>
+              </div>
+              
+              <!-- 3. Paste JSON manually channel -->
+              <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--border-color); padding-top: 24px;">
+                <h4 style="font-size: 0.95rem; font-weight: 500; color: var(--color-primary); margin: 0;">Wklej ręcznie kod JSON</h4>
+                <textarea id="cmsWooJsonPaste" rows="4" placeholder="Wklej tablicę JSON z WooCommerce..." style="width: 100%; border: 1px solid var(--border-color); padding: 10px; font-size: 0.85rem; outline: none; background-color: var(--bg-primary); font-family: monospace;"></textarea>
+                <div style="display: flex; gap: 10px;">
+                  <button type="button" class="btn-minimal" id="cmsWooImportJsonProducts" style="flex-grow: 1; padding: 10px; font-size: 0.75rem;">Importuj Produkty</button>
+                  <button type="button" class="btn-minimal" id="cmsWooImportJsonOrders" style="flex-grow: 1; padding: 10px; font-size: 0.75rem;">Importuj Zamówienia</button>
+                </div>
+                <div id="cmsWooPasteStatus" style="font-size: 0.8rem; min-height: 16px; transition: var(--transition-fast);"></div>
+              </div>
+              
+            </div>
+            
+            <!-- RIGHT COLUMN: DANGER ZONE -->
+            <div style="display: flex; flex-direction: column; gap: 24px; padding: 40px; border: 1px solid var(--border-color); background-color: var(--bg-primary);">
+              <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: #D32F2F;">Zagrożenie & Reset Bazy</h3>
+              <p style="font-size: 0.85rem; color: var(--color-secondary); font-weight: 300; line-height: 1.7; margin-bottom: 20px;">
+                Poniższe polecenie całkowicie wyczyści wprowadzone przez Ciebie niestandardowe modyfikacje w przeglądarce (produkty, historię zamówień, kody rabatowe) i przywróci sklep do pierwotnego stanu początkowego zdefiniowanego w pliku <code style="background-color: var(--bg-secondary); padding: 2px 6px; color: var(--color-primary);">products.js</code>.
+              </p>
+              
+              <div style="border-top: 1px solid var(--border-color); padding-top: 24px;">
+                <button class="btn-minimal" id="cmsResetDbBtn" style="border-color: #D32F2F; color: #D32F2F;">Resetuj bazę danych</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= PRODUCT ADD/EDIT PANEL DRAWER ================= -->
+  <div class="cart-overlay" id="cmsProductDrawer" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cmsDrawerTitle" style="z-index: 30000; justify-content: flex-end;">
+    <div class="cart-drawer" style="width: 550px;">
+      
+      <!-- Header -->
+      <div class="cart-header">
+        <h2 class="cart-title" id="cmsDrawerTitle">Edytuj Produkt</h2>
+        <button class="cart-close-btn" id="cmsDrawerCloseBtn" aria-label="Zamknij panel formularza">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Form container (Scrollable) -->
+      <form id="cmsProductForm" style="flex-grow: 1; overflow-y: auto; padding: 40px; display: flex; flex-direction: column; gap: 20px;" novalidate>
+        <input type="hidden" id="cmsFormProductId">
+        
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="cmsFormProductName" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary);">Nazwa produktu (PL)</label>
+          <input type="text" id="cmsFormProductName" style="width: 100%; border: 1px solid var(--border-color); padding: 10px; font-size: 0.9rem; outline: none; background-color: var(--bg-primary);" required placeholder="np. Jedwabny Durag Platinum">
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="cmsFormProductNameEn" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary);">Nazwa produktu (EN)</label>
+          <input type="text" id="cmsFormProductNameEn" style="width: 100%; border: 1px solid var(--border-color); padding: 10px; font-size: 0.9rem; outline: none; background-color: var(--bg-primary);" required placeholder="np. Platinum Silk Durag">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <label for="cmsFormProductCategory" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary);">Kategoria</label>
+            <select id="cmsFormProductCategory" style="width: 100%; border: 1px solid var(--border-color); padding: 10px; font-size: 0.9rem; outline: none; background-color: var(--bg-primary);" required>
+              <option value="silk">Czysty Jedwab</option>
+              <option value="velvet">Luksusowy Aksamit</option>
+              <option value="accessories">Akcesoria</option>
+            </select>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <label for="cmsFormProductPrice" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary);">Cena (PLN)</label>
+            <input type="number" id="cmsFormProductPrice" min="0" step="0.01" style="width: 100%; border: 1px solid var(--border-color); padding: 10px; font-size: 0.9rem; outline: none; background-color: var(--bg-primary);" required placeholder="np. 129.00">
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="cmsFormProductMaterial" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary);">Główny Materiał</label>
+          <input type="text" id="cmsFormProductMaterial" style="width: 100%; border: 1px solid var(--border-color); padding: 10px; font-size: 0.9rem; outline: none; background-color: var(--bg-primary);" required placeholder="np. 100% Jedwab Morwowy (19 Momme)">
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="cmsFormProductDesc" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary);">Pełny Opis produktu</label>
+          <textarea id="cmsFormProductDesc" rows="4" style="width: 100%; border: 1px solid var(--border-color); padding: 10px; font-size: 0.9rem; outline: none; background-color: var(--bg-primary); font-family: var(--font-sans);" required placeholder="Szczegółowy opis produktu..."></textarea>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <label style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; color: var(--color-secondary);">Zdjęcie Produktu</label>
+          
+          <!-- Hidden real input that holds the final image path or base64 data url -->
+          <input type="hidden" id="cmsFormProductImage" required value="./assets/durag_silk_black.png">
+
+          <!-- Preview & Upload row -->
+          <div style="display: flex; gap: 16px; align-items: center; border: 1px solid var(--border-color); padding: 14px; background-color: var(--bg-secondary); margin-bottom: 4px;">
+            <!-- Image thumbnail preview container -->
+            <div style="width: 80px; height: 80px; border: 1px solid var(--border-color); background-color: var(--bg-primary); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; position: relative;">
+              <img id="cmsProductFormImagePreview" src="./assets/durag_silk_black.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Podgląd">
+            </div>
+            
+            <!-- Upload buttons/states -->
+            <div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1; text-align: left;">
+              <span style="font-size: 0.75rem; color: var(--color-secondary); font-weight: 300; line-height: 1.4;">Zalecana kwadratowa rozdzielczość JPG/PNG. Możesz dodać własne zdjęcie z dysku.</span>
+              <div style="display: flex; gap: 8px;">
+                <button type="button" class="btn-minimal" id="btnCmsTriggerUpload" style="padding: 6px 12px; font-size: 0.7rem; height: 32px;">Wgraj z dysku</button>
+                <input type="file" id="cmsProductFormFileInput" accept="image/*" style="display: none;">
+                <button type="button" class="btn-text" id="btnCmsClearImage" style="font-size: 0.7rem; color: #D32F2F; --color-primary: #D32F2F; display: none; background: none; border: none; cursor: pointer;">Usuń</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paste custom link channel -->
+          <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+            <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--color-secondary); font-weight: 500;">Lub wklej bezpośredni link (URL)</span>
+            <input type="text" id="cmsFormProductImageUrl" style="width: 100%; border: 1px solid var(--border-color); padding: 10px; font-size: 0.85rem; outline: none; background-color: var(--bg-primary);" placeholder="np. https://mojadomena.pl/zdjecie.jpg">
+          </div>
+
+          <!-- Quick Choose Presets Row -->
+          <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 4px; text-align: left;">
+            <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--color-secondary); font-weight: 500;">Szybki wybór sesji editorial (WDS Presets)</span>
+            <div class="cms-preset-gallery" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+              <div class="cms-preset-item active" data-img="./assets/durag_silk_black.png" style="border: 1px solid var(--color-primary); cursor: pointer; aspect-ratio: 1; overflow: hidden; position: relative;">
+                <img src="./assets/durag_silk_black.png" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="cms-preset-item" data-img="./assets/durag_silk_champagne.png" style="border: 1px solid var(--border-color); cursor: pointer; aspect-ratio: 1; overflow: hidden; position: relative;">
+                <img src="./assets/durag_silk_champagne.png" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="cms-preset-item" data-img="./assets/durag_velvet_emerald.png" style="border: 1px solid var(--border-color); cursor: pointer; aspect-ratio: 1; overflow: hidden; position: relative;">
+                <img src="./assets/durag_velvet_emerald.png" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="cms-preset-item" data-img="./assets/durag_velvet_royal.png" style="border: 1px solid var(--border-color); cursor: pointer; aspect-ratio: 1; overflow: hidden; position: relative;">
+                <img src="./assets/durag_velvet_royal.png" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border-color); padding-top: 20px;">
+          <button type="submit" class="btn-minimal" style="width: 100%; height: 48px;">Zapisz zmiany</button>
+        </div>
+      </form>
+      
+    </div>
+  </div>
+
+  <!-- ================= APPLICATION SCRIPTS ================= -->
+  <script src="./products.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
