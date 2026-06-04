@@ -28,9 +28,10 @@
   --shadow-luxury: 0 20px 50px rgba(0, 0, 0, 0.05);
   
   /* Border Radius */
-  --border-radius-lg: 16px;
-  --border-radius-md: 8px;
-  --border-radius-sm: 4px;
+  --border-radius-lg: 0px;
+  --border-radius-md: 0px;
+  --border-radius-sm: 0px;
+
   
   /* UI Elements */
   --header-height: 90px;
@@ -803,15 +804,15 @@ a {
   flex-direction: column;
   position: relative;
   cursor: pointer;
-  background: var(--bg-primary);
-  border: 1px solid transparent;
-  padding-bottom: 15px;
+  background: transparent; /* No container backgrounds for high-end boutique look */
+  border: none;
+  padding: 0;
+  margin-bottom: 8px;
   transition: var(--transition-smooth);
-  border-radius: var(--border-radius-lg);
 }
 
 .product-card:hover {
-  box-shadow: var(--shadow-subtle);
+  box-shadow: none; /* No box shadows to keep aesthetic editorial */
 }
 
 .product-image-container {
@@ -820,8 +821,7 @@ a {
   aspect-ratio: 1 / 1;
   background-color: var(--bg-secondary);
   overflow: hidden;
-  margin-bottom: 20px;
-  border-radius: var(--border-radius-lg);
+  margin-bottom: 14px;
 }
 
 .product-card-img {
@@ -832,13 +832,11 @@ a {
   top: 0;
   left: 0;
   transition: var(--transition-smooth);
-  border-radius: var(--border-radius-lg);
 }
 
 .product-card-img.secondary {
   opacity: 0;
   transform: scale(1.02);
-  border-radius: var(--border-radius-lg);
 }
 
 .product-card:hover .product-card-img.primary {
@@ -847,31 +845,33 @@ a {
 
 .product-card:hover .product-card-img.secondary {
   opacity: 1;
+
   transform: scale(1);
 }
 
 /* Badges */
 .product-badge {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  background-color: var(--color-primary);
-  color: var(--bg-primary);
-  font-size: 0.7rem;
+  top: 12px;
+  left: 12px;
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  border: 1px solid var(--border-color);
+  font-size: 0.65rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  padding: 6px 12px;
+  padding: 4px 8px;
   z-index: 5;
-  border-radius: var(--border-radius-sm);
 }
 
 .product-badge.gold {
-  background-color: var(--color-accent);
-  color: var(--color-primary);
-  font-weight: 600;
-  border-radius: var(--border-radius-sm);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  font-weight: 500;
 }
+
 
 /* Quick Add button */
 .quick-add-overlay {
