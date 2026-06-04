@@ -720,11 +720,10 @@ a {
     display: flex;
     overflow-x: auto;
     justify-content: flex-start;
-    gap: 12px;
-    padding: 0 16px 12px 16px;
-    margin-left: -5%;
-    margin-right: -5%;
-    width: calc(100% + 10%);
+    gap: 20px;
+    padding: 0 0 12px 0;
+    margin: 0 0 24px 0;
+    width: 100%;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     margin-bottom: 24px;
@@ -737,7 +736,15 @@ a {
   .filter-tabs::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
   }
+  .filter-btn {
+    font-size: 0.8rem;
+    padding: 6px 0;
+  }
+  .filter-btn::after {
+    bottom: -13px;
+  }
 }
+
 
 
 .filter-btn {
