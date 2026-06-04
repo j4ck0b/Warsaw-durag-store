@@ -58,6 +58,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 16px;
@@ -67,10 +75,25 @@ html {
 }
 
 body {
-  overflow-x: hidden;
   background-color: var(--bg-primary);
   line-height: 1.6;
 }
+
+/* Prevent scroll chaining on interactive overlays */
+.cart-drawer,
+.modal-container,
+.modal-details,
+.checkout-form-container,
+#inpostResultsList {
+  overscroll-behavior: contain;
+}
+
+/* Helper to lock background scroll when modals/drawers are open */
+body.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -2191,5 +2214,114 @@ a {
   transform: translateY(-2px);
   color: var(--color-primary);
 }
+
+/* ========================================================================
+   📱 RESPONSIVE IMPROVEMENTS & ADVANCED OVERLAYS
+   ======================================================================== */
+
+/* Quick Add button visible directly on touch/mobile screens to improve UX */
+@media (max-width: 768px) {
+  .quick-add-overlay {
+    transform: translateY(0);
+    opacity: 1;
+    background: transparent;
+    padding: 8px 0;
+  }
+  .btn-quick-add {
+    padding: 10px;
+    font-size: 0.75rem;
+    border-radius: var(--border-radius-sm);
+  }
+  .product-card {
+    padding-bottom: 8px;
+  }
+  .product-image-container {
+    margin-bottom: 12px;
+  }
+}
+
+/* Delivery options wrapping safety on extra small screens */
+@media (max-width: 380px) {
+  .delivery-tabs {
+    grid-template-columns: 1fr !important;
+    gap: 8px;
+  }
+}
+
+/* Admin Dashboard, Login & Drawer responsivity overrides */
+#adminLoginModal .modal-container {
+  width: 400px;
+  max-width: calc(100% - 32px);
+  box-sizing: border-box;
+}
+
+#cmsProductDrawer .cart-drawer {
+  width: 550px;
+  max-width: 100%;
+}
+
+@media (max-width: 992px) {
+  #adminDashboardOverlay .modal-container {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto 1fr !important;
+    height: 95vh !important;
+    max-height: 95vh !important;
+    width: 95% !important;
+    max-width: 95% !important;
+  }
+  
+  #adminDashboardOverlay .modal-container > div:first-of-type {
+    padding: 24px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    gap: 16px;
+  }
+  
+  #adminDashboardOverlay nav {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  
+  #adminDashboardOverlay nav .filter-btn {
+    padding: 8px 12px !important;
+    font-size: 0.8rem !important;
+  }
+  
+  #adminDashboardOverlay .modal-container > div:last-of-type {
+    padding: 24px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #adminDashboardOverlay nav {
+    justify-content: flex-start;
+  }
+  #cmsTabPromos > div {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  #cmsTabStats > div:first-of-type {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  #cmsTabSettings > div {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  
+  /* Make CMS table scrollable on small viewports without breaking layout */
+  .cms-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 
 

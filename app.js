@@ -148,6 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize WooCommerce Clientside Importers
   initWooCommerceImporter();
 
+  // Initialize Scroll Lock Observer
+  initScrollLockObserver();
+
 });
 
 // Hide Preloader on Page Load with Safety Timeout Fallback
@@ -2225,3 +2228,45 @@ function initWooCommerceImporter() {
     statusEl.innerHTML = `<span style="color:#2E7D32;">Pomyślnie zaimportowano ${importCount} zamówień!</span>`;
   }
 }
+
+// --- Scroll Lock Observer ---
+// Monitors overlay states and dynamically locks background body scroll to prevent page shift
+function initScrollLockObserver() {
+  const overlayIds = [
+    'mobileNavDrawer',
+    'cartOverlay',
+    'productModal',
+    'adminLoginModal',
+    'adminDashboardOverlay',
+    'cmsProductDrawer'
+  ];
+
+  const updateBodyScroll = () => {
+    let shouldLock = false;
+    overlayIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.classList.contains('active')) {
+        shouldLock = true;
+      }
+    });
+
+    if (shouldLock) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  };
+
+  const observer = new MutationObserver(updateBodyScroll);
+
+  overlayIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      observer.observe(el, { attributes: true, attributeFilter: ['class'] });
+    }
+  });
+
+  // Run initial check
+  updateBodyScroll();
+}
+
