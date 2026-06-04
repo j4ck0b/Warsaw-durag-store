@@ -26,6 +26,11 @@
   --shadow-subtle: 0 4px 30px rgba(0, 0, 0, 0.02);
   --shadow-luxury: 0 20px 50px rgba(0, 0, 0, 0.05);
   
+  /* Border Radius */
+  --border-radius-lg: 16px;
+  --border-radius-md: 8px;
+  --border-radius-sm: 4px;
+  
   /* UI Elements */
   --header-height: 90px;
   --header-height-scrolled: 70px;
@@ -188,6 +193,7 @@ a {
   position: relative;
   overflow: hidden;
   transition: var(--transition-smooth);
+  border-radius: var(--border-radius-md);
 }
 
 .btn-minimal::before {
@@ -516,6 +522,14 @@ a {
   background-color: #E2DFD8;
 }
 
+@media (min-width: 1024px) {
+  .hero-section {
+    height: 80vh;
+    min-height: 550px;
+    max-height: 750px;
+  }
+}
+
 .hero-bg {
   position: absolute;
   top: 0;
@@ -529,6 +543,7 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 25%;
   transform: scale(1.05);
   animation: slowZoom 15s ease-out forwards;
 }
@@ -724,6 +739,7 @@ a {
   border: 1px solid transparent;
   padding-bottom: 15px;
   transition: var(--transition-smooth);
+  border-radius: var(--border-radius-lg);
 }
 
 .product-card:hover {
@@ -737,6 +753,7 @@ a {
   background-color: var(--bg-secondary);
   overflow: hidden;
   margin-bottom: 20px;
+  border-radius: var(--border-radius-lg);
 }
 
 .product-card-img {
@@ -747,11 +764,13 @@ a {
   top: 0;
   left: 0;
   transition: var(--transition-smooth);
+  border-radius: var(--border-radius-lg);
 }
 
 .product-card-img.secondary {
   opacity: 0;
   transform: scale(1.02);
+  border-radius: var(--border-radius-lg);
 }
 
 .product-card:hover .product-card-img.primary {
@@ -776,12 +795,14 @@ a {
   letter-spacing: 0.1em;
   padding: 6px 12px;
   z-index: 5;
+  border-radius: var(--border-radius-sm);
 }
 
 .product-badge.gold {
   background-color: var(--color-accent);
   color: var(--color-primary);
   font-weight: 600;
+  border-radius: var(--border-radius-sm);
 }
 
 /* Quick Add button */
@@ -897,6 +918,7 @@ a {
   overflow: hidden;
   background-color: var(--bg-primary);
   border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
 }
 
 .lookbook-media img {
@@ -904,6 +926,7 @@ a {
   height: 100%;
   object-fit: cover;
   transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+  border-radius: var(--border-radius-lg);
 }
 
 .lookbook-media:hover img {
@@ -964,6 +987,7 @@ a {
   border: 1px solid var(--border-color);
   background: var(--bg-primary);
   transition: var(--transition-smooth);
+  border-radius: var(--border-radius-lg);
 }
 
 .philosophy-card:hover {
@@ -1012,6 +1036,7 @@ a {
   box-shadow: var(--shadow-luxury);
   border: 1px solid rgba(212, 175, 55, 0.15); /* Gold outline hint */
   transition: var(--transition-smooth);
+  border-radius: var(--border-radius-lg);
 }
 
 /* Elegant gold/champagne accent corner/lines */
@@ -1063,6 +1088,7 @@ a {
   font-family: var(--font-sans);
   font-weight: 300;
   transition: var(--transition-fast);
+  border-radius: var(--border-radius-md);
 }
 
 .newsletter-input:focus {
@@ -1085,6 +1111,7 @@ a {
   font-weight: 600;
   padding: 0 35px;
   transition: var(--transition-smooth);
+  border-radius: var(--border-radius-md);
 }
 
 .newsletter-submit:hover {
@@ -1452,6 +1479,7 @@ a {
   overflow: hidden;
   transform: translateY(30px) scale(0.97);
   transition: var(--transition-smooth);
+  border-radius: var(--border-radius-lg);
 }
 
 .modal-overlay.active .modal-container {

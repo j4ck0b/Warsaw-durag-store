@@ -150,8 +150,8 @@ window.products = [
     material: "Naturalny Dąb i 100% Włosie Dzika",
     description: "Ręcznie wykończona, profesjonalna szczotka do fal wykonana z selekcjonowanego drewna dębowego o ergonomicznym profilu. Zastosowanie średnio-twardego naturalnego włosia dzika pozwala na perfekcyjne ułożenie i wyciągnięcie fal przy jednoczesnym delikatnym masażu skóry głowy.",
     images: [
-      "./assets/durag_silk_black.png",
-      "./assets/durag_silk_black.png"
+      "./assets/wave_brush_premium.png",
+      "./assets/wave_brush_premium.png"
     ],
     colors: [
       { name: "Natural Oak", hex: "#C59B6D" }
@@ -170,8 +170,8 @@ window.products = [
     material: "Ultra-elastyczna Satyna Oddychająca",
     description: "Lekka, elastyczna czapka satynowa z płaskimi szwami. Doskonała do spania oraz jako baza pod durag dla wzmocnienia pożądanej kompresji 360 waves. Zapobiega zsuwaniu się duragów w nocy oraz chroni pościel przed zatłuszczeniem olejkami do pielęgnacji.",
     images: [
-      "./assets/durag_silk_black.png",
-      "./assets/durag_silk_black.png"
+      "./assets/wave_cap_classic.png",
+      "./assets/wave_cap_classic.png"
     ],
     colors: [
       { name: "Classic Black", hex: "#111111" }
@@ -190,8 +190,8 @@ window.products = [
     material: "100% Organiczny Zimnotłoczony Olejek Arganowy & Jojoba",
     description: "Luksusowy eliksir stworzony do głębokiej pielęgnacji fal 360 waves oraz ochrony skóry głowy. Unikalna fuzja marokańskiego oleju arganowego, oleju jojoba oraz ekstraktu z nasion drzewa sandałowego. Głęboko odżywia, nadaje falom lustrzany połysk i zapobiega przesuszeniom pod duragiem.",
     images: [
-      "./assets/durag_silk_black.png",
-      "./assets/durag_silk_black.png"
+      "./assets/wave_elixir_bottle.png",
+      "./assets/wave_elixir_bottle.png"
     ],
     colors: [
       { name: "Amber Glass", hex: "#B87333" }
