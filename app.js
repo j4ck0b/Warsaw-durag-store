@@ -9,18 +9,25 @@
 let products = [];
 const initProductsDatabase = () => {
   const stored = localStorage.getItem('wds_products');
+  let needsReset = false;
   if (stored) {
     try {
-      products = JSON.parse(stored);
-      if (products.length !== window.products.length || !products.find(p => p.id === 10)) {
-        products = [...window.products];
-        localStorage.setItem('wds_products', JSON.stringify(products));
+      const parsed = JSON.parse(stored);
+      if (!Array.isArray(parsed) || parsed.length !== window.products.length) {
+        needsReset = true;
+      } else if (parsed.length > 0 && window.products.length > 0 && parsed[0].name !== window.products[0].name) {
+        needsReset = true;
+      } else {
+        products = parsed;
       }
     } catch (e) {
-      products = [...window.products];
-      localStorage.setItem('wds_products', JSON.stringify(products));
+      needsReset = true;
     }
   } else {
+    needsReset = true;
+  }
+  
+  if (needsReset) {
     products = [...window.products];
     localStorage.setItem('wds_products', JSON.stringify(products));
   }
