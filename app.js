@@ -55,7 +55,8 @@ let state = {
   activeCategory: 'all',
   promoApplied: null, // { code: 'WARSAW10', discount: 0.1 } or null
   activeProductInModal: null,
-  selectedColorInModal: null
+  selectedColorInModal: null,
+  activeImageIndexInModal: 0
 };
 
 // --- Promotional Coupons ---
@@ -100,6 +101,9 @@ const DOM = {
   productModal: document.getElementById('productModal'),
   modalCloseBtn: document.getElementById('modalCloseBtn'),
   modalImg: document.getElementById('modalImg'),
+  modalGalleryPrev: document.getElementById('modalGalleryPrev'),
+  modalGalleryNext: document.getElementById('modalGalleryNext'),
+  modalThumbnails: document.getElementById('modalThumbnails'),
   modalCategory: document.getElementById('modalCategory'),
   modalTitle: document.getElementById('modalTitle'),
   modalPrice: document.getElementById('modalPrice'),
@@ -282,6 +286,19 @@ function bindEventListeners() {
   DOM.productModal.addEventListener('click', (e) => {
     if (e.target === DOM.productModal) closeProductModal();
   });
+  
+  if (DOM.modalGalleryPrev) {
+    DOM.modalGalleryPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      updateModalGallery(state.activeImageIndexInModal - 1);
+    });
+  }
+  if (DOM.modalGalleryNext) {
+    DOM.modalGalleryNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      updateModalGallery(state.activeImageIndexInModal + 1);
+    });
+  }
   
   // Esc Key closes Drawer & Modals
   window.addEventListener('keydown', (e) => {
@@ -673,11 +690,32 @@ function handleCheckoutProcess() {
 // 5. ACCESSIBLE PRODUCT DETAIL MODAL CONTROLLER
 // ========================================================================
 
+function updateModalGallery(index) {
+  if (!state.activeProductInModal || !state.activeProductInModal.images) return;
+  const images = state.activeProductInModal.images;
+  
+  if (index < 0) index = images.length - 1;
+  if (index >= images.length) index = 0;
+  
+  state.activeImageIndexInModal = index;
+  DOM.modalImg.src = images[index];
+  
+  const thumbs = DOM.modalThumbnails.querySelectorAll('.modal-thumb');
+  thumbs.forEach((t, idx) => {
+    if (idx === index) {
+      t.classList.add('active');
+    } else {
+      t.classList.remove('active');
+    }
+  });
+}
+
 function openProductModal(productId) {
   const p = products.find(prod => prod.id === productId);
   if (!p) return;
 
   state.activeProductInModal = p;
+  state.activeImageIndexInModal = 0;
   
   // Inject details
   DOM.modalImg.src = p.images[0];
@@ -689,6 +727,26 @@ function openProductModal(productId) {
   DOM.modalDesc.textContent = p.description;
   DOM.modalQtyVal.textContent = '1';
   DOM.modalReviewsCount.textContent = p.reviews.length;
+  
+  // Render thumbnails
+  DOM.modalThumbnails.innerHTML = '';
+  if (p.images && p.images.length > 1) {
+    p.images.forEach((imgSrc, idx) => {
+      const thumb = document.createElement('img');
+      thumb.className = `modal-thumb ${idx === 0 ? 'active' : ''}`;
+      thumb.src = imgSrc;
+      thumb.alt = `${p.name} - ujęcie ${idx + 1}`;
+      thumb.addEventListener('click', () => {
+        updateModalGallery(idx);
+      });
+      DOM.modalThumbnails.appendChild(thumb);
+    });
+    DOM.modalGalleryPrev.style.display = 'flex';
+    DOM.modalGalleryNext.style.display = 'flex';
+  } else {
+    DOM.modalGalleryPrev.style.display = 'none';
+    DOM.modalGalleryNext.style.display = 'none';
+  }
   
   // Render colors swatch inputs
   DOM.modalColors.innerHTML = '';
