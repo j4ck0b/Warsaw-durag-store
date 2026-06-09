@@ -2,52 +2,14 @@
 ========================================================================
    WARSAW DURAG STORE - APP CONTROLLER
    Full Interactive Experience (Cart, Modals, Filters, Aesthetics)
+   Backend: Supabase (PostgreSQL + Edge Functions for email)
 ========================================================================
 */
 
-// --- Load Products Database from LocalStorage (or populate default) ---
+import { supabase, seedProductsIfEmpty, EDGE_FUNCTION_URL } from './supabase-config.js';
+
+// --- Products array (populated from Supabase on init) ---
 let products = [];
-const initProductsDatabase = () => {
-  const stored = localStorage.getItem('wds_products');
-  let needsReset = false;
-  if (stored) {
-    try {
-      const parsed = JSON.parse(stored);
-      if (!Array.isArray(parsed) || parsed.length !== window.products.length) {
-        needsReset = true;
-      } else if (parsed.length > 0 && window.products.length > 0 && parsed[0].name !== window.products[0].name) {
-        needsReset = true;
-      } else {
-        products = parsed;
-      }
-    } catch (e) {
-      needsReset = true;
-    }
-  } else {
-    needsReset = true;
-  }
-  
-  if (needsReset) {
-    products = [...window.products];
-    localStorage.setItem('wds_products', JSON.stringify(products));
-  }
-};
-
-initProductsDatabase();
-
-const initPromosDatabase = () => {
-  const stored = localStorage.getItem('wds_promos');
-  if (!stored) {
-    const defaultPromos = [
-      { code: 'WARSAW10', rate: 0.10 },
-      { code: 'ELEMENTY', rate: 0.15 },
-      { code: 'DURAGWAVES', rate: 0.20 }
-    ];
-    localStorage.setItem('wds_promos', JSON.stringify(defaultPromos));
-  }
-};
-initPromosDatabase();
-
 
 // --- Application State ---
 let state = {
@@ -59,12 +21,47 @@ let state = {
   activeImageIndexInModal: 0
 };
 
-// --- Promotional Coupons ---
-const VALID_PROMOS = {
-  'WARSAW10': 0.10, // 10% Off
-  'ELEMENTY': 0.15,  // 15% Off
-  'DURAGWAVES': 0.20 // 20% Off
-};
+// --- Load products from Supabase (async) ---
+async function loadProductsFromSupabase() {
+  try {
+    // Seed on first use if DB is empty
+    await seedProductsIfEmpty();
+
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('visible', true)
+      .order('id', { ascending: true });
+
+    if (error) {
+      console.warn('[WDS] Supabase products load error, falling back to window.products:', error.message);
+      products = window.products ? [...window.products] : [];
+    } else {
+      // Map snake_case DB columns to camelCase used throughout the app
+      products = (data || []).map(p => ({
+        id: p.id,
+        name: p.name,
+        nameEn: p.name_en,
+        price: parseFloat(p.price),
+        category: p.category,
+        categoryLabel: p.category_label,
+        material: p.material,
+        description: p.description,
+        images: p.images || [],
+        colors: p.colors || [],
+        reviews: p.reviews || [],
+        stock: p.stock,
+        visible: p.visible
+      }));
+      console.log(`[WDS] ✓ Załadowano ${products.length} produktów z Supabase.`);
+    }
+  } catch (err) {
+    console.warn('[WDS] Błąd ładowania produktów:', err);
+    products = window.products ? [...window.products] : [];
+  }
+
+  renderProductGrid();
+}
 
 // --- DOM Elements Cache ---
 const DOM = {
@@ -129,8 +126,8 @@ const DOM = {
 // 1. INITIALIZATION & LAYOUT TRIGGERS
 // ========================================================================
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Load Cart from localStorage
+document.addEventListener('DOMContentLoaded', async () => {
+  // Load Cart from localStorage (cart stays local for session speed)
   const savedCart = localStorage.getItem('wds_cart');
   if (savedCart) {
     try {
@@ -141,8 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Render initial grid
-  renderProductGrid();
+  // Load products from Supabase (async - renders grid when ready)
+  await loadProductsFromSupabase();
   
   // Initialize IntersectionObserver for Scroll Reveals
   initScrollReveals();
@@ -620,31 +617,50 @@ function handleCartItemClicks(e) {
   }
 }
 
-// Apply Promo Coupon Logic
-function handleApplyPromoCode() {
+// Apply Promo Coupon Logic — walidacja po stronie Supabase (serwer)
+async function handleApplyPromoCode() {
   const rawCode = DOM.cartPromoInput.value.trim().toUpperCase();
   
   if (!rawCode) {
     showPromoMessage('Wpisz kod rabatowy.', 'error');
     return;
   }
-  
-  // Initialize promos list from localStorage
-  const currentPromos = JSON.parse(localStorage.getItem('wds_promos') || '[]');
-  const match = currentPromos.find(p => p.code === rawCode);
-  
-  if (match) {
+
+  // Show loading state
+  DOM.cartPromoApplyBtn.textContent = '...';
+  DOM.cartPromoApplyBtn.disabled = true;
+
+  try {
+    // Validate server-side — nikt nie może ominąć przez devtools
+    const { data, error } = await supabase
+      .from('promo_codes')
+      .select('code, rate')
+      .eq('code', rawCode)
+      .eq('active', true)
+      .maybeSingle();
+
+    DOM.cartPromoApplyBtn.textContent = 'Zastosuj';
+    DOM.cartPromoApplyBtn.disabled = false;
+
+    if (error || !data) {
+      state.promoApplied = null;
+      showPromoMessage('Nieprawidłowy kod rabatowy.', 'error');
+      renderCart();
+      return;
+    }
+
     state.promoApplied = {
       code: rawCode,
-      discount: match.rate,
-      percent: match.rate * 100
+      discount: parseFloat(data.rate),
+      percent: Math.round(parseFloat(data.rate) * 100)
     };
-    showPromoMessage(`Dodano kupon ${rawCode}! Zniżka ${match.rate * 100}%`, 'success');
+    showPromoMessage(`Dodano kupon ${rawCode}! Zniżka ${state.promoApplied.percent}%`, 'success');
     renderCart();
-  } else {
-    state.promoApplied = null;
-    showPromoMessage('Nieprawidłowy kod rabatowy.', 'error');
-    renderCart();
+  } catch (err) {
+    DOM.cartPromoApplyBtn.textContent = 'Zastosuj';
+    DOM.cartPromoApplyBtn.disabled = false;
+    console.warn('[WDS] Promo validation error:', err);
+    showPromoMessage('Błąd połączenia. Spróbuj ponownie.', 'error');
   }
 }
 
@@ -962,29 +978,59 @@ function initAdminCMS() {
     adminLoginMsg.textContent = '';
   });
 
-  adminLoginForm.addEventListener('submit', (e) => {
+  adminLoginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const pw = adminPassword.value.trim();
-    if (pw === 'admin') {
+    const emailVal = adminPassword.value.trim(); // pole "hasło" używamy jako email na chwilę, ale dodamy osobne pole
+
+    // Dla uproszczenia: format "email:hasło" w polu hasła, lub email jako login admina
+    // Supabase Auth wymaga email + hasła — pobieramy je z formularza
+    const adminEmailInput = document.getElementById('adminEmailInput');
+    const adminEmail = adminEmailInput ? adminEmailInput.value.trim() : 'admin@warsawduragstore.pl';
+    const adminPw = adminPassword.value.trim();
+
+    if (!adminPw) {
+      adminLoginMsg.textContent = 'Wpisz hasło dostępu.';
+      return;
+    }
+
+    const submitBtn = adminLoginForm.querySelector('button[type="submit"]');
+    if (submitBtn) { submitBtn.textContent = 'Logowanie...'; submitBtn.disabled = true; }
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: adminEmail,
+        password: adminPw
+      });
+
+      if (submitBtn) { submitBtn.textContent = 'Zaloguj się'; submitBtn.disabled = false; }
+
+      if (error || !data.session) {
+        adminLoginMsg.textContent = 'Niepoprawny e-mail lub hasło.';
+        setTimeout(() => { adminLoginMsg.textContent = ''; }, 3000);
+        return;
+      }
+
       // Success Login
       adminLoginModal.classList.remove('active');
       adminLoginModal.setAttribute('aria-hidden', 'true');
       adminPassword.value = '';
+      if (adminEmailInput) adminEmailInput.value = '';
       adminLoginMsg.textContent = '';
       
       // Open Dashboard
       adminDashboardOverlay.classList.add('active');
       adminDashboardOverlay.setAttribute('aria-hidden', 'false');
       
-      // Show tab Products by default
       switchCmsTab('products');
-    } else {
-      adminLoginMsg.textContent = 'Niepoprawne hasło dostępu!';
+    } catch (err) {
+      if (submitBtn) { submitBtn.textContent = 'Zaloguj się'; submitBtn.disabled = false; }
+      adminLoginMsg.textContent = 'Błąd połączenia z serwerem.';
       setTimeout(() => { adminLoginMsg.textContent = ''; }, 3000);
     }
   });
 
-  adminLogoutBtn.addEventListener('click', () => {
+  adminLogoutBtn.addEventListener('click', async () => {
+    await supabase.auth.signOut();
     adminDashboardOverlay.classList.remove('active');
     adminDashboardOverlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
@@ -1085,134 +1131,201 @@ function initAdminCMS() {
     });
   }
 
-  // Delete Product
-  function deleteCmsProduct(id) {
-    const idx = products.findIndex(p => p.id === id);
-    if (idx > -1) {
-      products.splice(idx, 1);
-      localStorage.setItem('wds_products', JSON.stringify(products));
+  // Delete Product — Supabase
+  async function deleteCmsProduct(id) {
+    try {
+      const { error } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        alert('Błąd usuwania produktu: ' + error.message);
+        return;
+      }
+
+      // Remove from local array and re-render
+      const idx = products.findIndex(p => p.id === id);
+      if (idx > -1) products.splice(idx, 1);
       renderCmsProductList();
-      renderProductGrid(); // Update main storefront reactively!
+      renderProductGrid();
+    } catch (err) {
+      alert('Błąd połączenia przy usuwaniu produktu.');
     }
   }
 
-  // 2. PROMO CODES TAB RENDER
-  function renderCmsPromoList() {
+  // 2. PROMO CODES TAB RENDER — Supabase
+  async function renderCmsPromoList() {
     if (!cmsPromoListBody) return;
-    cmsPromoListBody.innerHTML = '';
+    cmsPromoListBody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding: 20px 0; color: var(--color-secondary);">Ładowanie...</td></tr>`;
     
-    const promos = JSON.parse(localStorage.getItem('wds_promos') || '[]');
-    
-    if (promos.length === 0) {
-      cmsPromoListBody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding: 20px 0; color: var(--color-secondary);">Brak zdefiniowanych kuponów rabatowych.</td></tr>`;
-      return;
-    }
+    try {
+      const { data: promos, error } = await supabase
+        .from('promo_codes')
+        .select('id, code, rate, active, uses_count')
+        .order('created_at', { ascending: false });
 
-    promos.forEach((pr, idx) => {
-      const tr = document.createElement('tr');
-      tr.style.borderBottom = '1px solid var(--border-color-light)';
-      
-      tr.innerHTML = `
-        <td style="padding: 14px 10px; font-weight: 500; color: var(--color-primary);">${pr.code}</td>
-        <td style="padding: 14px 10px; font-weight: 500; color: #2E7D32;">${pr.rate * 100}% zniżki</td>
-        <td style="padding: 14px 10px; text-align: right;">
-          <button class="btn-text" data-action="delete-promo" data-idx="${idx}" style="font-size: 0.75rem; color: #D32F2F; --color-primary: #D32F2F;">Usuń</button>
-        </td>
-      `;
+      if (error) throw error;
 
-      tr.querySelector('[data-action="delete-promo"]').addEventListener('click', () => {
-        promos.splice(idx, 1);
-        localStorage.setItem('wds_promos', JSON.stringify(promos));
-        renderCmsPromoList();
+      cmsPromoListBody.innerHTML = '';
+
+      if (!promos || promos.length === 0) {
+        cmsPromoListBody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding: 20px 0; color: var(--color-secondary);">Brak zdefiniowanych kuponów rabatowych.</td></tr>`;
+        return;
+      }
+
+      promos.forEach((pr) => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--border-color-light)';
+        
+        tr.innerHTML = `
+          <td style="padding: 14px 10px; font-weight: 500; color: var(--color-primary);">${pr.code}</td>
+          <td style="padding: 14px 10px; font-weight: 500; color: #2E7D32;">${Math.round(pr.rate * 100)}% zniżki</td>
+          <td style="padding: 14px 10px; text-align: right;">
+            <button class="btn-text" data-action="delete-promo" data-id="${pr.id}" style="font-size: 0.75rem; color: #D32F2F; --color-primary: #D32F2F;">Usuń</button>
+          </td>
+        `;
+
+        tr.querySelector('[data-action="delete-promo"]').addEventListener('click', async () => {
+          const { error: delErr } = await supabase
+            .from('promo_codes')
+            .delete()
+            .eq('id', pr.id);
+          if (!delErr) renderCmsPromoList();
+          else alert('Błąd usuwania kodu: ' + delErr.message);
+        });
+
+        cmsPromoListBody.appendChild(tr);
       });
-
-      cmsPromoListBody.appendChild(tr);
-    });
+    } catch (err) {
+      cmsPromoListBody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding: 20px 0; color: #D32F2F;">Błąd ładowania kuponów.</td></tr>`;
+    }
   }
 
-  // Create new coupon on form submit
-  cmsAddPromoForm.addEventListener('submit', (e) => {
+  // Create new coupon — Supabase
+  cmsAddPromoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const code = cmsPromoCode.value.trim().toUpperCase();
     const ratePercent = parseInt(cmsPromoRate.value);
     
-    if (!code || isNaN(ratePercent)) return;
-    
-    const promos = JSON.parse(localStorage.getItem('wds_promos') || '[]');
-    
-    // Check duplication
-    if (promos.some(p => p.code === code)) {
-      alert('Taki kod rabatowy już istnieje!');
+    if (!code || isNaN(ratePercent) || ratePercent <= 0 || ratePercent > 100) return;
+
+    const { error } = await supabase
+      .from('promo_codes')
+      .insert({ code, rate: ratePercent / 100 });
+
+    if (error) {
+      if (error.code === '23505') {
+        alert('Taki kod rabatowy już istnieje!');
+      } else {
+        alert('Błąd dodawania kodu: ' + error.message);
+      }
       return;
     }
 
-    promos.push({
-      code: code,
-      rate: ratePercent / 100
-    });
-
-    localStorage.setItem('wds_promos', JSON.stringify(promos));
     cmsPromoCode.value = '';
     cmsPromoRate.value = '';
     renderCmsPromoList();
   });
 
-  // 3. STATS TAB RENDER
-  function renderCmsStats() {
-    const orders = JSON.parse(localStorage.getItem('wds_orders') || '[]');
+  // 3. STATS TAB RENDER — Supabase
+  async function renderCmsStats() {
     const revEl = document.getElementById('cmsStatRevenue');
     const countEl = document.getElementById('cmsStatOrders');
     const bestEl = document.getElementById('cmsStatBestseller');
     const listEl = document.getElementById('cmsOrderHistoryBody');
     
     if (!revEl || !countEl || !bestEl || !listEl) return;
-    
-    // Calculate stats
-    const totalRev = orders.reduce((sum, o) => sum + o.total, 0);
-    revEl.textContent = `${totalRev.toFixed(2)} PLN`;
-    countEl.textContent = orders.length;
-    
-    // Bestseller calculations
-    if (orders.length > 0) {
-      const itemCounts = {};
-      orders.forEach(o => {
-        o.rawItems.forEach(item => {
-          itemCounts[item.name] = (itemCounts[item.name] || 0) + item.quantity;
+
+    listEl.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px 0; color: var(--color-secondary);">Ładowanie zamówień...</td></tr>`;
+
+    try {
+      const { data: orders, error } = await supabase
+        .from('orders')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      // Calculate stats
+      const totalRev = (orders || []).reduce((sum, o) => sum + parseFloat(o.total || 0), 0);
+      revEl.textContent = `${totalRev.toFixed(2)} PLN`;
+      countEl.textContent = orders?.length || 0;
+
+      // Bestseller from items JSON
+      if (orders && orders.length > 0) {
+        const itemCounts = {};
+        orders.forEach(o => {
+          if (Array.isArray(o.items)) {
+            o.items.forEach(item => {
+              itemCounts[item.name] = (itemCounts[item.name] || 0) + (item.quantity || 1);
+            });
+          }
         });
-      });
-      
-      let bestProduct = '';
-      let maxCount = 0;
-      for (const [name, count] of Object.entries(itemCounts)) {
-        if (count > maxCount) {
-          maxCount = count;
-          bestProduct = name;
+        let bestProduct = 'Brak danych';
+        let maxCount = 0;
+        for (const [name, count] of Object.entries(itemCounts)) {
+          if (count > maxCount) { maxCount = count; bestProduct = name; }
         }
+        bestEl.textContent = maxCount > 0 ? `${bestProduct} (${maxCount} szt.)` : 'Brak danych';
+      } else {
+        bestEl.textContent = 'Brak danych';
       }
-      bestEl.textContent = bestProduct ? `${bestProduct} (${maxCount} szt.)` : 'Brak danych';
-    } else {
-      bestEl.textContent = 'Brak danych';
+
+      // Render orders history
+      listEl.innerHTML = '';
+      if (!orders || orders.length === 0) {
+        listEl.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px 0; color: var(--color-secondary);">Brak zrealizowanych zamówień.</td></tr>`;
+        return;
+      }
+
+      orders.forEach(o => {
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid var(--border-color-light)';
+
+        const statusLabels = { new: '🆕 Nowe', processing: '⚙️ W realizacji', shipped: '🚚 Wysłane', delivered: '✅ Dostarczone', cancelled: '❌ Anulowane' };
+        const dateStr = new Date(o.created_at).toLocaleString('pl-PL');
+
+        tr.innerHTML = `
+          <td style="padding: 14px 10px; font-weight: 500; color: var(--color-primary);">
+            ${o.order_no}
+            <div style="font-size:0.75rem; color:var(--color-secondary); margin-top:2px;">${o.customer_name} • ${o.customer_phone}</div>
+          </td>
+          <td style="padding: 14px 10px; font-weight: 300; font-size:0.85rem;">${dateStr}</td>
+          <td style="padding: 14px 10px; font-weight: 300; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${o.items_summary || ''}">${
+            o.items_summary || '—'
+          }</td>
+          <td style="padding: 14px 10px; color: var(--color-secondary); font-size: 0.85rem;">${o.discount_code ? o.discount_code + ' (-' + parseFloat(o.discount_val).toFixed(2) + ' PLN)' : 'Brak'}</td>
+          <td style="padding: 14px 10px; font-weight: 500; text-align: right; color: var(--color-primary);">${parseFloat(o.total).toFixed(2)} PLN</td>
+          <td style="padding: 14px 10px;">
+            <select class="order-status-select" data-order-id="${o.id}" style="font-size: 0.75rem; padding: 4px 8px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--color-primary); cursor: pointer;">
+              <option value="new" ${o.status === 'new' ? 'selected' : ''}>🆕 Nowe</option>
+              <option value="processing" ${o.status === 'processing' ? 'selected' : ''}>⚙️ W realizacji</option>
+              <option value="shipped" ${o.status === 'shipped' ? 'selected' : ''}>🚚 Wysłane</option>
+              <option value="delivered" ${o.status === 'delivered' ? 'selected' : ''}>✅ Dostarczone</option>
+              <option value="cancelled" ${o.status === 'cancelled' ? 'selected' : ''}>❌ Anulowane</option>
+            </select>
+          </td>
+        `;
+
+        // Status change handler
+        const statusSelect = tr.querySelector('.order-status-select');
+        statusSelect.addEventListener('change', async () => {
+          const { error: upErr } = await supabase
+            .from('orders')
+            .update({ status: statusSelect.value })
+            .eq('id', o.id);
+          if (upErr) {
+            alert('Błąd zmiany statusu: ' + upErr.message);
+            statusSelect.value = o.status; // revert
+          }
+        });
+
+        listEl.appendChild(tr);
+      });
+    } catch (err) {
+      listEl.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px 0; color: #D32F2F;">Błąd ładowania zamówień: ${err.message}</td></tr>`;
     }
-    
-    // Render orders history log
-    listEl.innerHTML = '';
-    if (orders.length === 0) {
-      listEl.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 20px 0; color: var(--color-secondary);">Brak zrealizowanych zamówień.</td></tr>`;
-      return;
-    }
-    
-    orders.forEach(o => {
-      const tr = document.createElement('tr');
-      tr.style.borderBottom = '1px solid var(--border-color-light)';
-      tr.innerHTML = `
-        <td style="padding: 14px 10px; font-weight: 500; color: var(--color-primary);">${o.orderNo}</td>
-        <td style="padding: 14px 10px; color: var(--color-secondary); font-size:0.8rem;">${o.date}</td>
-        <td style="padding: 14px 10px; color: var(--color-secondary); max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${o.itemsSummary}</td>
-        <td style="padding: 14px 10px; color: var(--color-secondary);">${o.discountCode}</td>
-        <td style="padding: 14px 10px; font-weight: 500; text-align: right; color: var(--color-primary);">${o.total.toFixed(2)} PLN</td>
-      `;
-      listEl.appendChild(tr);
-    });
   }
 
   // --- PRODUCT FORM EDIT/ADD DRAWER CONTROLLER ---
@@ -1366,8 +1479,8 @@ function initAdminCMS() {
     updateCmsImageSource('./assets/durag_silk_black.png', 'preset');
   }
 
-  // Handle Add/Edit form submission
-  cmsProductForm.addEventListener('submit', (e) => {
+  // Handle Add/Edit form submission — Supabase
+  cmsProductForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const idVal = cmsFormProductId.value;
@@ -1387,91 +1500,118 @@ function initAdminCMS() {
       'accessories': 'Pielęgnacja & Akcesoria'
     };
 
-    if (idVal) {
-      // SAVE EXISTING EDIT
-      const productId = parseInt(idVal);
-      const idx = products.findIndex(prod => prod.id === productId);
-      
-      if (idx > -1) {
-        products[idx].name = name;
-        products[idx].nameEn = nameEn;
-        products[idx].category = category;
-        products[idx].categoryLabel = categoryLabels[category];
-        products[idx].price = price;
-        products[idx].material = material;
-        products[idx].description = description;
-        products[idx].images = [mainImg, mainImg]; // update both
-      }
-    } else {
-      // ADD NEW PRODUCT
-      const maxId = products.reduce((max, prod) => prod.id > max ? prod.id : max, 0);
-      const newId = maxId + 1;
-      
-      // Default colors based on category
-      let newColors = [{ name: 'Standard Edition', hex: '#111111' }];
-      if (category === 'silk') {
-        newColors = [
-          { name: 'Classic Pearl', hex: '#F3F2EE' },
-          { name: 'Obsidian Sheen', hex: '#111111' }
-        ];
-      } else if (category === 'velvet') {
-        newColors = [
-          { name: 'Deep Velvet', hex: '#1C2E24' }
-        ];
+    const submitBtn = cmsProductForm.querySelector('button[type="submit"]');
+    if (submitBtn) { submitBtn.textContent = 'Zapisywanie...'; submitBtn.disabled = true; }
+
+    try {
+      if (idVal) {
+        // EDIT EXISTING PRODUCT
+        const productId = parseInt(idVal);
+        const { error } = await supabase
+          .from('products')
+          .update({
+            name,
+            name_en: nameEn,
+            category,
+            category_label: categoryLabels[category],
+            price,
+            material,
+            description,
+            images: [mainImg, mainImg]
+          })
+          .eq('id', productId);
+
+        if (error) throw error;
+
+        // Update local array
+        const idx = products.findIndex(prod => prod.id === productId);
+        if (idx > -1) {
+          products[idx] = { ...products[idx], name, nameEn, category, categoryLabel: categoryLabels[category], price, material, description, images: [mainImg, mainImg] };
+        }
+      } else {
+        // ADD NEW PRODUCT
+        let newColors = [{ name: 'Standard Edition', hex: '#111111' }];
+        if (category === 'silk') {
+          newColors = [{ name: 'Classic Pearl', hex: '#F3F2EE' }, { name: 'Obsidian Sheen', hex: '#111111' }];
+        } else if (category === 'velvet') {
+          newColors = [{ name: 'Deep Velvet', hex: '#1C2E24' }];
+        }
+
+        const { data: inserted, error } = await supabase
+          .from('products')
+          .insert({
+            name,
+            name_en: nameEn,
+            category,
+            category_label: categoryLabels[category],
+            price,
+            material,
+            description,
+            images: [mainImg, mainImg],
+            colors: newColors,
+            reviews: [{ author: 'Obsługa Sklepu', rating: 5, comment: 'Nowość w katalogu WDS.', date: new Date().toLocaleDateString('pl-PL') }],
+            stock: 10,
+            visible: true
+          })
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        // Add to local array
+        products.push({
+          id: inserted.id,
+          name: inserted.name,
+          nameEn: inserted.name_en,
+          price: parseFloat(inserted.price),
+          category: inserted.category,
+          categoryLabel: inserted.category_label,
+          material: inserted.material,
+          description: inserted.description,
+          images: inserted.images || [],
+          colors: inserted.colors || [],
+          reviews: inserted.reviews || [],
+          stock: inserted.stock,
+          visible: inserted.visible
+        });
       }
 
-      const newProd = {
-        id: newId,
-        name: name,
-        nameEn: nameEn,
-        price: price,
-        category: category,
-        categoryLabel: categoryLabels[category],
-        material: material,
-        description: description,
-        images: [mainImg, mainImg],
-        colors: newColors,
-        reviews: [
-          { author: "Obsługa Sklepu", rating: 5, comment: "Nowość w naszym katalogu. Produkt przetestowany przez załogę WDS.", date: new Date().toLocaleDateString('pl-PL') }
-        ]
-      };
-
-      products.push(newProd);
+      if (submitBtn) { submitBtn.textContent = 'Zapisz produkt'; submitBtn.disabled = false; }
+      closeCmsProductDrawer();
+      renderCmsProductList();
+      renderProductGrid();
+    } catch (err) {
+      if (submitBtn) { submitBtn.textContent = 'Zapisz produkt'; submitBtn.disabled = false; }
+      alert('Błąd zapisu produktu: ' + err.message);
     }
-
-    // Save and Sync
-    localStorage.setItem('wds_products', JSON.stringify(products));
-    products = JSON.parse(localStorage.getItem('wds_products'));
-    
-    // Close & Reactively Re-render main grid + CMS grid
-    closeCmsProductDrawer();
-    renderCmsProductList();
-    renderProductGrid();
   });
 
-  // --- DATABASE RESET HELPER ---
-  cmsResetDbBtn.addEventListener('click', () => {
-    if (confirm('CAŁKOWITY RESET BAZY: Czy jesteś pewien? To polecenie wymaże wszystkie dodane przez Ciebie produkty, historię zamówień oraz kody rabatowe.')) {
-      localStorage.removeItem('wds_products');
-      localStorage.removeItem('wds_promos');
-      localStorage.removeItem('wds_orders');
-      
-      // Re-populate from source default products.js
-      products = [...window.products];
-      localStorage.setItem('wds_products', JSON.stringify(products));
-      
-      const defaultPromos = [
-        { code: 'WARSAW10', rate: 0.10 },
-        { code: 'ELEMENTY', rate: 0.15 },
-        { code: 'DURAGWAVES', rate: 0.20 }
-      ];
-      localStorage.setItem('wds_promos', JSON.stringify(defaultPromos));
-      
-      // Reactively sync main grid + CMS catalogs
-      renderProductGrid();
-      
-      alert('Baza danych została pomyślnie zresetowana do ustawień fabrycznych.');
-      switchCmsTab('products');
+  // --- DATABASE RESET HELPER — Supabase ---
+  cmsResetDbBtn.addEventListener('click', async () => {
+    if (confirm('CAŁKOWITY RESET BAZY: Czy jesteś pewien? To polecenie wymaże wszystkie produkty i kody rabatowe z Supabase i przywróci domyślne.')) {
+      try {
+        // Delete all products and promo codes from Supabase
+        await supabase.from('products').delete().neq('id', 0);
+        await supabase.from('promo_codes').delete().neq('id', 0);
+
+        // Re-seed products and promos
+        await seedProductsIfEmpty();
+
+        // Re-insert default promos
+        await supabase.from('promo_codes').insert([
+          { code: 'WARSAW10', rate: 0.10 },
+          { code: 'ELEMENTY', rate: 0.15 },
+          { code: 'DURAGWAVES', rate: 0.20 }
+        ]);
+
+        // Reload products
+        await loadProductsFromSupabase();
+
+        alert('Baza danych została pomysłnie zresetowana.');
+        switchCmsTab('products');
+      } catch (err) {
+        alert('Błąd resetu bazy: ' + err.message);
+      }
     }
   });
 
@@ -1642,8 +1782,8 @@ function initCheckoutFlow() {
     renderPaczkomatyResults(fallbackLockers);
   });
 
-  // Place Order Action Validation
-  placeOrderBtn.addEventListener('click', (e) => {
+  // Place Order Action Validation — zapisuje do Supabase i wysyła maile
+  placeOrderBtn.addEventListener('click', async (e) => {
     e.preventDefault();
     checkoutErrorMsg.textContent = '';
     
@@ -1669,7 +1809,149 @@ function initCheckoutFlow() {
     }
 
     // Visual order processing block
-    placeOrderBtn.textContent = 'Autoryzacja płatności...';
+    placeOrderBtn.textContent = 'Przetwarzanie zamówienia...';
+    placeOrderBtn.disabled = true;
+
+    try {
+      // Generate order number
+      const orderNo = `#WDS-${Math.floor(100000 + Math.random() * 900000)}`;
+      const totals = calculateTotals();
+      const orderItemsSummary = state.cart.map(item => `${item.name} (${item.color}) x${item.quantity}`).join(', ');
+
+      // Build order object for Supabase
+      const orderPayload = {
+        order_no: orderNo,
+        customer_name: nameVal,
+        customer_email: emailVal,
+        customer_phone: phoneVal,
+        delivery_method: currentDeliveryMethod,
+        locker_code: currentDeliveryMethod === 'paczkomat' ? selectedPaczkomat?.name : null,
+        locker_address: currentDeliveryMethod === 'paczkomat' ? selectedPaczkomat?.address : null,
+        items: state.cart.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          image: item.image,
+          color: item.color,
+          quantity: item.quantity
+        })),
+        items_summary: orderItemsSummary,
+        subtotal: totals.subtotal,
+        discount_code: state.promoApplied ? state.promoApplied.code : null,
+        discount_pct: state.promoApplied ? state.promoApplied.percent : 0,
+        discount_val: totals.discount,
+        total: totals.total,
+        status: 'new'
+      };
+
+      // 1. Save order to Supabase
+      const { data: savedOrder, error: orderError } = await supabase
+        .from('orders')
+        .insert(orderPayload)
+        .select()
+        .single();
+
+      if (orderError) {
+        console.error('[WDS] Order save error:', orderError);
+        // Show error but continue — don't block user
+        checkoutErrorMsg.textContent = 'Wystąpił problem z zapisem. Spróbuj ponownie.';
+        placeOrderBtn.textContent = 'Kupuję i płacę';
+        placeOrderBtn.disabled = false;
+        return;
+      }
+
+      // 2. Send emails via Edge Function (non-blocking — fire and forget)
+      fetch(EDGE_FUNCTION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...orderPayload,
+          order_no: savedOrder.order_no,
+          id: savedOrder.id
+        })
+      }).catch(err => console.warn('[WDS] Email Edge Function error (non-critical):', err));
+
+      // 3. Show success view
+      const cartItemsContainer = document.getElementById('cartItemsContainer');
+      const cartFooter = document.getElementById('cartFooter');
+      
+      cartStepCheckout.style.display = 'none';
+      cartStepCart.style.display = 'flex';
+      cartItemsContainer.style.opacity = '1';
+      cartFooter.style.display = 'none';
+      
+      cartItemsContainer.innerHTML = `
+        <div class="checkout-success-view">
+          <div class="success-icon-circle">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-primary);">Dziękujemy za zamówienie!</h3>
+          <p style="font-size: 0.95rem; color: var(--color-secondary); line-height: 1.6; font-weight: 300;">
+            Twoje zamówienie zostało pomyślnie przyjęte. Numer zamówienia: <strong style="color:var(--color-primary);">${savedOrder.order_no}</strong>. Szczegóły wysłaliśmy na e-mail: <strong style="color:var(--color-primary);">${emailVal}</strong>.
+          </p>
+          ${currentDeliveryMethod === 'paczkomat' ? `
+            <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 14px; text-align: left; margin: 15px 0; font-size: 0.85rem;">
+              <strong style="color:#2E7D32; display:block; margin-bottom:4px;">Dostawa Paczkomat:</strong>
+              <strong>${selectedPaczkomat.name}</strong> - ${selectedPaczkomat.address}
+            </div>
+          ` : `
+            <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 14px; text-align: left; margin: 15px 0; font-size: 0.85rem;">
+              <strong style="color:var(--color-primary); display:block; margin-bottom:4px;">Dostawa Kurierska:</strong>
+              Adresat: ${nameVal}<br>Tel: ${phoneVal}
+            </div>
+          `}
+          <button class="btn-minimal" id="successCloseBtn" style="margin-top: 20px; width: 100%;">Kontynuuj zakupy</button>
+        </div>
+      `;
+
+      // 4. Clear state
+      state.cart = [];
+      state.promoApplied = null;
+      selectedPaczkomat = null;
+      currentDeliveryMethod = 'courier';
+      
+      checkoutName.value = '';
+      checkoutEmail.value = '';
+      checkoutPhone.value = '';
+      selectedPaczkomatCard.style.display = 'none';
+      inpostResultsList.style.display = 'flex';
+      inpostSearchInput.style.display = 'block';
+      inpostSearchBtn.style.display = 'block';
+      inpostSearchInput.value = '';
+      deliveryTabBtns.forEach(b => b.classList.remove('active'));
+      deliveryTabBtns[0].classList.add('active');
+      inpostSelectionContainer.style.display = 'none';
+      
+      const cartPromoInput = document.getElementById('cartPromoInput');
+      if (cartPromoInput) cartPromoInput.value = '';
+      
+      updateCartBadge();
+      localStorage.removeItem('wds_cart');
+
+      // Refresh CMS statistics if panel is open
+      updateCmsAnalyticStatsDirectly();
+
+      document.getElementById('successCloseBtn').addEventListener('click', () => {
+        closeCartDrawer();
+        setTimeout(() => {
+          cartFooter.style.display = 'flex';
+          cartFooter.style.opacity = '1';
+          placeOrderBtn.textContent = 'Kupuję i płacę';
+          placeOrderBtn.disabled = false;
+          renderCart();
+        }, 500);
+      });
+
+    } catch (err) {
+      console.error('[WDS] Order placement error:', err);
+      checkoutErrorMsg.textContent = 'Błąd połączenia z serwerem. Spróbuj ponownie.';
+      placeOrderBtn.textContent = 'Kupuję i płacę';
+      placeOrderBtn.disabled = false;
+    }
+  });
+}
     placeOrderBtn.disabled = true;
 
     setTimeout(() => {
