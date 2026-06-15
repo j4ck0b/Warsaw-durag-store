@@ -3,9 +3,56 @@
 //
 // !! UZUPEŁNIJ SWOJE KLUCZE PONIŻEJ !!
 // Znajdziesz je w: Supabase Dashboard → Settings → API
-// ========================================================================
-
 (() => {
+  // --- Temporary Visual Debugger ---
+  window.onerror = function(message, source, lineno, colno, error) {
+    const errDiv = document.createElement('div');
+    errDiv.style.position = 'fixed';
+    errDiv.style.bottom = '0';
+    errDiv.style.left = '0';
+    errDiv.style.width = '100%';
+    errDiv.style.background = 'rgba(255, 0, 60, 0.95)';
+    errDiv.style.color = 'white';
+    errDiv.style.padding = '15px';
+    errDiv.style.zIndex = '999999';
+    errDiv.style.fontFamily = 'monospace';
+    errDiv.style.fontSize = '13px';
+    errDiv.style.lineHeight = '1.4';
+    errDiv.innerHTML = '<strong>RUNTIME ERROR:</strong> ' + message + '<br><small>at ' + source + ':' + lineno + ':' + colno + '</small>';
+    document.body.appendChild(errDiv);
+  };
+  const visualLog = (type, args) => {
+    const debugDiv = document.getElementById('visual-debug-log') || (() => {
+      const div = document.createElement('div');
+      div.id = 'visual-debug-log';
+      div.style.position = 'fixed';
+      div.style.bottom = '10px';
+      div.style.right = '10px';
+      div.style.width = '350px';
+      div.style.maxHeight = '250px';
+      div.style.overflowY = 'auto';
+      div.style.background = 'rgba(0, 0, 0, 0.9)';
+      div.style.border = '2px solid #ff003c';
+      div.style.color = '#fff';
+      div.style.padding = '12px';
+      div.style.zIndex = '999998';
+      div.style.fontFamily = 'monospace';
+      div.style.fontSize = '11px';
+      document.body.appendChild(div);
+      return div;
+    })();
+    const msg = document.createElement('div');
+    msg.style.marginBottom = '4px';
+    msg.textContent = `[${type.toUpperCase()}] ${Array.from(args).map(x => typeof x === 'object' ? JSON.stringify(x) : x).join(' ')}`;
+    if (type === 'error') msg.style.color = '#ff003c';
+    if (type === 'warn') msg.style.color = '#ffaa00';
+    debugDiv.appendChild(msg);
+    debugDiv.scrollTop = debugDiv.scrollHeight;
+  };
+  console.log = function() { visualLog('log', arguments); };
+  console.warn = function() { visualLog('warn', arguments); };
+  console.error = function() { visualLog('error', arguments); };
+
   // Inicjalizacja klienta Supabase z obsługą CDN w przeglądarce i fallbacku offline
   const createClient = window.supabase ? window.supabase.createClient : null;
 
