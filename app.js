@@ -6,10 +6,11 @@
 ========================================================================
 */
 
-// Access Supabase client and helpers from global window scope (allows CORS-safe local files execution)
-const supabase = window.supabaseClient;
-const seedProductsIfEmpty = window.seedProductsIfEmpty;
-const EDGE_FUNCTION_URL = window.EDGE_FUNCTION_URL;
+(() => {
+  // Access Supabase client and helpers from global window scope (allows CORS-safe local files execution)
+  const supabase = window.supabaseClient;
+  const seedProductsIfEmpty = window.seedProductsIfEmpty;
+  const EDGE_FUNCTION_URL = window.EDGE_FUNCTION_URL;
 
 // --- Products array (populated from Supabase on init) ---
 let products = [];
@@ -2545,4 +2546,5 @@ function initScrollLockObserver() {
   // Run initial check
   updateBodyScroll();
 }
+})();
 
