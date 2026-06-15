@@ -5,30 +5,35 @@
 // Znajdziesz je w: Supabase Dashboard → Settings → API
 // ========================================================================
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+// Inicjalizacja klienta Supabase z obsługą CDN w przeglądarce i fallbacku offline
+const createClient = window.supabase ? window.supabase.createClient : null;
 
 // 🔑 TWOJE KLUCZE SUPABASE — wklej tutaj wartości z dashboardu
 const SUPABASE_URL = 'https://icvgsnenbgyvpwmsccym.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImljdmdzbmVuYmd5dnB3bXNjY3ltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTIyMjgsImV4cCI6MjA5NjU4ODIyOH0.ls3_Echd4hZkDYJcwr4Wx0YT2gnG36-Me76fwqIMd2I';
 
 // 🔗 URL Twojej Edge Function do wysyłki maili
-// Po deployu będzie: https://<projekt-ref>.supabase.co/functions/v1/send-order-email
-export const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/send-order-email`;
+const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/send-order-email`;
+window.EDGE_FUNCTION_URL = EDGE_FUNCTION_URL;
 
-// Inicjalizacja klienta Supabase
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+const supabase = createClient ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: false
   }
-});
+}) : null;
+window.supabaseClient = supabase;
 
 // ========================================================================
 // SEED FUNCTION — wykonuje się raz przy pustej bazie
 // Importuje produkty z window.products do Supabase
 // ========================================================================
-export async function seedProductsIfEmpty() {
+async function seedProductsIfEmpty() {
+  if (!supabase) {
+    console.warn('[WDS] Supabase client is not initialized (offline fallback).');
+    return false;
+  }
   try {
     // Check if products table is empty
     const { count, error } = await supabase
@@ -85,11 +90,18 @@ export async function seedProductsIfEmpty() {
     return false;
   }
 }
+window.seedProductsIfEmpty = seedProductsIfEmpty;
 
 // ========================================================================
 // HELPER: Sprawdź czy użytkownik jest zalogowany jako admin
 // ========================================================================
-export async function getAdminSession() {
-  const { data: { session } } = await supabase.auth.getSession();
-  return session;
+async function getAdminSession() {
+  if (!supabase) return null;
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    return session;
+  } catch (e) {
+    return null;
+  }
 }
+window.getAdminSession = getAdminSession;
