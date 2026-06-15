@@ -22,6 +22,42 @@
     <div class="loader-logo">Warsaw Durag Store</div>
     <div class="loader-bar"></div>
   </div>
+  <script>
+    // Fail-safe preloader removal: if modular scripts (app.js / esm.sh) fail to load or are blocked by CORS
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        var loader = document.getElementById('preloader');
+        if (loader && loader.style.opacity !== '0') {
+          loader.style.opacity = '0';
+          setTimeout(function() {
+            loader.style.display = 'none';
+            loader.style.visibility = 'hidden';
+          }, 800);
+        }
+      }, 200);
+    });
+    // Safety timeout fallback (max 1.5 seconds)
+    setTimeout(function() {
+      var loader = document.getElementById('preloader');
+      if (loader && loader.style.opacity !== '0') {
+        loader.style.opacity = '0';
+        setTimeout(function() {
+          loader.style.display = 'none';
+          loader.style.visibility = 'hidden';
+        }, 800);
+      }
+    }, 1500);
+  </script>
+
+  <!-- ================= SCROLLING ANNOUNCEMENT TICKER ================= -->
+  <div class="marquee-banner">
+    <div class="marquee-content">
+      <span>WARSAW DURAG STORE • ULTIMATE STREETWEAR HEADWEAR • WAVES CARE SYSTEM • DROPS & COLLABS • SHIPPED FROM WARSAW • </span>
+      <span>WARSAW DURAG STORE • ULTIMATE STREETWEAR HEADWEAR • WAVES CARE SYSTEM • DROPS & COLLABS • SHIPPED FROM WARSAW • </span>
+      <span>WARSAW DURAG STORE • ULTIMATE STREETWEAR HEADWEAR • WAVES CARE SYSTEM • DROPS & COLLABS • SHIPPED FROM WARSAW • </span>
+      <span>WARSAW DURAG STORE • ULTIMATE STREETWEAR HEADWEAR • WAVES CARE SYSTEM • DROPS & COLLABS • SHIPPED FROM WARSAW • </span>
+    </div>
+  </div>
 
   <!-- ================= STICKY HEADER ================= -->
   <header class="site-header" id="siteHeader">
@@ -96,7 +132,7 @@
     <div class="hero-overlay"></div>
     <div class="container" style="position: relative; z-index: 5;">
       <div class="hero-content">
-        <span class="script-accent" style="font-size: 3.2rem; margin-bottom: 5px;">le soin du cheveu</span>
+        <span class="script-accent" style="margin-bottom: 15px;">[ care & wave system ]</span>
         <span class="hero-subtitle">Premium Headwear & Care</span>
         <h1 class="hero-title">Nowa definicja <br><span>luxury streetwear</span>.</h1>
         <div class="hero-actions">
@@ -116,7 +152,7 @@
       <div class="container">
         
         <div class="section-header reveal">
-          <span class="script-accent">le rituel de la vague</span>
+          <span class="script-accent">[ the wave ritual ]</span>
           <span class="subtitle">Nasze produkty</span>
           <h2 class="title">Rzemiosło i Estetyka</h2>
         </div>
@@ -150,7 +186,7 @@
           </div>
           
           <div class="lookbook-content reveal">
-            <span class="script-accent">l'art de la soie</span>
+            <span class="script-accent">[ silk craftsmanship ]</span>
             <span class="subtitle">WDS Campaign '26</span>
             <h2 class="title">Kampania Editorial: <br><span>Jedwab w Mieście</span>.</h2>
             <p class="desc">

@@ -6,26 +6,26 @@
 */
 
 /* --- Google Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Tangerine:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* --- Design Tokens / Variables --- */
 :root {
   /* Colors */
-  --bg-primary: #FAF9F6;      /* Off-White / Alabaster */
-  --bg-secondary: #F3F2EE;    /* Warm Clay / Pearl */
-  --color-primary: #111111;   /* Slate Obsidian */
-  --color-secondary: #555555; /* Soft Charcoal */
-  --color-accent: #D4AF37;    /* Champagne Gold */
-  --color-accent-rgb: 212, 175, 55;
+  --bg-primary: #050505;      /* Pure rich dark black */
+  --bg-secondary: #0c0c0c;    /* Deep dark gray for cards/sections */
+  --color-primary: #ffffff;   /* Slate Obsidian */
+  --color-secondary: #888888; /* Soft Charcoal */
+  --color-accent: #ff003c;    /* Neon red accent */
+  --color-accent-rgb: 255, 0, 60;
   --color-white: #FFFFFF;
   --color-black: #000000;
-  --glass-bg: rgba(250, 249, 246, 0.85);
+  --glass-bg: rgba(5, 5, 5, 0.85);
   
   /* Borders & Shadows */
-  --border-color: rgba(17, 17, 17, 0.08);
-  --border-color-light: rgba(17, 17, 17, 0.03);
-  --shadow-subtle: 0 4px 30px rgba(0, 0, 0, 0.02);
-  --shadow-luxury: 0 20px 50px rgba(0, 0, 0, 0.05);
+  --border-color: #1c1c1c;    /* Clean dark thin borders */
+  --border-color-light: #121212;
+  --shadow-subtle: none;
+  --shadow-luxury: 0 10px 40px rgba(0, 0, 0, 0.8);
   
   /* Border Radius */
   --border-radius-lg: 0px;
@@ -38,17 +38,17 @@
   --header-height-scrolled: 70px;
   
   /* Fonts */
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-script: 'Tangerine', cursive;
+  --font-serif: 'Archivo Narrow', sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-script: 'Archivo Narrow', sans-serif;
 
   /* Custom script accents styles */
-  --font-script-accent: 'Tangerine', cursive;
+  --font-script-accent: 'Archivo Narrow', sans-serif;
   
   /* Transitions */
-  --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-  --transition-fast: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
-  --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 /* --- Base & Reset --- */
@@ -100,16 +100,17 @@ body.no-scroll {
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(17, 17, 17, 0.15);
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(17, 17, 17, 0.3);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 /* Typography Selection */
@@ -183,7 +184,7 @@ a {
 .loader-bar {
   width: 100px;
   height: 1px;
-  background-color: rgba(17, 17, 17, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
 }
@@ -226,14 +227,14 @@ a {
   background-color: transparent;
   color: var(--color-primary);
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: var(--transition-smooth);
-  border-radius: 100px;
+  border-radius: 0px;
 }
 
 .btn-minimal::before {
@@ -250,7 +251,7 @@ a {
 }
 
 .btn-minimal:hover {
-  color: var(--bg-primary);
+  color: var(--color-black);
 }
 
 .btn-minimal:hover::before {
@@ -267,7 +268,7 @@ a {
 }
 
 .btn-minimal.accent:hover {
-  color: var(--color-primary);
+  color: var(--color-white);
 }
 
 .btn-text {
@@ -347,7 +348,7 @@ a {
 
 .site-header.scrolled {
   height: var(--header-height-scrolled);
-  background-color: rgba(250, 249, 246, 0.95);
+  background-color: rgba(5, 5, 5, 0.95);
   box-shadow: var(--shadow-subtle);
 }
 
@@ -364,15 +365,15 @@ a {
 
 .logo {
   font-family: var(--font-serif);
-  font-size: clamp(1.2rem, 2vw, 1.6rem);
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-primary);
 }
 
 .logo-sub {
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-secondary);
 }
 
@@ -539,6 +540,12 @@ a {
   letter-spacing: 0.05em;
   color: var(--color-primary);
   display: block;
+  transition: var(--transition-fast);
+}
+
+.mobile-menu-links a:hover {
+  color: var(--color-accent);
+  padding-left: 8px;
 }
 
 .mobile-drawer-footer {
@@ -769,7 +776,7 @@ a {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--color-secondary);
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
   position: relative;
   padding: 8px 12px;
@@ -787,7 +794,7 @@ a {
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: var(--color-primary);
+  background-color: var(--color-accent);
   transform: scaleX(0);
   transition: var(--transition-fast);
 }
@@ -826,15 +833,15 @@ a {
   flex-direction: column;
   position: relative;
   cursor: pointer;
-  background: transparent; /* No container backgrounds for high-end boutique look */
-  border: none;
-  padding: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 16px;
   margin-bottom: 8px;
   transition: var(--transition-smooth);
 }
 
 .product-card:hover {
-  box-shadow: none; /* No box shadows to keep aesthetic editorial */
+  border-color: var(--color-accent);
 }
 
 .product-image-container {
@@ -876,22 +883,23 @@ a {
   position: absolute;
   top: 12px;
   left: 12px;
-  background-color: var(--color-white);
-  color: var(--color-primary);
-  border: 1px solid var(--border-color);
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border: none;
   font-size: 0.65rem;
-  font-weight: 500;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 4px 8px;
+  letter-spacing: 0.12em;
+  padding: 5px 10px;
   z-index: 5;
+  border-radius: 0px;
 }
 
 .product-badge.gold {
-  background-color: var(--color-primary);
-  color: var(--color-white);
+  background-color: var(--color-white);
+  color: var(--color-black);
   border: none;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 
@@ -902,7 +910,7 @@ a {
   left: 0;
   width: 100%;
   padding: 15px;
-  background: linear-gradient(to top, rgba(250,249,246,0.9) 0%, rgba(250,249,246,0) 100%);
+  background: linear-gradient(to top, rgba(5,5,5,0.9) 0%, rgba(5,5,5,0) 100%);
   transform: translateY(100%);
   opacity: 0;
   z-index: 10;
@@ -917,19 +925,21 @@ a {
 .btn-quick-add {
   width: 100%;
   padding: 12px;
-  background-color: var(--color-primary);
-  color: var(--bg-primary);
+  background-color: var(--color-white);
+  color: var(--color-black);
   border: none;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   cursor: pointer;
   transition: var(--transition-fast);
+  border-radius: 0px;
 }
 
 .btn-quick-add:hover {
-  background-color: var(--color-secondary);
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }
 
 /* Product Info styling */
@@ -978,8 +988,8 @@ a {
 .swatch {
   width: 12px;
   height: 12px;
-  border-radius: 50%;
-  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 0%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   display: inline-block;
 }
 
@@ -1252,7 +1262,7 @@ a {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(17, 17, 17, 0.4);
+  background-color: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   z-index: 10000;
@@ -1455,28 +1465,32 @@ a {
   padding: 10px 14px;
   font-size: 0.85rem;
   outline: none;
+  color: var(--color-white);
   transition: var(--transition-fast);
+  border-radius: 0px;
 }
 
 .cart-promo-input:focus {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
 }
 
 .btn-promo-apply {
   background-color: var(--color-primary);
-  color: var(--bg-primary);
+  color: var(--color-black);
   border: none;
   padding: 10px 18px;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 700;
   transition: var(--transition-fast);
+  border-radius: 0px;
 }
 
 .btn-promo-apply:hover {
-  background-color: var(--color-secondary);
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }
 
 .promo-status-msg {
@@ -1505,34 +1519,36 @@ a {
   font-family: var(--font-serif);
   font-size: 1.3rem;
   color: var(--color-primary);
-  font-weight: 500;
-  border-top: 1px solid rgba(17, 17, 17, 0.05);
+  font-weight: 700;
+  border-top: 1px solid var(--border-color);
   padding-top: 12px;
   margin-top: 6px;
 }
 
 .discount-highlight {
-  color: #2E7D32;
-  font-weight: 500;
+  color: var(--color-accent);
+  font-weight: 700;
 }
 
 .btn-checkout {
   width: 100%;
   padding: 16px;
   background-color: var(--color-primary);
-  color: var(--bg-primary);
+  color: var(--color-black);
   border: none;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition-fast);
   text-align: center;
+  border-radius: 0px;
 }
 
 .btn-checkout:hover {
-  background-color: var(--color-secondary);
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }
 
 /* --- Accessible Product Detail Modal --- */
@@ -1542,7 +1558,7 @@ a {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(17, 17, 17, 0.5);
+  background-color: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   z-index: 20000;
@@ -1636,8 +1652,8 @@ a {
   transform: translateY(-50%);
   width: 44px;
   height: 44px;
-  border-radius: 50%;
-  background: rgba(250, 249, 246, 0.7);
+  border-radius: 0%;
+  background: rgba(5, 5, 5, 0.7);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--border-color);
@@ -1773,8 +1789,8 @@ a {
 .color-option {
   width: 24px;
   height: 24px;
-  border-radius: 50%;
-  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 0%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   position: relative;
   display: flex;
@@ -1788,8 +1804,8 @@ a {
   position: absolute;
   width: 32px;
   height: 32px;
-  border: 1px solid var(--color-primary);
-  border-radius: 50%;
+  border: 1px solid var(--color-accent);
+  border-radius: 0%;
   opacity: 0;
   transform: scale(0.8);
   transition: var(--transition-fast);
@@ -1851,7 +1867,13 @@ a {
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  font-weight: 500;
+  font-weight: 700;
+  color: var(--color-primary);
+  transition: var(--transition-fast);
+}
+
+.tab-header:hover h4 {
+  color: var(--color-accent);
 }
 
 .tab-header svg {
@@ -1862,6 +1884,11 @@ a {
 
 .tab-header.active svg {
   transform: rotate(180deg);
+  color: var(--color-accent);
+}
+
+.tab-header.active h4 {
+  color: var(--color-accent);
 }
 
 .tab-content {
@@ -2115,7 +2142,7 @@ a {
 }
 
 .filter-btn[data-cms-tab]:hover {
-  background-color: rgba(17, 17, 17, 0.04);
+  background-color: rgba(255, 255, 255, 0.08);
   color: var(--color-primary);
 }
 
@@ -2124,17 +2151,20 @@ a {
   color: var(--bg-primary) !important;
 }
 
-/* Calligraphic Script Accents (Fichu Paris Inspired) */
+/* Calligraphic Script Accents (Fichu Paris Inspired) - Changed to Streetwear Badge */
 .script-accent {
-  font-family: var(--font-script-accent);
-  font-size: clamp(2rem, 3.8vw, 3rem);
-  text-transform: none !important;
-  color: #B48A1F; /* Darker Champagne Gold for higher legibility on light backgrounds */
-  display: block;
-  margin-bottom: 0px;
-  letter-spacing: 0.02em !important;
-  font-weight: 600; /* Bolder script strokes for better text visibility */
-  line-height: 1.1;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase !important;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  display: inline-block;
+  padding: 4px 10px;
+  margin-bottom: 16px;
+  border-radius: 0px;
+  letter-spacing: 0.25em !important;
+  line-height: 1;
 }
 
 
@@ -2209,9 +2239,9 @@ a {
 }
 
 .delivery-tab-btn.active {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
   background-color: var(--bg-primary);
-  box-shadow: 0 4px 12px rgba(17, 17, 17, 0.03);
+  box-shadow: none;
 }
 
 .inpost-search-box {
@@ -2227,27 +2257,31 @@ a {
   outline: none;
   transition: var(--transition-fast);
   background-color: var(--bg-primary);
+  color: var(--color-white);
+  border-radius: 0px;
 }
 
 .inpost-search-box input:focus {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
 }
 
 .inpost-search-box button {
   background-color: var(--color-primary);
-  color: var(--bg-primary);
+  color: var(--color-black);
   border: none;
   padding: 0 16px;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition-fast);
+  border-radius: 0px;
 }
 
 .inpost-search-box button:hover {
-  background-color: var(--color-secondary);
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }
 
 .paczkomat-item {
@@ -2260,7 +2294,7 @@ a {
 }
 
 .paczkomat-item:hover {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
   background-color: var(--bg-secondary);
 }
 
@@ -2302,7 +2336,7 @@ a {
 }
 
 .cms-dropzone:hover, .cms-dropzone.drag-over {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
   background-color: var(--bg-primary);
 }
 
@@ -2322,7 +2356,7 @@ a {
 
 .cms-dropzone:hover svg {
   transform: translateY(-2px);
-  color: var(--color-primary);
+  color: var(--color-accent);
 }
 
 /* ========================================================================
@@ -2433,5 +2467,57 @@ a {
   }
 }
 
+/* ================= MARQUEE TICKER BANNER ================= */
+.marquee-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 35px;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  border-bottom: 1px solid var(--border-color);
+}
 
+.marquee-content {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 25s linear infinite;
+}
 
+.marquee-content span {
+  display: inline-block;
+  padding-right: 2rem;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-25%, 0, 0);
+  }
+}
+
+/* Adjust Site Header Position to sit below the fixed marquee ticker */
+.site-header {
+  top: 35px !important;
+}
+
+.site-header.scrolled {
+  top: 35px !important;
+}
+
+/* Adjust Mobile Nav Drawer top offset to avoid overlay overlap */
+.mobile-nav-drawer {
+  padding-top: calc(35px + 90px) !important;
+}
