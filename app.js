@@ -160,6 +160,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Initialize WooCommerce Clientside Importers
   initWooCommerceImporter();
 
+  // Initialize Information & Legal Modals
+  initInfoModals();
+
   // Initialize Scroll Lock Observer
   initScrollLockObserver();
 
@@ -2506,6 +2509,63 @@ function initWooCommerceImporter() {
   }
 }
 
+// --- INFORMATION & LEGAL MODALS CONTROLLER ---
+function initInfoModals() {
+  const overlay = document.getElementById('infoModalOverlay');
+  const closeBtn = document.getElementById('infoModalCloseBtn');
+  if (!overlay || !closeBtn) return;
+
+  const contentMap = {
+    linkWaveGuide: 'modalContentWaveGuide',
+    linkSizeChart: 'modalContentSizeChart',
+    linkDelivery: 'modalContentDelivery',
+    linkTerms: 'modalContentTerms',
+    linkPrivacy: 'modalContentPrivacy'
+  };
+
+  function openModal(contentId) {
+    Object.values(contentMap).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    const target = document.getElementById(contentId);
+    if (target) {
+      target.style.display = 'block';
+      overlay.classList.add('active');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+    }
+  }
+
+  function closeModal() {
+    overlay.classList.remove('active');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('no-scroll');
+  }
+
+  Object.entries(contentMap).forEach(([linkId, contentId]) => {
+    const linkEl = document.getElementById(linkId);
+    if (linkEl) {
+      linkEl.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal(contentId);
+      });
+    }
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) {
+      closeModal();
+    }
+  });
+}
+
 // --- Scroll Lock Observer ---
 // Monitors overlay states and dynamically locks background body scroll to prevent page shift
 function initScrollLockObserver() {
@@ -2515,7 +2575,8 @@ function initScrollLockObserver() {
     'productModal',
     'adminLoginModal',
     'adminDashboardOverlay',
-    'cmsProductDrawer'
+    'cmsProductDrawer',
+    'infoModalOverlay'
   ];
 
   const updateBodyScroll = () => {
