@@ -341,21 +341,24 @@ function bindEventListeners() {
 }
 
 // ========================================================================
-// I18N DICTIONARY & MULTI-LANGUAGE TRANSLATIONS
+// I18N DICTIONARY & MULTI-LANGUAGE TRANSLATIONS (100% FULL COVERAGE)
 // ========================================================================
 const I18N = {
   PL: {
+    nav: { all: 'Wszystko', silk: 'Jedwabne', satin: 'Satynowe', velvet: 'Welurowe', seasonal: 'Sezonowe', accessories: 'Akcesoria', about: 'O Nas' },
     heroTitle: 'Ręcznie szyte duragi.<br><span style="color: #D9A87E; font-style: italic;">Bo styl rodzi się na głowie</span>.',
     heroSubtitle: 'Jedyne duragi szyte w Polsce',
     heroAccent: '[ Duragi Najlepszej Jakości ]',
     heroCta: 'Odkryj kolekcję',
     marquee: 'Wysyłamy z Warszawy w 1 dzień • kup dwa a trzeci otrzymasz gratis • Darmowa wysyłka • ręcznie szyte duragi • odbiór osobisty w warszawie • ',
-    filterAll: 'Wszystko',
-    filterSilk: 'Jedwabne',
-    filterSatin: 'Satynowe',
-    filterVelvet: 'Welurowe',
-    filterSeasonal: 'Sezonowe materiały',
-    filterAccessories: 'Akcesoria',
+    trust: {
+      shippingTitle: 'Wysyłka 1–2 Dni', shippingDesc: 'Express z Warszawy',
+      deliveryTitle: 'Darmowa Dostawa', deliveryDesc: 'InPost & Kurier w PL dla każdego zamówienia',
+      returnsTitle: '14 Dni na Zwrot', returnsDesc: 'Gwarancja bezproblemowego zwrotu',
+      pickupTitle: 'Odbiór w Warszawie', pickupDesc: 'ul. Włodarzewska 4 lub Centrum'
+    },
+    catalog: { tag: '[ Durag Activity ]', title: 'Unikalny styl' },
+    filterAll: 'Wszystko', filterSilk: 'Jedwabne', filterSatin: 'Satynowe', filterVelvet: 'Welurowe', filterSeasonal: 'Sezonowe materiały', filterAccessories: 'Akcesoria',
     addToCart: 'Dodaj do koszyka',
     dealBadge: '2+1 Gratis',
     emptyCatalog: 'Brak dostępnych produktów w wybranej kategorii.',
@@ -366,20 +369,76 @@ const I18N = {
       velvet: 'Mięsisty, głęboko teksturowany welur o wyrazistej strukturze, idealny do stabilnej kompresji fal.',
       seasonal: 'Wyjątkowe tkaniny takie jak len, cupro i krepa satynowa Mirella stworzone na różne pory roku.',
       accessories: 'Szczotki wave brush z naturalnego włosia dzika, wave capy i niezbędne akcesoria do pielęgnacji 360 waves.'
+    },
+    lookbook: {
+      tag: '[ pure silk 19 momme ]',
+      title: 'Jedwab w Mieście.',
+      p1: 'W miejskim rytmie nasz Durag Milanówek to coś więcej niż dodatek — chroni, podkreśla styl i wyróżnia nas na tle innych. Wykonany z naturalnego jedwabiu o gramaturze 19 momme — oznaczającej wysoką gęstość, trwałość i jakość materiału — łączy lekkość z wyjątkową wytrzymałością, a jego gładka struktura ogranicza tarcie, pomaga chronić włosy przed łamaniem i puszeniem oraz jest delikatna dla skóry głowy.',
+      p2: 'Jedwabny durag to unikatowy modowy hidden gem, który w przeciwieństwie do chusty czy czepka wyróżnia Cię na tle innych zarówno jakością wykonania, jak i subtelną elegancją w stylizacji. Jego lekka tkanina osłania głowę przed wiatrem i promieniowaniem UV, a niepodrabialny, głęboki połysk zmienia światło miasta w część stylizacji. To jedyny w Polsce durag wykonany z prawdziwego jedwabiu — bo styl rodzi się na głowie.',
+      btn: 'Sprawdź'
+    },
+    philosophy: {
+      tag: '[ Standardy rzemiosła ]',
+      title: 'Filozofia naszych materiałów',
+      silkTitle: 'Jedwab stworzony dla włosów',
+      silkDesc: 'Użyta przy produkcji Durag Milanówek satyna jedwabna ma naturalnie gładką powierzchnię ograniczającą tarcie, dzięki czemu pozwala chronić włosy przed puszeniem, łamaniem i nadmiernym przesuszaniem. Delikatny dla skóry głowy materiał pozwala włosom zachować naturalną miękkość i zdrowy wygląd, nie odbierając nam komfortu nawet podczas dłuższego noszenia. W przeciwieństwie do syntetycznych tkanin jedwab nie tylko otula włosy, lecz także pomaga ograniczać utratę ich naturalnego nawilżenia. Zastosowany tutaj jedwab o gramaturze 19 momme jest odpowiednio lekki i elastyczny a zarazem odpowiednio gęsty oraz trwały.',
+      satinTitle: 'Satyna stworzona dla codzienności',
+      satinDesc: 'Satyna poliestrowa to materiał, który idealnie łączy gładkość, lekkość i trwałość — właśnie dlatego tak dobrze sprawdza się w szyciu duragów i to właśnie z niej korzysta zdecydowana większość klientów. Podobnie jak jedwab satyna poliestrowa jest śliska, przyjemna w dotyku co ogranicza tarcie, pomagając zmniejszyć puszenie i chronić włosy przed niepotrzebnym łamaniem. W przeciwieństwie do naturalnego jedwabiu jest materiałem syntetycznym, bardziej odpornym na codzienne użytkowanie i znacznie łatwiejszym w pielęgnacji oraz tańszym, a równocześnie zachowującym przy tym charakterystyczną gładkość oraz połysk. Dobrze dopasowuje się do głowy, utrzymuje swój kształt i szybko schnie, dzięki czemu durag pozostaje wygodnym elementem codziennego stylu.',
+      velvetTitle: 'Welur na co dzień',
+      velvetDesc: 'Welur poliestrowy to miękki, gęsty materiał o charakterystycznej, delikatnie włoskowatej powierzchni, która nadaje duragowi wyrazistą strukturę i głębię koloru. Wykonany z włókien poliestrowych jest trwały, odporny na częste użytkowanie. Jego przyjemna w dotyku faktura sprawia, że materiał dobrze układa się na głowie, a jednocześnie jest bardziej mięsisty i otulający niż lekki jedwab czy gładka satyna. Welur poliestrowy nie gniecie się łatwo, szybko schnie i jest prosty w codziennej pielęgnacji.',
+      seasonalTitle: 'Sezonowe materiały',
+      seasonalDesc: 'Nie każdy materiał sprawdza się tak samo o każdej porze roku. Dlatego tworzymy serię duragów wykonanych z sezonowych tkanin, które odpowiadają na zmieniającą się pogodę, temperaturę i sposób noszenia. W tej kolekcji znalazł się Durag Bydgoszcz wykonany z cupro — lekkiej, gładkiej i przyjemnej w dotyku tkaniny o subtelnym połysku, Durag Żyrardów uszyty z naturalnego, przewiewnego lnu oraz Durag Stalowa Wola wykonany z krepy satynowej.'
+    },
+    about: {
+      tag: '[ Warsaw Durag Store ]',
+      title: 'O nas',
+      p1: 'Warsaw Durag Store powstał w 2020 roku z potrzeby stworzenia miejsca, które przybliży duragi polskiej społeczności i pokaże ich różnorodność — nie tylko jako elementu stylu, ale również praktycznego dodatku z własną historią i charakterem. Od tego czasu stale rozwijamy naszą ofertę, poszerzając ją o kolejne materiały, kolory i modele, szukając nowych sposobów na pokazanie, czym może być współczesny durag.',
+      p2: 'Jesteśmy małym butikiem prowadzonym przez dwóch braci, którym często pomagają również nasi znajomi. Dzięki temu każdy produkt przechodzi przez nasze ręce — od wyboru materiału, przez przygotowanie zamówienia, aż po kontakt z klientem. Dokładamy wszelkich starań, aby każda klientka i każdy klient otrzymywali nie tylko świetny produkt, lecz także dobrą i indywidualną obsługę.',
+      p3: 'Chcemy, aby Warsaw Durag Store był wsparciem dla artystów, sportowców i wszystkich osób, które poprzez swój styl wyrażają siebie, dlatego chętnie nawiązujemy z nimi współprace - robisz coś w sporcie, modzie lub muzyce pisz do nas po paczkę niespodziankę.',
+      p4: 'Na razie nie prowadzimy własnego sklepu stacjonarnego, jednak nasze duragi można odebrać osobiście przy ul. Włodarzewskiej 4 lub w centrum Warszawy — po wcześniejszym umówieniu. Z informacji praktycznych to najłatwiej dorwać nas przez Instagram @warsawduragstore, dla oldschoolowców mamy mail support@warsawduragstore.pl.',
+      btn: 'Więcej o nas',
+      thumb1: 'Założyciele', thumb2: 'Packaging & Rzemiosło', thumb3: 'Opinie na Insta',
+      cap1: 'Kuba & Założyciele Warsaw Durag Store', cap2: 'Ręcznie szyte z jedwabiu 19 Momme', cap3: 'Opinie ze społeczności @warsawduragstore'
+    },
+    newsletter: {
+      title: 'Dołącz do Klubu WDS',
+      desc: 'Zapisz się do naszego klubu. Zyskaj 10% rabatu na pierwsze zakupy, wczesny dostęp do limitowanych kolekcji oraz poradników 360 waves.',
+      placeholder: 'Twój adres e-mail',
+      btn: 'Dołącz'
+    },
+    footer: {
+      aboutText: 'Jedyne duragi szyte w Polsce. Warszawski brand rzemieślniczy dostarczający najwyższej jakości duragi i akcesoria.',
+      shopTitle: 'Sklep', infoTitle: 'Informacje', pickupTitle: 'Odbiór Osobisty',
+      copyright: '© 2026 Warsaw Durag Store. Jedyne duragi szyte w Polsce. Wszelkie prawa zastrzeżone.'
+    },
+    cart: {
+      title: 'Twój Koszyk',
+      emptyText: 'Twój koszyk jest pusty.',
+      subtotalLabel: 'Suma częściowa:',
+      discountLabel: 'Rabat',
+      shippingLabel: 'Dostawa:',
+      shippingFree: 'Darmowa (EU Express)',
+      totalLabel: 'Łącznie:',
+      couponPlaceholder: 'Kod rabatowy (np. WARSAW10)',
+      couponApplyBtn: 'Użyj',
+      checkoutBtn: 'Przejdź do dostawy'
     }
   },
   EN: {
+    nav: { all: 'All Products', silk: 'Silk Durags', satin: 'Satin Durags', velvet: 'Velvet Durags', seasonal: 'Seasonal', accessories: 'Accessories', about: 'About Us' },
     heroTitle: 'Handcrafted Luxury Durags.<br><span style="color: #D9A87E; font-style: italic;">Style begins at the crown</span>.',
     heroSubtitle: 'The Only Durags Handcrafted in Poland',
     heroAccent: '[ Premium Quality Durags ]',
     heroCta: 'Explore Collection',
     marquee: 'Express 24h shipping from Warsaw • Buy 2 Get 1 Free • Free EU Shipping • Handcrafted in Warsaw • Local pickup available • ',
-    filterAll: 'All Products',
-    filterSilk: 'Silk Durags',
-    filterSatin: 'Satin Durags',
-    filterVelvet: 'Velvet Durags',
-    filterSeasonal: 'Seasonal Fabrics',
-    filterAccessories: 'Accessories',
+    trust: {
+      shippingTitle: '1–2 Days Dispatch', shippingDesc: 'Express from Warsaw to EU',
+      deliveryTitle: 'Free EU Delivery', deliveryDesc: 'Free Tracked Shipping on All Orders',
+      returnsTitle: '14 Days Returns', returnsDesc: 'Hassle-Free Return Guarantee',
+      pickupTitle: 'Warsaw Showroom', pickupDesc: 'Włodarzewska 4 or City Centre'
+    },
+    catalog: { tag: '[ Durag Activity ]', title: 'Unique Style' },
+    filterAll: 'All Products', filterSilk: 'Silk Durags', filterSatin: 'Satin Durags', filterVelvet: 'Velvet Durags', filterSeasonal: 'Seasonal Fabrics', filterAccessories: 'Accessories',
     addToCart: 'Add to Cart',
     dealBadge: 'Buy 2 Get 1 Free',
     emptyCatalog: 'No products available in this category.',
@@ -390,20 +449,76 @@ const I18N = {
       velvet: 'Plush, deeply textured velvet providing optimal compression, weight and rich aesthetic depth.',
       seasonal: 'Unique breathable textiles including natural linen, cupro, and crepe satin crafted for each season.',
       accessories: 'Natural boar bristle wave brushes, compression caps and essential 360 wave accessories.'
+    },
+    lookbook: {
+      tag: '[ pure silk 19 momme ]',
+      title: 'Silk in the City.',
+      p1: 'In the fast-paced city rhythm, our Milanówek Durag is more than an accessory — it protects, elevates your style, and sets you apart. Handcrafted from pure 19 Momme mulberry silk, it pairs featherlight breathability with lasting durability. Its ultra-smooth surface eliminates friction, prevents breakage and frizz, and is supremely gentle on the scalp.',
+      p2: 'A genuine silk durag is a true fashion hidden gem. Unlike basic caps or bandanas, it distinguishes your silhouette with artisanal precision and understated luxury. Its breathable weave shields you from UV rays and wind, turning ambient light into a subtle gleam. Poland’s only authentic silk durag — because style begins at the crown.',
+      btn: 'Discover Silk'
+    },
+    philosophy: {
+      tag: '[ Craftsmanship Standards ]',
+      title: 'Philosophy of Our Materials',
+      silkTitle: 'Silk Crafted for Hair Protection',
+      silkDesc: 'Our Milanówek silk satin has a naturally friction-free surface that locks in moisture and guards against hair breakage, split ends, and frizz. Hypoallergenic and gentle, it preserves hair texture while keeping you comfortable all day and night. Grade-6A 19 Momme silk provides the ideal balance of elasticity, density, and resilience.',
+      satinTitle: 'Satin Engineered for Daily Wear',
+      satinDesc: 'Premium satin merges smoothness, durability, and lightweight comfort. It glides effortlessly over waves to minimize frizz while delivering high durability and low maintenance at an accessible price. It holds compression firmly and dries quickly, making it a reliable streetwear staple.',
+      velvetTitle: 'Velvet for Deep Compression & Form',
+      velvetDesc: 'Plush, heavyweight velvet features a rich nap that delivers remarkable color depth and solid wave compression. Durable and soft to the touch, it adds a structured, tactile presence to any outfit while keeping hair perfectly set.',
+      seasonalTitle: 'Seasonal Natural Textiles',
+      seasonalDesc: 'Different seasons demand different fabrics. Our seasonal collection features lightweight breathable Cupro (Bydgoszcz), natural airy Linen (Żyrardów), and lustrous Satin Crepe (Stalowa Wola).'
+    },
+    about: {
+      tag: '[ Warsaw Durag Store ]',
+      title: 'About Us',
+      p1: 'Warsaw Durag Store was founded in 2020 to introduce premium durags to the European streetwear community, showcasing them both as a timeless styling piece and an essential hair care ritual.',
+      p2: 'We are an independent boutique atelier run by two brothers and close friends. Every piece passes through our hands — from fabric inspection and precision cutting to hand-packaging and customer support.',
+      p3: 'We actively collaborate with athletes, artists, and creators who express their individuality through style. Reach out if you represent music, sports, or fashion for an exclusive gift pack.',
+      p4: 'While we operate online across Europe, local pickups are available in Warsaw (ul. Włodarzewska 4 or City Centre) by appointment. Connect with us on Instagram @warsawduragstore or email support@warsawduragstore.pl.',
+      btn: 'Read Full Story',
+      thumb1: 'Founders', thumb2: 'Packaging & Craft', thumb3: 'IG Community',
+      cap1: 'Kuba & Co-Founders in Warsaw', cap2: 'Handcrafted with 19 Momme Silk', cap3: 'Real reviews from @warsawduragstore'
+    },
+    newsletter: {
+      title: 'Join the WDS Club',
+      desc: 'Subscribe to our private circle. Receive 10% off your first order, private drop alerts, and 360 wave mastery guides.',
+      placeholder: 'Enter your email address',
+      btn: 'Subscribe'
+    },
+    footer: {
+      aboutText: 'The only durags handcrafted in Poland. Warsaw luxury atelier providing supreme quality durags and accessories.',
+      shopTitle: 'Shop', infoTitle: 'Information', pickupTitle: 'Local Pickup',
+      copyright: '© 2026 Warsaw Durag Store. Handcrafted in Poland. All rights reserved.'
+    },
+    cart: {
+      title: 'Your Shopping Bag',
+      emptyText: 'Your shopping bag is currently empty.',
+      subtotalLabel: 'Subtotal:',
+      discountLabel: 'Discount',
+      shippingLabel: 'Shipping:',
+      shippingFree: 'Free (EU Express)',
+      totalLabel: 'Total:',
+      couponPlaceholder: 'Discount code (e.g. WARSAW10)',
+      couponApplyBtn: 'Apply',
+      checkoutBtn: 'Proceed to Checkout'
     }
   },
   CZ: {
+    nav: { all: 'Všechny', silk: 'Hedvábné', satin: 'Saténové', velvet: 'Sametové', seasonal: 'Sezónní', accessories: 'Doplňky', about: 'O nás' },
     heroTitle: 'Ručně šité prémiové duragy.<br><span style="color: #D9A87E; font-style: italic;">Styl začíná na hlavě</span>.',
     heroSubtitle: 'Jediné duragy šité v Polsku',
     heroAccent: '[ Duragy nejvyšší kvality ]',
     heroCta: 'Objevte kolekci',
     marquee: 'Expresní odeslání z Varšavy do 24h • Kupte 2 Získejte 1 Zdarma • Doprava zdarma v EU • Ruční výroba • ',
-    filterAll: 'Všechny produkty',
-    filterSilk: 'Hedvábné duragy',
-    filterSatin: 'Saténové duragy',
-    filterVelvet: 'Sametové duragy',
-    filterSeasonal: 'Sezónní materiály',
-    filterAccessories: 'Doplňky',
+    trust: {
+      shippingTitle: 'Odeslání 1–2 Dny', shippingDesc: 'Expres z Varšavy do celé EU',
+      deliveryTitle: 'Doprava Zdarma', deliveryDesc: 'Doručení zdarma na každou objednávku',
+      returnsTitle: '14 Dní na Vrácení', returnsDesc: 'Záruka bezstarostného vrácení',
+      pickupTitle: 'Osobní Odběr', pickupDesc: 'Varšava, ul. Włodarzewska 4 / Centrum'
+    },
+    catalog: { tag: '[ Durag Activity ]', title: 'Jedinečný styl' },
+    filterAll: 'Všechny produkty', filterSilk: 'Hedvábné duragy', filterSatin: 'Saténové duragy', filterVelvet: 'Sametové duragy', filterSeasonal: 'Sezónní materiály', filterAccessories: 'Doplňky',
     addToCart: 'Přidat do košíku',
     dealBadge: '2+1 Zdarma',
     emptyCatalog: 'Žádné produkty v této kategorii.',
@@ -414,20 +529,76 @@ const I18N = {
       velvet: 'Hustý, měkký samet s hlubokou strukturou pro pevnou a stabilní kompresi vln 360.',
       seasonal: 'Sezónní přírodní len, cupro a saténový krep přizpůsobené měnícímu se počasí.',
       accessories: 'Kartáče z kančích štětin na vlny, wave capy a prémiové doplňky pro péči o vlny.'
+    },
+    lookbook: {
+      tag: '[ pure silk 19 momme ]',
+      title: 'Hedvábí ve Městě.',
+      p1: 'V městském tempu je náš Durag Milanówek víc než jen doplněk — chrání vlasy, podtrhuje styl a odlišuje vás od ostatních. Je vyrobený z pravého přírodního morušového hedvábí 19 Momme.',
+      p2: 'Pravý hedvábný durag představuje módní hidden gem spojující řemeslnou dokonalost s nenucenou elegancí. Jediný v Polsku šitý durag z pravého hedvábí.',
+      btn: 'Vyzkoušet'
+    },
+    philosophy: {
+      tag: '[ Řemeslné standardy ]',
+      title: 'Filozofie našich materiálů',
+      silkTitle: 'Hedvábí pro ochranu vlasů',
+      silkDesc: 'Přírodní hedvábí 19 Momme s dokonale hladkým povrchem chrání vlasy před krepatěním a lámáním. Udržuje přirozenou vlhkost.',
+      satinTitle: 'Satén pro každodenní styl',
+      satinDesc: 'Kvalitní polyesterový satén spojuje lehkost, odolnost a charakteristický lesk pro každodenní nošení.',
+      velvetTitle: 'Samet pro hlubokou kompresi',
+      velvetDesc: 'Měkký, hustý samet s hlubokou strukturou pro pevnou kompresi a luxusní vzhled.',
+      seasonalTitle: 'Sezónní přírodní látky',
+      seasonalDesc: 'Látky přizpůsobené počasí: prodyšný len (Żyrardów), lehké cupro (Bydgoszcz) a saténový krep.'
+    },
+    about: {
+      tag: '[ Warsaw Durag Store ]',
+      title: 'O nás',
+      p1: 'Warsaw Durag Store vznikl v roce 2020 jako rodinný butik s cílem přinést prémiové duragy do střední Evropy.',
+      p2: 'Jsme malý butik vedený dvěma bratry. Každý kus projde našima rukama od výběru látky po zabalení.',
+      p3: 'Podporujeme umělce a sportovce vyjadřující svůj osobitý styl.',
+      p4: 'Osobní odběr ve Varšavě po domluvě. Kontaktujte nás na IG @warsawduragstore nebo support@warsawduragstore.pl.',
+      btn: 'Více o nás',
+      thumb1: 'Zakladatelé', thumb2: 'Balení a řemeslo', thumb3: 'Recenze na IG',
+      cap1: 'Kuba & Zakladatelé Warsaw Durag Store', cap2: 'Ručně šité z hedvábí 19 Momme', cap3: 'Reakce komunity na IG'
+    },
+    newsletter: {
+      title: 'Připojte se k WDS Klubu',
+      desc: 'Získejte 10% slevu na první nákup a přednostní přístup k limitovaným edicím.',
+      placeholder: 'Váš e-mail',
+      btn: 'Odebírat'
+    },
+    footer: {
+      aboutText: 'Jediné duragy ručně šité v Polsku. Varšavská prémiová řemeslná značka.',
+      shopTitle: 'Obchod', infoTitle: 'Informace', pickupTitle: 'Osobní odběr',
+      copyright: '© 2026 Warsaw Durag Store. Ruční výroba v Polsku. Všechna práva vyhrazena.'
+    },
+    cart: {
+      title: 'Váš Košík',
+      emptyText: 'Váš košík je prázdný.',
+      subtotalLabel: 'Mezisoučet:',
+      discountLabel: 'Sleva',
+      shippingLabel: 'Doprava:',
+      shippingFree: 'Zdarma (EU Express)',
+      totalLabel: 'Celkem:',
+      couponPlaceholder: 'Slevový kód (např. WARSAW10)',
+      couponApplyBtn: 'Použít',
+      checkoutBtn: 'Přejít k objednávce'
     }
   },
   LT: {
+    nav: { all: 'Visi', silk: 'Šilkiniai', satin: 'Satininiai', velvet: 'Velūriniai', seasonal: 'Sezoniniai', accessories: 'Aksesuarai', about: 'Apie mus' },
     heroTitle: 'Rankų darbo duragai.<br><span style="color: #D9A87E; font-style: italic;">Stilius prasideda nuo galvos</span>.',
     heroSubtitle: 'Vieninteliai duragai, siuvami Lenkijoje',
     heroAccent: '[ Aukščiausios kokybės duragai ]',
     heroCta: 'Atraskite kolekciją',
     marquee: 'Greitas išsiuntimas iš Varšuvos per 24 val. • Pirkite 2 Gaukite 1 Nemokamai • Nemokamas pristatymas ES • ',
-    filterAll: 'Visi produktai',
-    filterSilk: 'Šilkiniai duragai',
-    filterSatin: 'Satininiai duragai',
-    filterVelvet: 'Velūriniai duragai',
-    filterSeasonal: 'Sezoniniai audiniai',
-    filterAccessories: 'Aksesuarai',
+    trust: {
+      shippingTitle: 'Siuntimas 1–2 d.', shippingDesc: 'Ekspresas iš Varšuvos į visą ES',
+      deliveryTitle: 'Nemokamas Pristatymas', deliveryDesc: 'Nemokamas siuntimas visiems užsakymams',
+      returnsTitle: '14 Dienų Grąžinimas', returnsDesc: 'Garantuotas sklandus grąžinimas',
+      pickupTitle: 'Atsiėmimas Varšuvoje', pickupDesc: 'ul. Włodarzewska 4 arba Centras'
+    },
+    catalog: { tag: '[ Durag Activity ]', title: 'Unikalus stilius' },
+    filterAll: 'Visi produktai', filterSilk: 'Šilkiniai duragai', filterSatin: 'Satininiai duragai', filterVelvet: 'Velūriniai duragai', filterSeasonal: 'Sezoniniai audiniai', filterAccessories: 'Aksesuarai',
     addToCart: 'Įdėti į krepšelį',
     dealBadge: '2+1 Nemokamai',
     emptyCatalog: 'Šioje kategorijoje produktų nėra.',
@@ -438,20 +609,76 @@ const I18N = {
       velvet: 'Tvirtas velūras su gilia tekstūra, puikiai tinkantis patikimai kompresijai.',
       seasonal: 'Sezoniniai audiniai, tokie kaip linas, cupro ir satino krepšas įvairiems metų laikams.',
       accessories: 'Natūralių šerno šerių bangų šepečiai ir būtini 360 bangų priežiūros priedai.'
+    },
+    lookbook: {
+      tag: '[ pure silk 19 momme ]',
+      title: 'Šilkas Mieste.',
+      p1: 'Miesto ritmu mūsų „Milanówek“ duragas yra daugiau nei stiliaus detalė — jis saugo plaukus, mažina trintį ir pabrėžia individualumą. Siūtas iš 100% natūralaus 19 Momme šilko.',
+      p2: 'Tikras šilkinis duragas išskiria jus subtilia elegancija ir nepriekaištinga kokybe.',
+      btn: 'Išbandyti'
+    },
+    philosophy: {
+      tag: '[ Meistrystės standartai ]',
+      title: 'Mūsų medžiagų filosofija',
+      silkTitle: 'Šilkas plaukų apsaugai',
+      silkDesc: 'Natūralus 19 Momme šilkas su glotniu paviršiumi apsaugo nuo šiaušimosi ir lūžinėjimo.',
+      satinTitle: 'Satinas kasdieniam stiliui',
+      satinDesc: 'Aukštos kokybės satinas užtikrina patvarumą, blizgesį ir patogumą.',
+      velvetTitle: 'Velūras patikimai fiksacijai',
+      velvetDesc: 'Tankus velūras suteikia sodrią tekstūrą ir patikimą 360 bangų kompresiją.',
+      seasonalTitle: 'Sezoniniai natūralūs audiniai',
+      seasonalDesc: 'Linas (Żyrardów), cupro (Bydgoszcz) ir krepinis satinas skirtingiems sezonams.'
+    },
+    about: {
+      tag: '[ Warsaw Durag Store ]',
+      title: 'Apie mus',
+      p1: 'Warsaw Durag Store įkurtas 2020 m. kaip dviejų brolių butikas, siuvantis rankų darbo duragus.',
+      p2: 'Kiekvienas gaminys kruopščiai paruošiamas ir supakuojamas Varšuvoje.',
+      p3: 'Mielai bendradarbiaujame su menininkais ir sportininkais.',
+      p4: 'Atsiėmimas Varšuvoje iš anksto susitarus arba siuntimas paštomatu. IG @warsawduragstore.',
+      btn: 'Daugiau apie mus',
+      thumb1: 'Įkūrėjai', thumb2: 'Pakuotė ir darbas', thumb3: 'Atsiliepimai IG',
+      cap1: 'Kuba ir įkūrėjai Varšuvoje', cap2: 'Rankų darbas iš 19 Momme šilko', cap3: 'Bendruomenės atsiliepimai'
+    },
+    newsletter: {
+      title: 'Prisijunkite prie WDS Klubo',
+      desc: 'Gaukite 10% nuolaidą pirmajam užsakymui ir išskirtinę prieigą prie naujienų.',
+      placeholder: 'Jūsų el. pašto adresas',
+      btn: 'Prenumeruoti'
+    },
+    footer: {
+      aboutText: 'Vieninteliai duragai, siuvami Lenkijoje. Varšuvos meistrystės prekės ženklas.',
+      shopTitle: 'Parduotuvė', infoTitle: 'Informacija', pickupTitle: 'Atsiėmimas',
+      copyright: '© 2026 Warsaw Durag Store. Siūta Lenkijoje. Visos teisės saugomos.'
+    },
+    cart: {
+      title: 'Jūsų Krepšelis',
+      emptyText: 'Jūsų krepšelis tuščias.',
+      subtotalLabel: 'Tarpinė suma:',
+      discountLabel: 'Nuolaida',
+      shippingLabel: 'Pristatymas:',
+      shippingFree: 'Nemokamas (EU Express)',
+      totalLabel: 'Iš viso:',
+      couponPlaceholder: 'Nuolaidos kodas (pvz. WARSAW10)',
+      couponApplyBtn: 'Pritaikyti',
+      checkoutBtn: 'Apmokėti užsakymą'
     }
   },
   DE: {
+    nav: { all: 'Alle', silk: 'Seide', satin: 'Satin', velvet: 'Samt', seasonal: 'Saisonal', accessories: 'Zubehör', about: 'Über uns' },
     heroTitle: 'Handgefertigte Luxus-Durags.<br><span style="color: #D9A87E; font-style: italic;">Stil beginnt am Kopf</span>.',
     heroSubtitle: 'Die einzigen in Polen handgefertigten Durags',
     heroAccent: '[ Höchste Qualität ]',
     heroCta: 'Kollektion entdecken',
     marquee: 'Express-Versand aus Warschau in 24h • Nimm 3 Zahle 2 • Kostenloser EU-Versand • Handarbeit • ',
-    filterAll: 'Alle Produkte',
-    filterSilk: 'Seidige Durags',
-    filterSatin: 'Satin Durags',
-    filterVelvet: 'Samt Durags',
-    filterSeasonal: 'Saisonale Stoffe',
-    filterAccessories: 'Zubehör',
+    trust: {
+      shippingTitle: 'Versand in 1–2 Tagen', shippingDesc: 'Express aus Warschau nach ganz Europa',
+      deliveryTitle: 'Kostenloser Versand', deliveryDesc: 'Kostenlose Lieferung für alle Bestellungen',
+      returnsTitle: '14 Tage Rückgabe', returnsDesc: 'Garantierte unkomplizierte Rückgabe',
+      pickupTitle: 'Abholung in Warschau', pickupDesc: 'ul. Włodarzewska 4 / Zentrum'
+    },
+    catalog: { tag: '[ Durag Activity ]', title: 'Einzigartiger Stil' },
+    filterAll: 'Alle Produkte', filterSilk: 'Seidige Durags', filterSatin: 'Satin Durags', filterVelvet: 'Samt Durags', filterSeasonal: 'Saisonale Stoffe', filterAccessories: 'Zubehör',
     addToCart: 'In den Warenkorb',
     dealBadge: '3 für 2',
     emptyCatalog: 'Keine Produkte in dieser Kategorie verfügbar.',
@@ -462,20 +689,76 @@ const I18N = {
       velvet: 'Edler Samt mit dichter Struktur für optimale Kompression und Halt.',
       seasonal: 'Besondere saisonale Stoffe wie Leinen, Cupro und Satin-Krepp.',
       accessories: 'Wave-Bürsten aus echten Wildschweinborsten und Zubehör für 360 Waves.'
+    },
+    lookbook: {
+      tag: '[ pure silk 19 momme ]',
+      title: 'Seide in der Stadt.',
+      p1: 'Im urbanen Rhythmus ist unser Milanówek Durag mehr als nur ein Accessoire – er schützt das Haar und setzt ein modisches Statement. Gefertigt aus reiner 19 Momme Maulbeerseide.',
+      p2: 'Ein echter Seiden-Durag ist ein Mode-Highlight mit zeitloser Eleganz. Der einzige echte Seidendurag aus Polen.',
+      btn: 'Entdecken'
+    },
+    philosophy: {
+      tag: '[ Handwerksstandards ]',
+      title: 'Philosophie unserer Materialien',
+      silkTitle: 'Seide für perfekten Haarschutz',
+      silkDesc: 'Reine 19 Momme Maulbeerseide reduziert Reibung, verhindert Haarbruch und bewahrt die Feuchtigkeit.',
+      satinTitle: 'Satin für den täglichen Luxus',
+      satinDesc: 'Geschmeidiger Satin kombiniert Strapazierfähigkeit mit edlem Glanz für jeden Tag.',
+      velvetTitle: 'Samt für starke Kompression',
+      velvetDesc: 'Dichter, weicher Samt für optimale Wave-Kompression und satten Farbton.',
+      seasonalTitle: 'Saisonale Naturstoffe',
+      seasonalDesc: 'Leinen (Żyrardów), Cupro (Bydgoszcz) und Seidenkrepp für jedes Wetter.'
+    },
+    about: {
+      tag: '[ Warsaw Durag Store ]',
+      title: 'Über uns',
+      p1: 'Warsaw Durag Store wurde 2020 von zwei Brüdern in Warschau gegründet, um hochwertige Durags in Handarbeit zu fertigen.',
+      p2: 'Jedes Stück wird in Warschau sorgfältig von Hand geprüft und verpackt.',
+      p3: 'Wir unterstützen Kreative, Sportler und Musiker in ganz Europa.',
+      p4: 'Persönliche Abholung in Warschau nach Vereinbarung oder Expressversand. IG @warsawduragstore.',
+      btn: 'Mehr über uns',
+      thumb1: 'Gründer', thumb2: 'Verpackung & Handwerk', thumb3: 'Instagram Feedback',
+      cap1: 'Kuba & Gründer in Warschau', cap2: 'Handgefertigt aus 19 Momme Seide', cap3: 'Kundenstimmen auf Instagram'
+    },
+    newsletter: {
+      title: 'WDS Club beitreten',
+      desc: 'Erhalten Sie 10% Rabatt auf Ihre erste Bestellung und exklusiven Zugang zu limitierten Drops.',
+      placeholder: 'Ihre E-Mail-Adresse',
+      btn: 'Anmelden'
+    },
+    footer: {
+      aboutText: 'Die einzigen in Polen handgefertigten Durags. Warschauer Manufaktur für Luxus-Durags.',
+      shopTitle: 'Shop', infoTitle: 'Informationen', pickupTitle: 'Abholung',
+      copyright: '© 2026 Warsaw Durag Store. Handgefertigt in Polen. Alle Rechte vorbehalten.'
+    },
+    cart: {
+      title: 'Warenkorb',
+      emptyText: 'Ihr Warenkorb ist leer.',
+      subtotalLabel: 'Zwischensumme:',
+      discountLabel: 'Rabatt',
+      shippingLabel: 'Versand:',
+      shippingFree: 'Kostenlos (EU Express)',
+      totalLabel: 'Gesamtsumme:',
+      couponPlaceholder: 'Gutscheincode (z.B. WARSAW10)',
+      couponApplyBtn: 'Einlösen',
+      checkoutBtn: 'Zur Kasse'
     }
   },
   FR: {
+    nav: { all: 'Tous', silk: 'Soie', satin: 'Satin', velvet: 'Velours', seasonal: 'Saison', accessories: 'Accessoires', about: 'À propos' },
     heroTitle: 'Durags de luxe faits main.<br><span style="color: #D9A87E; font-style: italic;">Le style commence par la tête</span>.',
     heroSubtitle: 'Les seuls durags confectionnés en Pologne',
     heroAccent: '[ Qualité Supérieure ]',
     heroCta: 'Découvrir la collection',
     marquee: 'Expédition express depuis Varsovie en 24h • 2 achetés 1 offert • Livraison gratuite en Europe • ',
-    filterAll: 'Tous les produits',
-    filterSilk: 'Durags en Soie',
-    filterSatin: 'Durags en Satin',
-    filterVelvet: 'Durags en Velours',
-    filterSeasonal: 'Matières de Saison',
-    filterAccessories: 'Accessoires',
+    trust: {
+      shippingTitle: 'Expédition 1–2 Jours', shippingDesc: 'Express depuis Varsovie vers toute l\'Europe',
+      deliveryTitle: 'Livraison Gratuite', deliveryDesc: 'Livraison offerte sur toutes les commandes',
+      returnsTitle: '14 Jours de Retours', returnsDesc: 'Garantie de retour en toute simplicité',
+      pickupTitle: 'Retrait à Varsovie', pickupDesc: 'ul. Włodarzewska 4 / Centre-ville'
+    },
+    catalog: { tag: '[ Durag Activity ]', title: 'Style Unique' },
+    filterAll: 'Tous les produits', filterSilk: 'Durags en Soie', filterSatin: 'Durags en Satin', filterVelvet: 'Durags en Velours', filterSeasonal: 'Matières de Saison', filterAccessories: 'Accessoires',
     addToCart: 'Ajouter au panier',
     dealBadge: '2+1 Offert',
     emptyCatalog: 'Aucun produit dans cette catégorie.',
@@ -486,20 +769,76 @@ const I18N = {
       velvet: 'Velours dense et texturé pour une compression parfaite.',
       seasonal: 'Matières saisonnières comme le lin respirant et le cupro.',
       accessories: 'Brosses en poils de sanglier et accessoires de compression 360 waves.'
+    },
+    lookbook: {
+      tag: '[ pure silk 19 momme ]',
+      title: 'La Soie en Ville.',
+      p1: 'Dans le rythme urbain, notre Durag Milanówek est bien plus qu\'un accessoire — il protège vos cheveux et affirme votre style. Confectionné en pure soie de mûrier 19 Momme.',
+      p2: 'Un véritable durag en soie naturelle est une pièce d\'exception alliant noblesse et décontraction.',
+      btn: 'Découvrir'
+    },
+    philosophy: {
+      tag: '[ Standards artisanaux ]',
+      title: 'Philosophie de nos matières',
+      silkTitle: 'La Soie pour protéger vos cheveux',
+      silkDesc: 'Soie 19 Momme pure limitant la casse, éliminant les frisottis et préservant l\'hydratation.',
+      satinTitle: 'Le Satin pour le style quotidien',
+      satinDesc: 'Satin doux et résistant alliant éclat et confort pour un usage intensif.',
+      velvetTitle: 'Le Velours pour la compression',
+      velvetDesc: 'Velours texturé pour maintenir fermement les vagues 360 avec un aspect velouté.',
+      seasonalTitle: 'Matières naturelles de saison',
+      seasonalDesc: 'Lin naturel (Żyrardów), cupro soyeux (Bydgoszcz) et crêpe satin pour toutes les saisons.'
+    },
+    about: {
+      tag: '[ Warsaw Durag Store ]',
+      title: 'À propos',
+      p1: 'Warsaw Durag Store est un atelier fondé à Varsovie en 2020 par deux frères passionnés de mode et de culture streetwear.',
+      p2: 'Chaque pièce est cousue, inspectée et emballée à la main avec le plus grand soin.',
+      p3: 'Nous collaborons avec des sportifs et artistes à travers toute l\'Europe.',
+      p4: 'Retrait sur place à Varsovie sur rendez-vous ou expédition suivie. IG @warsawduragstore.',
+      btn: 'En savoir plus',
+      thumb1: 'Fondateurs', thumb2: 'Emballage & Atelier', thumb3: 'Avis Instagram',
+      cap1: 'Kuba et les fondateurs à Varsovie', cap2: 'Fait main en soie 19 Momme', cap3: 'Témoignages de la communauté IG'
+    },
+    newsletter: {
+      title: 'Rejoindre le Club WDS',
+      desc: 'Profitez de 10% de réduction sur votre première commande et d\'un accès privilégié aux éditions limitées.',
+      placeholder: 'Votre adresse e-mail',
+      btn: 'S\'inscrire'
+    },
+    footer: {
+      aboutText: 'Les seuls durags faits main en Pologne. Atelier d\'artisanat haut de gamme à Varsovie.',
+      shopTitle: 'Boutique', infoTitle: 'Informations', pickupTitle: 'Retrait en magasin',
+      copyright: '© 2026 Warsaw Durag Store. Confectionné en Pologne. Tous droits réservés.'
+    },
+    cart: {
+      title: 'Votre Panier',
+      emptyText: 'Votre panier est vide.',
+      subtotalLabel: 'Sous-total :',
+      discountLabel: 'Remise',
+      shippingLabel: 'Livraison :',
+      shippingFree: 'Gratuite (EU Express)',
+      totalLabel: 'Total :',
+      couponPlaceholder: 'Code promo (ex: WARSAW10)',
+      couponApplyBtn: 'Appliquer',
+      checkoutBtn: 'Passer la commande'
     }
   },
   ES: {
+    nav: { all: 'Todos', silk: 'Seda', satin: 'Satén', velvet: 'Terciopelo', seasonal: 'Temporada', accessories: 'Accesorios', about: 'Sobre nosotros' },
     heroTitle: 'Durags artesanales de lujo.<br><span style="color: #D9A87E; font-style: italic;">El estilo nace en la cabeza</span>.',
     heroSubtitle: 'Los únicos durags hechos en Polonia',
     heroAccent: '[ Máxima Calidad ]',
     heroCta: 'Descubrir colección',
     marquee: 'Envío exprés desde Varsovia en 24h • Compra 2 y Llévate 1 Gratis • Envío gratis en Europa • ',
-    filterAll: 'Todos los productos',
-    filterSilk: 'Durags de Seda',
-    filterSatin: 'Durags de Satén',
-    filterVelvet: 'Durags de Terciopelo',
-    filterSeasonal: 'De Temporada',
-    filterAccessories: 'Accesorios',
+    trust: {
+      shippingTitle: 'Envío en 1–2 Días', shippingDesc: 'Exprés desde Varsovia a toda Europa',
+      deliveryTitle: 'Envío Gratuito', deliveryDesc: 'Envío gratis en todos los pedidos',
+      returnsTitle: '14 Días Devolución', returnsDesc: 'Garantía de devolución sin complicaciones',
+      pickupTitle: 'Recogida en Varsovia', pickupDesc: 'ul. Włodarzewska 4 / Centro'
+    },
+    catalog: { tag: '[ Durag Activity ]', title: 'Estilo Único' },
+    filterAll: 'Todos los productos', filterSilk: 'Durags de Seda', filterSatin: 'Durags de Satén', filterVelvet: 'Durags de Terciopelo', filterSeasonal: 'De Temporada', filterAccessories: 'Accesorios',
     addToCart: 'Añadir a la cesta',
     dealBadge: '2+1 Gratis',
     emptyCatalog: 'No hay productos disponibles en esta categoría.',
@@ -510,6 +849,59 @@ const I18N = {
       velvet: 'Terciopelo suave y denso con excelente fijación y compresión.',
       seasonal: 'Tejidos estacionales transpirables como lino natural y cupro.',
       accessories: 'Cepillos de cerdas de jabalí y accesorios esenciales para ondas 360.'
+    },
+    lookbook: {
+      tag: '[ pure silk 19 momme ]',
+      title: 'Seda en la Ciudad.',
+      p1: 'En el dinamismo urbano, nuestro Durag Milanówek es más que un complemento: cuida tu cabello y realza tu estilo personal. Hecho de auténtica seda de morera 19 Momme.',
+      p2: 'Un auténtico durag de seda natural es una joya de elegancia sutil y confección artesanal.',
+      btn: 'Descubrir'
+    },
+    philosophy: {
+      tag: '[ Estándares de calidad ]',
+      title: 'Filosofía de nuestros materiales',
+      silkTitle: 'Seda para el cuidado capilar',
+      silkDesc: 'Seda pura 19 Momme que elimina la fricción, previene el encrespamiento y retiene la hidratación.',
+      satinTitle: 'Satén para el estilo diario',
+      satinDesc: 'Satén prémium que combina ligereza, suavidad y durabilidad para el día a día.',
+      velvetTitle: 'Terciopelo para fijación',
+      velvetDesc: 'Terciopelo suave y denso para una compresión óptima de ondas 360.',
+      seasonalTitle: 'Tejidos naturales de temporada',
+      seasonalDesc: 'Lino transpirable (Żyrardów), cupro (Bydgoszcz) y crepé de satén para cada época del año.'
+    },
+    about: {
+      tag: '[ Warsaw Durag Store ]',
+      title: 'Sobre nosotros',
+      p1: 'Warsaw Durag Store nació en Varsovia en 2020 de la mano de dos hermanos para crear durags artesanales de máxima calidad.',
+      p2: 'Cada pieza se confecciona y se empaqueta a mano con atención meticulosa a cada detalle.',
+      p3: 'Colaboramos activamente con artistas y deportistas de toda Europa.',
+      p4: 'Recogida local en Varsovia con cita previa o envío urgente. IG @warsawduragstore.',
+      btn: 'Más sobre nosotros',
+      thumb1: 'Fundadores', thumb2: 'Empaque & Taller', thumb3: 'Opiniones en IG',
+      cap1: 'Kuba y los fundadores en Varsovia', cap2: 'Hecho a mano con seda 19 Momme', cap3: 'Comentarios de nuestra comunidad en IG'
+    },
+    newsletter: {
+      title: 'Únete al Club WDS',
+      desc: 'Consigue un 10% de descuento en tu primer pedido y acceso anticipado a ediciones limitadas.',
+      placeholder: 'Tu correo electrónico',
+      btn: 'Suscribirse'
+    },
+    footer: {
+      aboutText: 'Los únicos durags hechos a mano en Polonia. Taller de lujo en Varsovia.',
+      shopTitle: 'Tienda', infoTitle: 'Información', pickupTitle: 'Recogida',
+      copyright: '© 2026 Warsaw Durag Store. Confeccionado en Polonia. Todos los derechos reservados.'
+    },
+    cart: {
+      title: 'Tu Cesta',
+      emptyText: 'Tu cesta está vacía.',
+      subtotalLabel: 'Subtotal:',
+      discountLabel: 'Descuento',
+      shippingLabel: 'Envío:',
+      shippingFree: 'Gratis (EU Express)',
+      totalLabel: 'Total:',
+      couponPlaceholder: 'Código de descuento (ej: WARSAW10)',
+      couponApplyBtn: 'Aplicar',
+      checkoutBtn: 'Tramitar pedido'
     }
   }
 };
@@ -534,36 +926,143 @@ function applyLanguage(lang) {
   const currentLangText = document.getElementById('currentLangText');
   if (currentLangText) currentLangText.textContent = lang;
 
-  // Hero section translations
-  const heroTitle = document.querySelector('.hero-title');
-  if (heroTitle) heroTitle.innerHTML = dict.heroTitle;
-  const heroSubtitle = document.querySelector('.hero-subtitle');
-  if (heroSubtitle) heroSubtitle.textContent = dict.heroSubtitle;
-  const heroAccent = document.querySelector('.hero-content .script-accent');
-  if (heroAccent) heroAccent.textContent = dict.heroAccent;
-  const heroCta = document.querySelector('.hero-actions a');
-  if (heroCta) heroCta.textContent = dict.heroCta;
-
-  // Category filter buttons
-  const catMap = {
-    all: dict.filterAll,
-    silk: dict.filterSilk,
-    satin: dict.filterSatin,
-    velvet: dict.filterVelvet,
-    seasonal: dict.filterSeasonal,
-    accessories: dict.filterAccessories
+  // 1. Navigation Menu Links
+  const navMap = {
+    navLinkAll: dict.nav.all, mobNavLinkAll: dict.nav.all,
+    navLinkSilk: dict.nav.silk, mobNavLinkSilk: dict.nav.silk,
+    navLinkSatin: dict.nav.satin, mobNavLinkSatin: dict.nav.satin,
+    navLinkVelvet: dict.nav.velvet, mobNavLinkVelvet: dict.nav.velvet,
+    navLinkSeasonal: dict.nav.seasonal, mobNavLinkSeasonal: dict.nav.seasonal,
+    navLinkAccessories: dict.nav.accessories, mobNavLinkAccessories: dict.nav.accessories,
+    navLinkAbout: dict.nav.about, mobNavLinkAbout: dict.nav.about
   };
-  DOM.filterBtns.forEach(btn => {
-    const cat = btn.getAttribute('data-category');
-    if (cat && catMap[cat]) {
-      btn.textContent = catMap[cat];
-    }
+  Object.entries(navMap).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
   });
 
-  // Category dynamic description box
+  // 2. Marquee Ticker
+  const marqueeSpans = document.querySelectorAll('.marquee-content span');
+  marqueeSpans.forEach(span => {
+    span.textContent = dict.marquee;
+  });
+
+  // 3. Hero Section
+  const heroAccent = document.getElementById('heroAccent');
+  if (heroAccent) heroAccent.textContent = dict.heroAccent;
+  const heroSubtitle = document.getElementById('heroSubtitle');
+  if (heroSubtitle) heroSubtitle.textContent = dict.heroSubtitle;
+  const heroTitle = document.getElementById('heroTitle');
+  if (heroTitle) heroTitle.innerHTML = dict.heroTitle;
+  const heroCtaBtn = document.getElementById('heroCtaBtn');
+  if (heroCtaBtn) heroCtaBtn.textContent = dict.heroCta;
+
+  // 4. Trust Banner
+  const trustMap = {
+    trustShippingTitle: dict.trust.shippingTitle, trustShippingDesc: dict.trust.shippingDesc,
+    trustDeliveryTitle: dict.trust.deliveryTitle, trustDeliveryDesc: dict.trust.deliveryDesc,
+    trustReturnsTitle: dict.trust.returnsTitle, trustReturnsDesc: dict.trust.returnsDesc,
+    trustPickupTitle: dict.trust.pickupTitle, trustPickupDesc: dict.trust.pickupDesc
+  };
+  Object.entries(trustMap).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
+
+  // 5. Catalog Header & Filters
+  const catalogTag = document.getElementById('catalogSectionTag');
+  if (catalogTag) catalogTag.textContent = dict.catalog.tag;
+  const catalogTitle = document.getElementById('catalogSectionTitle');
+  if (catalogTitle) catalogTitle.textContent = dict.catalog.title;
+
+  const tabMap = {
+    tabAll: dict.filterAll, tabSilk: dict.filterSilk, tabSatin: dict.filterSatin,
+    tabVelvet: dict.filterVelvet, tabSeasonal: dict.filterSeasonal, tabAccessories: dict.filterAccessories
+  };
+  Object.entries(tabMap).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
+
   updateCategoryDescription(state.activeCategory || 'all');
 
-  // Re-render product grid
+  // 6. Lookbook Section
+  const lookbookMap = {
+    lookbookTag: dict.lookbook.tag, lookbookTitle: dict.lookbook.title,
+    lookbookP1: dict.lookbook.p1, lookbookP2: dict.lookbook.p2, lookbookBtn: dict.lookbook.btn
+  };
+  Object.entries(lookbookMap).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
+
+  // 7. Brand Philosophy
+  const philMap = {
+    philosophyTag: dict.philosophy.tag, philosophyTitle: dict.philosophy.title,
+    philSilkTitle: dict.philosophy.silkTitle, philSilkDesc: dict.philosophy.silkDesc,
+    philSatinTitle: dict.philosophy.satinTitle, philSatinDesc: dict.philosophy.satinDesc,
+    philVelvetTitle: dict.philosophy.velvetTitle, philVelvetDesc: dict.philosophy.velvetDesc,
+    philSeasonalTitle: dict.philosophy.seasonalTitle, philSeasonalDesc: dict.philosophy.seasonalDesc
+  };
+  Object.entries(philMap).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
+
+  // 8. About Us Section
+  const aboutMap = {
+    aboutTag: dict.about.tag, aboutTitle: dict.about.title,
+    aboutP1: dict.about.p1, aboutP2: dict.about.p2, aboutP3: dict.about.p3, aboutP4: dict.about.p4,
+    aboutMoreBtn: dict.about.btn,
+    aboutThumb1: dict.about.thumb1, aboutThumb2: dict.about.thumb2, aboutThumb3: dict.about.thumb3
+  };
+  Object.entries(aboutMap).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
+
+  // 9. Newsletter
+  const newsMap = {
+    newsletterTitle: dict.newsletter.title, newsletterDesc: dict.newsletter.desc, newsletterSubmitBtn: dict.newsletter.btn
+  };
+  Object.entries(newsMap).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
+  const newsInput = document.getElementById('newsletterEmail');
+  if (newsInput) newsInput.placeholder = dict.newsletter.placeholder;
+
+  // 10. Footer
+  const footerMap = {
+    footerAboutText: dict.footer.aboutText, footerShopTitle: dict.footer.shopTitle,
+    footerInfoTitle: dict.footer.infoTitle, footerPickupTitle: dict.footer.pickupTitle,
+    footerCopyright: dict.footer.copyright,
+    footerLinkSilk: dict.filterSilk, footerLinkSatin: dict.filterSatin, footerLinkVelvet: dict.filterVelvet,
+    footerLinkSeasonal: dict.filterSeasonal, footerLinkAccessories: dict.filterAccessories,
+    footerLinkPhilosophy: dict.philosophy.title
+  };
+  Object.entries(footerMap).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
+
+  // 11. Cart Drawer Labels
+  const cartMap = {
+    cartSubtotalLabel: dict.cart.subtotalLabel,
+    cartShippingLabel: dict.cart.shippingLabel,
+    cartShipping: dict.cart.shippingFree,
+    cartTotalLabel: dict.cart.totalLabel,
+    checkoutBtn: dict.cart.checkoutBtn,
+    cartPromoApplyBtn: dict.cart.couponApplyBtn
+  };
+  Object.entries(cartMap).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
+  const cartPromoInput = document.getElementById('cartPromoInput');
+  if (cartPromoInput) cartPromoInput.placeholder = dict.cart.couponPlaceholder;
+
+  // 12. Re-render product grid
   renderProductGrid();
 }
 
@@ -679,12 +1178,17 @@ function renderProductGrid() {
     // Visual badge
     let badgeHtml = '';
     if (p.category === 'silk') {
-      badgeHtml = `<span class="product-badge gold">Morwowy bestseller</span>`;
+      badgeHtml = `<span class="product-badge gold">${lang === 'PL' ? 'Morwowy bestseller' : (lang === 'DE' ? 'Bestseller Seide' : (lang === 'FR' ? 'Bestseller Soie' : 'Silk Bestseller'))}</span>`;
     } else if (p.category === 'seasonal') {
-      badgeHtml = `<span class="product-badge">Sezonowy Drop</span>`;
+      badgeHtml = `<span class="product-badge">${lang === 'PL' ? 'Sezonowy Drop' : 'Seasonal Drop'}</span>`;
     }
     
     const displayName = (lang !== 'PL' && p.nameEn) ? p.nameEn : p.name;
+    const catLabel = p.category === 'silk' ? dict.filterSilk 
+                   : (p.category === 'satin' ? dict.filterSatin 
+                   : (p.category === 'velvet' ? dict.filterVelvet 
+                   : (p.category === 'seasonal' ? dict.filterSeasonal 
+                   : (p.category === 'accessories' ? dict.filterAccessories : p.categoryLabel))));
     const descSnippet = p.storyDescription || p.description;
 
     card.innerHTML = `
@@ -695,7 +1199,7 @@ function renderProductGrid() {
       </div>
       
       <div class="product-info">
-        <span class="product-category">${p.categoryLabel}</span>
+        <span class="product-category">${catLabel}</span>
         <h3 class="product-title">${displayName}</h3>
         <p class="product-card-desc">${descSnippet}</p>
         <div class="product-meta-row">

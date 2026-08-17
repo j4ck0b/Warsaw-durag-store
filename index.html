@@ -35,6 +35,11 @@
   <meta property="og:image" content="https://warsawduragstore.pl/assets/logo_black.png">
   <meta property="og:locale" content="pl_PL">
 
+  <!-- Google Fonts: Cormorant Garamond, Plus Jakarta Sans, Syne -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
   <!-- Modern Styling -->
   <link rel="stylesheet" href="./style.css">
   
@@ -146,13 +151,13 @@
       <!-- Desktop Navigation Links -->
       <nav aria-label="Main Navigation">
         <ul class="nav-links">
-          <li><a href="#kolekcja" data-filter="all">Wszystko</a></li>
-          <li><a href="#kolekcja" data-filter="silk">Jedwabne</a></li>
-          <li><a href="#kolekcja" data-filter="satin">Satynowe</a></li>
-          <li><a href="#kolekcja" data-filter="velvet">Welurowe</a></li>
-          <li><a href="#kolekcja" data-filter="seasonal">Sezonowe</a></li>
-          <li><a href="#kolekcja" data-filter="accessories">Akcesoria</a></li>
-          <li><a href="#o-nas">O Nas</a></li>
+          <li><a href="#kolekcja" data-filter="all" id="navLinkAll">Wszystko</a></li>
+          <li><a href="#kolekcja" data-filter="silk" id="navLinkSilk">Jedwabne</a></li>
+          <li><a href="#kolekcja" data-filter="satin" id="navLinkSatin">Satynowe</a></li>
+          <li><a href="#kolekcja" data-filter="velvet" id="navLinkVelvet">Welurowe</a></li>
+          <li><a href="#kolekcja" data-filter="seasonal" id="navLinkSeasonal">Sezonowe</a></li>
+          <li><a href="#kolekcja" data-filter="accessories" id="navLinkAccessories">Akcesoria</a></li>
+          <li><a href="#o-nas" id="navLinkAbout">O Nas</a></li>
         </ul>
       </nav>
       
@@ -202,13 +207,13 @@
   <!-- ================= MOBILE NAVIGATION DRAWER ================= -->
   <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
     <ul class="mobile-menu-links">
-      <li><a href="#kolekcja" data-filter="all" class="mobile-nav-link">Wszystkie produkty</a></li>
-      <li><a href="#kolekcja" data-filter="silk" class="mobile-nav-link">Jedwabne</a></li>
-      <li><a href="#kolekcja" data-filter="satin" class="mobile-nav-link">Satynowe</a></li>
-      <li><a href="#kolekcja" data-filter="velvet" class="mobile-nav-link">Welurowe</a></li>
-      <li><a href="#kolekcja" data-filter="seasonal" class="mobile-nav-link">Sezonowe materiały</a></li>
-      <li><a href="#kolekcja" data-filter="accessories" class="mobile-nav-link">Akcesoria</a></li>
-      <li><a href="#o-nas" class="mobile-nav-link">O nas</a></li>
+      <li><a href="#kolekcja" data-filter="all" class="mobile-nav-link" id="mobNavLinkAll">Wszystkie produkty</a></li>
+      <li><a href="#kolekcja" data-filter="silk" class="mobile-nav-link" id="mobNavLinkSilk">Jedwabne</a></li>
+      <li><a href="#kolekcja" data-filter="satin" class="mobile-nav-link" id="mobNavLinkSatin">Satynowe</a></li>
+      <li><a href="#kolekcja" data-filter="velvet" class="mobile-nav-link" id="mobNavLinkVelvet">Welurowe</a></li>
+      <li><a href="#kolekcja" data-filter="seasonal" class="mobile-nav-link" id="mobNavLinkSeasonal">Sezonowe materiały</a></li>
+      <li><a href="#kolekcja" data-filter="accessories" class="mobile-nav-link" id="mobNavLinkAccessories">Akcesoria</a></li>
+      <li><a href="#o-nas" class="mobile-nav-link" id="mobNavLinkAbout">O nas</a></li>
     </ul>
     
     <div class="mobile-drawer-footer">
@@ -228,11 +233,11 @@
     <div class="hero-overlay" style="background: rgba(13,13,11,0.5);"></div>
     <div class="container" style="position: relative; z-index: 5;">
       <div class="hero-content">
-        <span class="script-accent" style="margin-bottom: 15px; color: #D9A87E;">[ Duragi Najlepszej Jakości ]</span>
-        <span class="hero-subtitle" style="letter-spacing: 0.2em; text-transform: uppercase;">Jedyne duragi szyte w Polsce</span>
-        <h1 class="hero-title">Ręcznie szyte duragi.<br><span style="color: #D9A87E; font-style: italic;">Bo styl rodzi się na głowie</span>.</h1>
+        <span class="script-accent" id="heroAccent" style="margin-bottom: 15px; color: #D9A87E;">[ Duragi Najlepszej Jakości ]</span>
+        <span class="hero-subtitle" id="heroSubtitle" style="letter-spacing: 0.2em; text-transform: uppercase;">Jedyne duragi szyte w Polsce</span>
+        <h1 class="hero-title" id="heroTitle">Ręcznie szyte duragi.<br><span style="color: #D9A87E; font-style: italic;">Bo styl rodzi się na głowie</span>.</h1>
         <div class="hero-actions">
-          <a href="#kolekcja" class="btn-minimal" style="background: white; color: #0D0D0B; border-radius: 9999px; padding: 16px 36px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.2em; font-size: 11px;">Odkryj kolekcję</a>
+          <a href="#kolekcja" class="btn-minimal" id="heroCtaBtn" style="background: white; color: #0D0D0B; border-radius: 9999px; padding: 16px 36px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.2em; font-size: 11px;">Odkryj kolekcję</a>
         </div>
       </div>
     </div>
@@ -247,8 +252,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           </div>
           <div class="trust-text">
-            <strong>Wysyłka 1–2 Dni</strong>
-            <span>Express z Warszawy</span>
+            <strong id="trustShippingTitle">Wysyłka 1–2 Dni</strong>
+            <span id="trustShippingDesc">Express z Warszawy</span>
           </div>
         </div>
         <div class="trust-item">
@@ -256,8 +261,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"/></svg>
           </div>
           <div class="trust-text">
-            <strong>Darmowa Dostawa</strong>
-            <span>InPost & Kurier w PL dla każdego zamówienia</span>
+            <strong id="trustDeliveryTitle">Darmowa Dostawa</strong>
+            <span id="trustDeliveryDesc">InPost & Kurier w PL dla każdego zamówienia</span>
           </div>
         </div>
         <div class="trust-item">
@@ -265,8 +270,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
           </div>
           <div class="trust-text">
-            <strong>14 Dni na Zwrot</strong>
-            <span>Gwarancja bezproblemowego zwrotu</span>
+            <strong id="trustReturnsTitle">14 Dni na Zwrot</strong>
+            <span id="trustReturnsDesc">Gwarancja bezproblemowego zwrotu</span>
           </div>
         </div>
         <div class="trust-item">
@@ -274,8 +279,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           </div>
           <div class="trust-text">
-            <strong>Odbiór w Warszawie</strong>
-            <span>ul. Włodarzewska 4 lub Centrum</span>
+            <strong id="trustPickupTitle">Odbiór w Warszawie</strong>
+            <span id="trustPickupDesc">ul. Włodarzewska 4 lub Centrum</span>
           </div>
         </div>
       </div>
@@ -289,18 +294,18 @@
       <div class="container">
         
         <div class="section-header reveal">
-          <span class="script-accent">[ Durag Activity ]</span>
-          <h2 class="title">Unikalny styl</h2>
+          <span class="script-accent" id="catalogSectionTag">[ Durag Activity ]</span>
+          <h2 class="title" id="catalogSectionTitle">Unikalny styl</h2>
         </div>
         
         <!-- Filter Tabs in exact required order -->
         <ul class="filter-tabs reveal" role="tablist">
-          <li><button class="filter-btn active" data-category="all" role="tab" aria-selected="true">Wszystko</button></li>
-          <li><button class="filter-btn" data-category="silk" role="tab" aria-selected="false">Jedwabne</button></li>
-          <li><button class="filter-btn" data-category="satin" role="tab" aria-selected="false">Satynowe</button></li>
-          <li><button class="filter-btn" data-category="velvet" role="tab" aria-selected="false">Welurowe</button></li>
-          <li><button class="filter-btn" data-category="seasonal" role="tab" aria-selected="false">Sezonowe materiały</button></li>
-          <li><button class="filter-btn" data-category="accessories" role="tab" aria-selected="false">Akcesoria</button></li>
+          <li><button class="filter-btn active" data-category="all" id="tabAll" role="tab" aria-selected="true">Wszystko</button></li>
+          <li><button class="filter-btn" data-category="silk" id="tabSilk" role="tab" aria-selected="false">Jedwabne</button></li>
+          <li><button class="filter-btn" data-category="satin" id="tabSatin" role="tab" aria-selected="false">Satynowe</button></li>
+          <li><button class="filter-btn" data-category="velvet" id="tabVelvet" role="tab" aria-selected="false">Welurowe</button></li>
+          <li><button class="filter-btn" data-category="seasonal" id="tabSeasonal" role="tab" aria-selected="false">Sezonowe materiały</button></li>
+          <li><button class="filter-btn" data-category="accessories" id="tabAccessories" role="tab" aria-selected="false">Akcesoria</button></li>
         </ul>
 
         <!-- Category 1-Sentence Dynamic Description -->
@@ -392,24 +397,24 @@
     </section>
 
     <!-- ================= JEDWAB W MIEŚCIE SHOWCASE ================= -->
-    <section class="section-padding lookbook-section" id="lookbook" style="background: #0D0D0B; color: white;">
+    <section class="section-padding lookbook-section" id="lookbook" style="background: #090908; color: white;">
       <div class="container">
         <div class="lookbook-container">
           
           <div class="lookbook-media reveal">
-            <video src="./assets/hero_video.mp4" poster="./assets/durag_silk_black.png" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;"></video>
+            <video src="./assets/hero_video.mp4" poster="./assets/durag_silk_black.png" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;"></video>
           </div>
           
           <div class="lookbook-content reveal" style="color: white;">
-            <span class="script-accent" style="color: #D9A87E;">[ pure silk 19 momme ]</span>
-            <h2 class="title" style="color: white;">Jedwab w Mieście.</h2>
-            <p class="desc" style="color: #CFCFCF; font-size: 14px; line-height: 1.8;">
+            <span class="script-accent" id="lookbookTag" style="color: #D9A87E;">[ pure silk 19 momme ]</span>
+            <h2 class="title" id="lookbookTitle" style="color: white;">Jedwab w Mieście.</h2>
+            <p class="desc" id="lookbookP1" style="color: #D6D6D6; font-size: 14px; line-height: 1.8;">
               W miejskim rytmie nasz Durag Milanówek to coś więcej niż dodatek — chroni, podkreśla styl i wyróżnia nas na tle innych. Wykonany z naturalnego jedwabiu o gramaturze 19 momme — oznaczającej wysoką gęstość, trwałość i jakość materiału — łączy lekkość z wyjątkową wytrzymałością, a jego gładka struktura ogranicza tarcie, pomaga chronić włosy przed łamaniem i puszeniem oraz jest delikatna dla skóry głowy.
             </p>
-            <p class="desc" style="color: #CFCFCF; font-size: 14px; line-height: 1.8;">
-              Jedwabny durag to unikatowy modowy hidden gem, który w przeciwieństwie do chusty czy czepka wyróżnia Cię na tle innych zarówno jakością wykonania, jak i subtelną elegancją w stylizacji. Jego lekka tkanina osłania głowę przed wiatrem i promieniowaniem UV, a niepodrabialny, głęboki połysk zmienia światło miasta w część stylizacji. To jedyny w Polsce durag wykonany z prawdziwego jedwabiu — bo styl rodzi się w na głowie.
+            <p class="desc" id="lookbookP2" style="color: #D6D6D6; font-size: 14px; line-height: 1.8;">
+              Jedwabny durag to unikatowy modowy hidden gem, który w przeciwieństwie do chusty czy czepka wyróżnia Cię na tle innych zarówno jakością wykonania, jak i subtelną elegancją w stylizacji. Jego lekka tkanina osłania głowę przed wiatrem i promieniowaniem UV, a niepodrabialny, głęboki połysk zmienia światło miasta w część stylizacji. To jedyny w Polsce durag wykonany z prawdziwego jedwabiu — bo styl rodzi się na głowie.
             </p>
-            <a href="#kolekcja" data-filter="silk" class="btn-minimal" style="background: #D9A87E; color: #0D0D0B; border-radius: 9999px; padding: 14px 32px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block; margin-top: 10px;">Sprawdź</a>
+            <a href="#kolekcja" data-filter="silk" class="btn-minimal" id="lookbookBtn" style="background: #D9A87E; color: #0D0D0B; border-radius: 9999px; padding: 14px 34px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.12em; display: inline-block; margin-top: 10px;">Sprawdź</a>
           </div>
           
         </div>
@@ -421,36 +426,36 @@
       <div class="container">
         
         <div class="section-header reveal">
-          <span class="script-accent">[ Standardy rzemiosła ]</span>
-          <h2 class="title">Filozofia naszych materiałów</h2>
+          <span class="script-accent" id="philosophyTag">[ Standardy rzemiosła ]</span>
+          <h2 class="title" id="philosophyTitle">Filozofia naszych materiałów</h2>
         </div>
         
         <div class="philosophy-grid">
           
           <div class="philosophy-card reveal">
-            <h3 class="philosophy-card-title">Jedwab stworzony dla włosów</h3>
-            <p class="philosophy-card-desc">
+            <h3 class="philosophy-card-title" id="philSilkTitle">Jedwab stworzony dla włosów</h3>
+            <p class="philosophy-card-desc" id="philSilkDesc">
               Użyta przy produkcji Durag Milanówek satyna jedwabna ma naturalnie gładką powierzchnię ograniczającą tarcie, dzięki czemu pozwala chronić włosy przed puszeniem, łamaniem i nadmiernym przesuszaniem. Delikatny dla skóry głowy materiał pozwala włosom zachować naturalną miękkość i zdrowy wygląd, nie odbierając nam komfortu nawet podczas dłuższego noszenia. W przeciwieństwie do syntetycznych tkanin jedwab nie tylko otula włosy, lecz także pomaga ograniczać utratę ich naturalnego nawilżenia. Zastosowany tutaj jedwab o gramaturze 19 momme jest odpowiednio lekki i elastyczny a zarazem odpowiednio gęsty oraz trwały.
             </p>
           </div>
           
           <div class="philosophy-card reveal">
-            <h3 class="philosophy-card-title">Satyna stworzona dla codzienności</h3>
-            <p class="philosophy-card-desc">
+            <h3 class="philosophy-card-title" id="philSatinTitle">Satyna stworzona dla codzienności</h3>
+            <p class="philosophy-card-desc" id="philSatinDesc">
               Satyna poliestrowa to materiał, który idealnie łączy gładkość, lekkość i trwałość — właśnie dlatego tak dobrze sprawdza się w szyciu duragów i to właśnie z niej korzysta zdecydowana większość klientów. Podobnie jak jedwab satyna poliestrowa jest śliska, przyjemna w dotyku co ogranicza tarcie, pomagając zmniejszyć puszenie i chronić włosy przed niepotrzebnym łamaniem. W przeciwieństwie do naturalnego jedwabiu jest materiałem syntetycznym, bardziej odpornym na codzienne użytkowanie i znacznie łatwiejszym w pielęgnacji oraz tańszym, a równocześnie zachowującym przy tym charakterystyczną gładkość oraz połysk. Dobrze dopasowuje się do głowy, utrzymuje swój kształt i szybko schnie, dzięki czemu durag pozostaje wygodnym elementem codziennego stylu. Satyna poliestrowa to praktyczna alternatywa dla jedwabiu — połączenie funkcjonalności, trwałości - stworzone z myślą o codziennym noszeniu.
             </p>
           </div>
           
           <div class="philosophy-card reveal">
-            <h3 class="philosophy-card-title">Welur na co dzień</h3>
-            <p class="philosophy-card-desc">
+            <h3 class="philosophy-card-title" id="philVelvetTitle">Welur na co dzień</h3>
+            <p class="philosophy-card-desc" id="philVelvetDesc">
               Welur poliestrowy to miękki, gęsty materiał o charakterystycznej, delikatnie włoskowatej powierzchni, która nadaje duragowi wyrazistą strukturę i głębię koloru. Wykonany z włókien poliestrowych jest trwały, odporny na częste użytkowanie. Jego przyjemna w dotyku faktura sprawia, że materiał dobrze układa się na głowie, a jednocześnie jest bardziej mięsisty i otulający niż lekki jedwab czy gładka satyna. Welur poliestrowy nie gniecie się łatwo, szybko schnie i jest prosty w codziennej pielęgnacji, dzięki czemu dobrze sprawdza się jako materiał codziennego użytkowania. To wybór dla osób, które cenią miękkość, trwałość i bardziej wyrazisty wygląd, bez rezygnowania z wygody.
             </p>
           </div>
 
           <div class="philosophy-card reveal">
-            <h3 class="philosophy-card-title">Sezonowe materiały</h3>
-            <p class="philosophy-card-desc">
+            <h3 class="philosophy-card-title" id="philSeasonalTitle">Sezonowe materiały</h3>
+            <p class="philosophy-card-desc" id="philSeasonalDesc">
               Nie każdy materiał sprawdza się tak samo o każdej porze roku. Dlatego tworzymy serię duragów wykonanych z sezonowych tkanin, które odpowiadają na zmieniającą się pogodę, temperaturę i sposób noszenia. W tej kolekcji znalazł się Durag Bydgoszcz wykonany z cupro — lekkiej, gładkiej i przyjemnej w dotyku tkaniny o subtelnym połysku, Durag Żyrardów uszyty z naturalnego, przewiewnego lnu o charakterystycznej strukturze oraz Durag Stalowa Wola wykonany z krepy satynowej, która łączy mocniejszą strukturę, z eleganckim połyskiem. Każdy z tych materiałów inaczej układa się na głowie i oferuje inne właściwości, dzięki czemu kolekcja pozwala dopasować durag zarówno do własnego stylu, jak i do pory roku. To seria dla osób, które szukają mniej oczywistych tkanin i chcą odkrywać duragi również poza klasyczną satyną i welurem.
             </p>
           </div>
@@ -460,12 +465,12 @@
     </section>
 
     <!-- ================= O NAS SECTION (WITH CAROUSEL & FULL STORY) ================= -->
-    <section class="section-padding" id="o-nas" style="background: #0D0D0B; color: white;">
+    <section class="section-padding" id="o-nas" style="background: #090908; color: white;">
       <div class="container">
         
         <div class="section-header reveal" style="text-align: center; margin-bottom: 48px;">
-          <span class="script-accent" style="color: #D9A87E;">[ Warsaw Durag Store ]</span>
-          <h2 class="title" style="color: white;">O nas</h2>
+          <span class="script-accent" id="aboutTag" style="color: #D9A87E;">[ Warsaw Durag Store ]</span>
+          <h2 class="title" id="aboutTitle" style="color: white;">O nas</h2>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; align-items: center;">
@@ -474,31 +479,31 @@
           <div class="reveal" style="display: flex; flex-direction: column; gap: 16px;">
             <div style="position: relative; aspect-ratio: 4/3; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
               <img id="aboutCarouselImg" src="./assets/lookbook_editorial.png" alt="Warsaw Durag Store — Założyciele i rzemiosło" style="width: 100%; height: 100%; object-fit: cover; transition: all 0.5s ease;">
-              <div id="aboutCarouselCaption" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 20px; background: linear-gradient(to top, rgba(13,13,11,0.9), transparent); font-size: 12px; color: #D9A87E; font-weight: 600;">
+              <div id="aboutCarouselCaption" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 20px; background: linear-gradient(to top, rgba(9,9,8,0.9), transparent); font-size: 12px; color: #D9A87E; font-weight: 600;">
                 Kuba & Założyciele Warsaw Durag Store
               </div>
             </div>
             
             <!-- Carousel Thumbnails / Controls -->
             <div style="display: flex; gap: 12px; justify-content: center;">
-              <button class="about-thumb-btn active" data-src="./assets/lookbook_editorial.png" data-cap="Kuba & Założyciele Warsaw Durag Store" style="background: rgba(255,255,255,0.1); border: 1px solid #D9A87E; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 11px; cursor: pointer;">Założyciele</button>
-              <button class="about-thumb-btn" data-src="./assets/durag_silk_black.png" data-cap="Ręcznie szyte z jedwabiu 19 Momme" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 11px; cursor: pointer;">Packaging & Rzemiosło</button>
-              <button class="about-thumb-btn" data-src="./assets/durag_velvet_emerald.png" data-cap="Opinie ze społeczności @warsawduragstore" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 11px; cursor: pointer;">Opinie na Insta</button>
+              <button class="about-thumb-btn active" id="aboutThumb1" data-src="./assets/lookbook_editorial.png" data-cap="Kuba & Założyciele Warsaw Durag Store" style="background: rgba(255,255,255,0.1); border: 1px solid #D9A87E; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 11px; cursor: pointer;">Założyciele</button>
+              <button class="about-thumb-btn" id="aboutThumb2" data-src="./assets/durag_silk_black.png" data-cap="Ręcznie szyte z jedwabiu 19 Momme" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 11px; cursor: pointer;">Packaging & Rzemiosło</button>
+              <button class="about-thumb-btn" id="aboutThumb3" data-src="./assets/durag_velvet_emerald.png" data-cap="Opinie ze społeczności @warsawduragstore" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 11px; cursor: pointer;">Opinie na Insta</button>
             </div>
           </div>
           
           <!-- Full Story Text -->
           <div class="reveal" style="color: white;">
-            <p class="desc" style="color: #E0E0E0; font-size: 14px; line-height: 1.8; margin-bottom: 16px;">
+            <p class="desc" id="aboutP1" style="color: #E0E0E0; font-size: 14px; line-height: 1.8; margin-bottom: 16px;">
               Warsaw Durag Store powstał w 2020 roku z potrzeby stworzenia miejsca, które przybliży duragi polskiej społeczności i pokaże ich różnorodność — nie tylko jako elementu stylu, ale również praktycznego dodatku z własną historią i charakterem. Od tego czasu stale rozwijamy naszą ofertę, poszerzając ją o kolejne materiały, kolory i modele, szukając nowych sposobów na pokazanie, czym może być współczesny durag.
             </p>
-            <p class="desc" style="color: #E0E0E0; font-size: 14px; line-height: 1.8; margin-bottom: 16px;">
+            <p class="desc" id="aboutP2" style="color: #E0E0E0; font-size: 14px; line-height: 1.8; margin-bottom: 16px;">
               Jesteśmy małym butikiem prowadzonym przez dwóch braci, którym często pomagają również nasi znajomi. Dzięki temu każdy produkt przechodzi przez nasze ręce — od wyboru materiału, przez przygotowanie zamówienia, aż po kontakt z klientem. Dokładamy wszelkich starań, aby każda klientka i każdy klient otrzymywali nie tylko świetny produkt, lecz także dobrą i indywidualną obsługę.
             </p>
-            <p class="desc" style="color: #E0E0E0; font-size: 14px; line-height: 1.8; margin-bottom: 16px;">
+            <p class="desc" id="aboutP3" style="color: #E0E0E0; font-size: 14px; line-height: 1.8; margin-bottom: 16px;">
               Chcemy, aby Warsaw Durag Store był wsparciem dla artystów, sportowców i wszystkich osób, które poprzez swój styl wyrażają siebie, dlatego chętnie nawiązujemy z nimi współprace - robisz coś w sporcie, modzie lub muzyce pisz do nas po paczkę niespodziankę.
             </p>
-            <p class="desc" style="color: #D9A87E; font-size: 14px; line-height: 1.8; margin-bottom: 24px;">
+            <p class="desc" id="aboutP4" style="color: #D9A87E; font-size: 14px; line-height: 1.8; margin-bottom: 24px;">
               Na razie nie prowadzimy własnego sklepu stacjonarnego, jednak nasze duragi można odebrać osobiście przy ul. Włodarzewskiej 4 lub w centrum Warszawy — po wcześniejszym umówieniu. Z informacji praktycznych to najłatwiej dorwać nas przez Instagram <a href="https://instagram.com/warsawduragstore" target="_blank" style="color: #fff; text-decoration: underline;">@warsawduragstore</a>, dla oldschoolowców mamy mail <a href="mailto:support@warsawduragstore.pl" style="color: #fff; text-decoration: underline;">support@warsawduragstore.pl</a>.
             </p>
 
@@ -513,8 +518,8 @@
     <section class="section-padding newsletter-section" id="newsletter">
       <div class="container">
         <div class="newsletter-container reveal">
-          <h2 class="newsletter-title">Dołącz do Klubu WDS</h2>
-          <p class="newsletter-desc">
+          <h2 class="newsletter-title" id="newsletterTitle">Dołącz do Klubu WDS</h2>
+          <p class="newsletter-desc" id="newsletterDesc">
             Zapisz się do naszego klubu. Zyskaj 10% rabatu na pierwsze zakupy, wczesny dostęp do limitowanych kolekcji oraz poradników 360 waves.
           </p>
           
@@ -537,35 +542,35 @@
         
         <div class="footer-col reveal">
           <div class="footer-logo"><img src="./assets/logo_white.png" alt="Warsaw Durag Store" style="height: 35px;"></div>
-          <p class="footer-about-text">
+          <p class="footer-about-text" id="footerAboutText">
             Jedyne duragi szyte w Polsce. Warszawski brand rzemieślniczy dostarczający najwyższej jakości duragi i akcesoria.
           </p>
         </div>
         
         <div class="footer-col reveal">
-          <h4 class="footer-col-title">Sklep</h4>
+          <h4 class="footer-col-title" id="footerShopTitle">Sklep</h4>
           <ul class="footer-links">
-            <li><a href="#kolekcja" data-filter="silk">Jedwabne</a></li>
-            <li><a href="#kolekcja" data-filter="satin">Satynowe</a></li>
-            <li><a href="#kolekcja" data-filter="velvet">Welurowe</a></li>
-            <li><a href="#kolekcja" data-filter="seasonal">Sezonowe materiały</a></li>
-            <li><a href="#kolekcja" data-filter="accessories">Akcesoria</a></li>
+            <li><a href="#kolekcja" data-filter="silk" id="footerLinkSilk">Jedwabne</a></li>
+            <li><a href="#kolekcja" data-filter="satin" id="footerLinkSatin">Satynowe</a></li>
+            <li><a href="#kolekcja" data-filter="velvet" id="footerLinkVelvet">Welurowe</a></li>
+            <li><a href="#kolekcja" data-filter="seasonal" id="footerLinkSeasonal">Sezonowe materiały</a></li>
+            <li><a href="#kolekcja" data-filter="accessories" id="footerLinkAccessories">Akcesoria</a></li>
           </ul>
         </div>
         
         <div class="footer-col reveal">
-          <h4 class="footer-col-title">Informacje</h4>
+          <h4 class="footer-col-title" id="footerInfoTitle">Informacje</h4>
           <ul class="footer-links">
             <li><a href="#" id="linkAboutModalFooter">O nas</a></li>
             <li><a href="#" id="linkContactModalFooter">Kontakt & Odbiór w Warszawie</a></li>
-            <li><a href="#filozofia">Filozofia materiałów</a></li>
+            <li><a href="#filozofia" id="footerLinkPhilosophy">Filozofia materiałów</a></li>
             <li><a href="#" id="linkBlogFooter">Blog & Poradnik</a></li>
           </ul>
         </div>
         
         <div class="footer-col reveal">
-          <h4 class="footer-col-title">Odbiór Osobisty</h4>
-          <div class="footer-showroom-info">
+          <h4 class="footer-col-title" id="footerPickupTitle">Odbiór Osobisty</h4>
+          <div class="footer-showroom-info" id="footerShowroomInfo">
             <p><strong>Warszawa (po wcześniejszym umówieniu):</strong></p>
             <p>• ul. Włodarzewska 4</p>
             <p>• Centrum Warszawy</p>
@@ -576,7 +581,7 @@
       </div>
       
       <div class="footer-bottom">
-        <p>&copy; 2026 Warsaw Durag Store. Jedyne duragi szyte w Polsce. Wszelkie prawa zastrzeżone.</p>
+        <p id="footerCopyright">&copy; 2026 Warsaw Durag Store. Jedyne duragi szyte w Polsce. Wszelkie prawa zastrzeżone.</p>
         <div class="footer-legal">
           <a href="#" id="linkAboutLegal">O nas</a>
           <a href="#" id="linkContactLegal">Kontakt</a>
@@ -609,19 +614,19 @@
         <div id="promoStatusMsg" class="promo-status"></div>
 
         <div class="cart-summary-row">
-          <span>Suma częściowa:</span>
+          <span id="cartSubtotalLabel">Suma częściowa:</span>
           <span id="cartSubtotal">0.00 PLN</span>
         </div>
         <div class="cart-summary-row discount-row" id="cartDiscountRow" style="display: none;">
-          <span>Rabat (<span id="cartDiscountPercent">0</span>%):</span>
+          <span id="cartDiscountLabel">Rabat (<span id="cartDiscountPercent">0</span>%):</span>
           <span id="cartDiscountVal">-0.00 PLN</span>
         </div>
         <div class="cart-summary-row">
-          <span>Dostawa:</span>
+          <span id="cartShippingLabel">Dostawa:</span>
           <span id="cartShipping" style="color: #2E7D32; font-weight: bold;">Darmowa (EU Express)</span>
         </div>
         <div class="cart-summary-row total-row">
-          <span>Łącznie:</span>
+          <span id="cartTotalLabel">Łącznie:</span>
           <span id="cartTotal">0.00 PLN</span>
         </div>
 
