@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Product } from '@/lib/products';
 import { useCart } from '@/context/CartContext';
-import { ShoppingBag, Truck, ShieldCheck, RefreshCw, Star, Check } from 'lucide-react';
+import { ShoppingBag, Truck, ShieldCheck, RefreshCw, Star, Check, Sparkles, MapPin } from 'lucide-react';
 
 interface ProductDetailsClientProps {
   product: Product;
@@ -27,7 +27,7 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
       
       {/* Left: Gallery */}
       <div className="space-y-4">
-        <div className="relative aspect-square bg-[#F7F5F2] border border-[#CFCFCF]/50 rounded-sm overflow-hidden">
+        <div className="relative aspect-[3/4] bg-[#F7F5F2] border border-[#CFCFCF]/50 rounded-xl overflow-hidden shadow-lg">
           <Image
             src={selectedImage || product.images[0]}
             alt={product.name}
@@ -36,19 +36,19 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
-          <div className="absolute top-4 left-4 bg-[#0D0D0B] text-[#D9A87E] text-xs uppercase tracking-widest font-semibold px-3 py-1.5">
+          <div className="absolute top-4 left-4 bg-[#0D0D0B]/80 text-[#D9A87E] text-xs uppercase tracking-widest font-semibold px-3 py-1.5 backdrop-blur-md rounded-full">
             {product.categoryLabel}
           </div>
         </div>
 
         {product.images.length > 1 && (
-          <div className="flex gap-3">
+          <div className="flex gap-3 pt-2">
             {product.images.map((img, idx) => (
               <button
                 key={idx}
                 onClick={() => setSelectedImage(img)}
-                className={`relative w-20 h-20 bg-[#F7F5F2] border rounded-sm overflow-hidden transition-all ${
-                  selectedImage === img ? 'border-[#734C1D] ring-2 ring-[#734C1D]/30' : 'border-[#CFCFCF]'
+                className={`relative w-20 h-24 bg-[#F7F5F2] border rounded-lg overflow-hidden transition-all ${
+                  selectedImage === img ? 'border-[#734C1D] ring-2 ring-[#734C1D]/30 shadow-md' : 'border-[#CFCFCF] opacity-70 hover:opacity-100'
                 }`}
               >
                 <Image src={img} alt={`${product.name} - ujęcie ${idx + 1}`} fill className="object-cover" />
@@ -70,7 +70,7 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
 
           {/* Rating */}
           <div className="flex items-center gap-2 mt-3">
-            <div className="flex text-[#734C1D]">
+            <div className="flex text-[#D9A87E]">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-4 h-4 fill-current" />
               ))}
@@ -81,10 +81,28 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
           </div>
         </div>
 
+        {/* 2 + 1 GRATIS Promo Box */}
+        <div className="bg-[#0D0D0B] text-white p-4 rounded-xl flex items-center justify-between shadow-md border border-[#D9A87E]/30">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[#D9A87E]/20 text-[#D9A87E] flex items-center justify-center shrink-0">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#D9A87E]">Zestaw 2 + 1 GRATIS</h4>
+              <p className="text-[12px] text-gray-300 font-light mt-0.5">Kup dwa duragi, a trzeci otrzymasz gratis!</p>
+            </div>
+          </div>
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#D9A87E] bg-white/10 px-3 py-1 rounded-full">
+            Promocja
+          </span>
+        </div>
+
         {/* Price */}
-        <div className="text-2xl font-semibold text-[#0D0D0B] pb-4 border-b border-[#CFCFCF]/40">
-          {product.price.toFixed(2)} PLN
-          <span className="text-xs text-[#2E7D32] font-normal ml-3">Darmowa dostawa w PL</span>
+        <div className="text-3xl font-bold text-[#0D0D0B] pb-4 border-b border-[#CFCFCF]/40 flex items-center justify-between">
+          <div>
+            <span>{product.price.toFixed(2)} PLN</span>
+            <span className="text-xs text-[#2E7D32] font-normal block mt-1">Darmowa dostawa w całej Polsce</span>
+          </div>
         </div>
 
         {/* Description */}
@@ -95,17 +113,17 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
         {/* Quantity & Add to Cart */}
         <div className="pt-4 space-y-4">
           <div className="flex items-center gap-4">
-            <div className="flex items-center border border-[#CFCFCF]">
+            <div className="flex items-center border border-[#CFCFCF] rounded-full overflow-hidden">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="px-3 py-2 text-sm text-[#3B3C40] hover:bg-gray-100"
+                className="px-4 py-2.5 text-sm text-[#3B3C40] hover:bg-gray-100 font-bold"
               >
                 -
               </button>
-              <span className="px-4 text-sm font-semibold">{quantity}</span>
+              <span className="px-4 text-sm font-bold">{quantity}</span>
               <button
                 onClick={() => setQuantity(quantity + 1)}
-                className="px-3 py-2 text-sm text-[#3B3C40] hover:bg-gray-100"
+                className="px-4 py-2.5 text-sm text-[#3B3C40] hover:bg-gray-100 font-bold"
               >
                 +
               </button>
@@ -113,7 +131,7 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
 
             <button
               onClick={handleAddToCart}
-              className="flex-grow bg-[#0D0D0B] hover:bg-[#734C1D] text-white py-3.5 px-8 text-xs font-semibold uppercase tracking-[0.2em] transition-colors rounded-full flex items-center justify-center gap-2"
+              className="flex-grow bg-[#0D0D0B] hover:bg-[#734C1D] text-white py-4 px-8 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-full flex items-center justify-center gap-2 shadow-lg"
             >
               <ShoppingBag className="w-4 h-4" />
               <span>Dodaj do koszyka</span>
@@ -121,7 +139,7 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
           </div>
 
           {addedMessage && (
-            <div className="bg-[#2E7D32]/10 border border-[#2E7D32]/30 text-[#2E7D32] text-xs p-3 rounded-sm flex items-center gap-2 animate-fade-in">
+            <div className="bg-[#2E7D32]/10 border border-[#2E7D32]/30 text-[#2E7D32] text-xs p-3.5 rounded-lg flex items-center gap-2 animate-fade-in font-medium">
               <Check className="w-4 h-4" />
               <span>Dodano produkt do koszyka! Otwórz koszyk, aby dokończyć zamówienie.</span>
             </div>
@@ -147,25 +165,25 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
               <span>Zewnętrzny bezodciskowy</span>
             </div>
             <div>
-              <span className="block font-semibold text-[#0D0D0B]">Konserwacja:</span>
-              <span>Pranie ręczne 30°C</span>
+              <span className="block font-semibold text-[#0D0D0B]">Pochodzenie:</span>
+              <span>Wyprodukowano w Polsce (Warszawa)</span>
             </div>
           </div>
         </div>
 
         {/* Trust Points */}
-        <div className="bg-[#F7F5F2] p-4 border border-[#CFCFCF]/50 rounded-sm space-y-2 text-xs text-[#3B3C40]">
-          <div className="flex items-center gap-2">
-            <Truck className="w-4 h-4 text-[#734C1D]" />
-            <span>Wysyłka w 1–2 dni z magazynu w Warszawie</span>
+        <div className="bg-[#F7F5F2] p-5 border border-[#CFCFCF]/50 rounded-xl space-y-3 text-xs text-[#3B3C40]">
+          <div className="flex items-center gap-2.5">
+            <Truck className="w-4 h-4 text-[#734C1D] shrink-0" />
+            <span>Wysyłka z Warszawy w 1 dzień • Darmowa dostawa InPost & Kurier</span>
           </div>
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#734C1D]" />
-            <span>Gwarancja 14 dni na darmowy zwrot towaru</span>
+          <div className="flex items-center gap-2.5">
+            <MapPin className="w-4 h-4 text-[#734C1D] shrink-0" />
+            <span>Odbiór osobisty w Warszawie (ul. Włodarzewska 4 / Centrum)</span>
           </div>
-          <div className="flex items-center gap-2">
-            <RefreshCw className="w-4 h-4 text-[#734C1D]" />
-            <span>Oryginalny produkt z polskiej szwalni</span>
+          <div className="flex items-center gap-2.5">
+            <ShieldCheck className="w-4 h-4 text-[#734C1D] shrink-0" />
+            <span>14 dni na bezproblemowy zwrot lub wymianę</span>
           </div>
         </div>
 

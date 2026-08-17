@@ -350,8 +350,25 @@ a {
 
 .site-header.scrolled {
   height: var(--header-height-scrolled);
-  background-color: rgba(5, 5, 5, 0.95);
-  box-shadow: var(--shadow-subtle);
+  background-color: #0D0D0B;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.site-header.scrolled .nav-links a {
+  color: #FFFFFF;
+}
+
+.site-header.scrolled .nav-links a:hover {
+  color: #D9A87E;
+}
+
+.site-header.scrolled .action-btn {
+  color: #FFFFFF;
+}
+
+.site-header.scrolled .hamburger span {
+  background-color: #FFFFFF;
 }
 
 

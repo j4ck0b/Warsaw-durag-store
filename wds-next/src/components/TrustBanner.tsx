@@ -1,5 +1,5 @@
 import React from 'react';
-import { Truck, ShieldCheck, RefreshCw, Award } from 'lucide-react';
+import { Truck, ShieldCheck, RefreshCw, MapPin } from 'lucide-react';
 
 export default function TrustBanner() {
   return (
@@ -39,11 +39,11 @@ export default function TrustBanner() {
 
           <div className="flex items-center gap-3.5">
             <div className="w-10 h-10 rounded-full bg-white border border-[#CFCFCF] flex items-center justify-center text-[#734C1D] shrink-0">
-              <Award className="w-5 h-5 stroke-[1.5]" />
+              <MapPin className="w-5 h-5 stroke-[1.5]" />
             </div>
             <div>
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-[#0D0D0B]">Jedwab 19 Momme</h4>
-              <p className="text-[12px] text-[#3B3C40] font-light mt-0.5">Gwarancja 100% naturalnego jedwabiu</p>
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-[#0D0D0B]">Odbiór w Warszawie</h4>
+              <p className="text-[12px] text-[#3B3C40] font-light mt-0.5">ul. Włodarzewska 4 lub Centrum</p>
             </div>
           </div>
 

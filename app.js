@@ -184,12 +184,15 @@ window.addEventListener('load', hidePreloader);
 // Safety timeout: hide preloader after 2s maximum anyway to avoid hanging on slow network asset load
 setTimeout(hidePreloader, 2000);
 
-// Sticky Glassmorphic Header transition on scroll
+// Sticky Navigation Header transition on scroll with logo color swapping
 window.addEventListener('scroll', () => {
+  const headerLogo = document.getElementById('headerLogo');
   if (window.scrollY > 50) {
     DOM.siteHeader.classList.add('scrolled');
+    if (headerLogo) headerLogo.src = './assets/logo_white.png';
   } else {
     DOM.siteHeader.classList.remove('scrolled');
+    if (headerLogo) headerLogo.src = './assets/logo_black.png';
   }
 });
 
