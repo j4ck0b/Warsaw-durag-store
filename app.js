@@ -232,7 +232,7 @@ function bindEventListeners() {
         e.preventDefault();
         
         // Close drawer if open
-        if (DOM.mobileNavDrawer.classList.contains('active')) {
+        if (DOM.mobileNavDrawer && DOM.mobileNavDrawer.classList.contains('active')) {
           toggleMobileNav();
         }
         
@@ -276,23 +276,27 @@ function bindEventListeners() {
     });
   });
 
-  // Cart Drawer Toggles
-  DOM.cartTrigger.addEventListener('click', openCartDrawer);
-  DOM.cartCloseBtn.addEventListener('click', closeCartDrawer);
-  DOM.cartOverlay.addEventListener('click', (e) => {
-    if (e.target === DOM.cartOverlay) closeCartDrawer();
-  });
+  // Cart Drawer Toggles with Null Guards
+  if (DOM.cartTrigger) DOM.cartTrigger.addEventListener('click', openCartDrawer);
+  if (DOM.cartCloseBtn) DOM.cartCloseBtn.addEventListener('click', closeCartDrawer);
+  if (DOM.cartOverlay) {
+    DOM.cartOverlay.addEventListener('click', (e) => {
+      if (e.target === DOM.cartOverlay) closeCartDrawer();
+    });
+  }
 
   // Cart actions: Qty, Delete, Apply Promo, Checkout
-  DOM.cartItemsContainer.addEventListener('click', handleCartItemClicks);
-  DOM.cartPromoApplyBtn.addEventListener('click', handleApplyPromoCode);
-  DOM.checkoutBtn.addEventListener('click', handleCheckoutProcess);
+  if (DOM.cartItemsContainer) DOM.cartItemsContainer.addEventListener('click', handleCartItemClicks);
+  if (DOM.cartPromoApplyBtn) DOM.cartPromoApplyBtn.addEventListener('click', handleApplyPromoCode);
+  if (DOM.checkoutBtn) DOM.checkoutBtn.addEventListener('click', handleCheckoutProcess);
 
   // Product Modal Toggles
-  DOM.modalCloseBtn.addEventListener('click', closeProductModal);
-  DOM.productModal.addEventListener('click', (e) => {
-    if (e.target === DOM.productModal) closeProductModal();
-  });
+  if (DOM.modalCloseBtn) DOM.modalCloseBtn.addEventListener('click', closeProductModal);
+  if (DOM.productModal) {
+    DOM.productModal.addEventListener('click', (e) => {
+      if (e.target === DOM.productModal) closeProductModal();
+    });
+  }
   
   if (DOM.modalGalleryPrev) {
     DOM.modalGalleryPrev.addEventListener('click', (e) => {
@@ -316,9 +320,9 @@ function bindEventListeners() {
   });
 
   // Modal Quantity adjustment
-  DOM.modalQtyMinus.addEventListener('click', () => adjustModalQty(-1));
-  DOM.modalQtyPlus.addEventListener('click', () => adjustModalQty(1));
-  DOM.modalAddBtn.addEventListener('click', handleAddFromModal);
+  if (DOM.modalQtyMinus) DOM.modalQtyMinus.addEventListener('click', () => adjustModalQty(-1));
+  if (DOM.modalQtyPlus) DOM.modalQtyPlus.addEventListener('click', () => adjustModalQty(1));
+  if (DOM.modalAddBtn) DOM.modalAddBtn.addEventListener('click', handleAddFromModal);
 
   // Modal Tabs (Accordion details)
   DOM.tabHeaders.forEach(header => {
@@ -327,6 +331,44 @@ function bindEventListeners() {
       toggleModalTab(header, tabName);
     });
   });
+
+  // Initialize EU Multi-language Switcher
+  initLanguageSwitcher();
+}
+
+function initLanguageSwitcher() {
+  const langBtn = document.getElementById('langBtn');
+  const langDropdown = document.getElementById('langDropdown');
+  const currentLangText = document.getElementById('currentLangText');
+
+  if (langBtn && langDropdown) {
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      langDropdown.style.display = langDropdown.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.addEventListener('click', () => {
+      langDropdown.style.display = 'none';
+    });
+
+    const langOpts = langDropdown.querySelectorAll('.lang-opt');
+    langOpts.forEach(opt => {
+      opt.addEventListener('click', () => {
+        const lang = opt.getAttribute('data-lang');
+        if (lang) {
+          if (currentLangText) currentLangText.textContent = lang;
+          localStorage.setItem('wds_lang', lang);
+          langDropdown.style.display = 'none';
+        }
+      });
+    });
+
+    const saved = localStorage.getItem('wds_lang');
+    if (saved && currentLangText) {
+      currentLangText.textContent = saved;
+    }
+  }
+}
 
   // Newsletter Submit Form validation
   if (DOM.newsletterForm) {

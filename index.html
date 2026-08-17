@@ -113,9 +113,20 @@
       <!-- Navigation Actions -->
       <div class="nav-actions">
         <!-- Language dropdown button -->
-        <button class="action-btn" id="langBtn" title="Język / Language" style="font-size: 11px; font-weight: bold;">
-          <span>PL</span>
-        </button>
+        <div style="position: relative;">
+          <button class="action-btn" id="langBtn" title="Wybierz język / Change language" style="font-size: 11px; font-weight: bold; padding: 6px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px;">
+            <span>🌐 </span><span id="currentLangText">PL</span>
+          </button>
+          <div id="langDropdown" class="lang-dropdown" style="display: none; position: absolute; right: 0; top: 100%; margin-top: 8px; background: #0D0D0B; border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 6px 0; z-index: 1000; min-width: 130px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
+            <button class="lang-opt" data-lang="PL" style="display: flex; justify-content: space-between; width: 100%; padding: 8px 16px; background: none; border: none; color: #fff; text-align: left; font-size: 12px; cursor: pointer;"><span>Polski</span> <span style="opacity:0.5;">[PL]</span></button>
+            <button class="lang-opt" data-lang="EN" style="display: flex; justify-content: space-between; width: 100%; padding: 8px 16px; background: none; border: none; color: #fff; text-align: left; font-size: 12px; cursor: pointer;"><span>English</span> <span style="opacity:0.5;">[EN]</span></button>
+            <button class="lang-opt" data-lang="DE" style="display: flex; justify-content: space-between; width: 100%; padding: 8px 16px; background: none; border: none; color: #fff; text-align: left; font-size: 12px; cursor: pointer;"><span>Deutsch</span> <span style="opacity:0.5;">[DE]</span></button>
+            <button class="lang-opt" data-lang="FR" style="display: flex; justify-content: space-between; width: 100%; padding: 8px 16px; background: none; border: none; color: #fff; text-align: left; font-size: 12px; cursor: pointer;"><span>Français</span> <span style="opacity:0.5;">[FR]</span></button>
+            <button class="lang-opt" data-lang="ES" style="display: flex; justify-content: space-between; width: 100%; padding: 8px 16px; background: none; border: none; color: #fff; text-align: left; font-size: 12px; cursor: pointer;"><span>Español</span> <span style="opacity:0.5;">[ES]</span></button>
+            <button class="lang-opt" data-lang="CZ" style="display: flex; justify-content: space-between; width: 100%; padding: 8px 16px; background: none; border: none; color: #fff; text-align: left; font-size: 12px; cursor: pointer;"><span>Čeština</span> <span style="opacity:0.5;">[CZ]</span></button>
+            <button class="lang-opt" data-lang="LT" style="display: flex; justify-content: space-between; width: 100%; padding: 8px 16px; background: none; border: none; color: #fff; text-align: left; font-size: 12px; cursor: pointer;"><span>Lietuvių</span> <span style="opacity:0.5;">[LT]</span></button>
+          </div>
+        </div>
 
         <!-- Search trigger -->
         <button class="action-btn" id="searchBtn" aria-label="Szukaj">
@@ -429,6 +440,98 @@
       
     </div>
   </footer>
+
+  <!-- ================= SLIDE-OUT CART DRAWER ================= -->
+  <div class="cart-overlay" id="cartOverlay">
+    <div class="cart-drawer" id="cartDrawer">
+      <div class="cart-header">
+        <h2 class="cart-title" id="cartTitleText">Twój Koszyk (<span id="cartHeaderCount">0</span>)</h2>
+        <button class="cart-close-btn" id="cartCloseBtn" aria-label="Zamknij koszyk">&times;</button>
+      </div>
+
+      <div class="cart-items-container" id="cartItemsContainer">
+        <!-- Dynamic Cart Items rendered via app.js -->
+      </div>
+
+      <div class="cart-footer" id="cartFooter">
+        <div class="promo-box">
+          <input type="text" id="cartPromoInput" placeholder="Kod rabatowy (np. WARSAW10)">
+          <button id="cartPromoApplyBtn" class="btn-minimal">Użyj</button>
+        </div>
+        <div id="promoStatusMsg" class="promo-status"></div>
+
+        <div class="cart-summary-row">
+          <span>Suma częściowa:</span>
+          <span id="cartSubtotal">0.00 PLN</span>
+        </div>
+        <div class="cart-summary-row discount-row" id="cartDiscountRow" style="display: none;">
+          <span>Rabat (<span id="cartDiscountPercent">0</span>%):</span>
+          <span id="cartDiscountVal">-0.00 PLN</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Dostawa:</span>
+          <span id="cartShipping" style="color: #2E7D32; font-weight: bold;">Darmowa (EU Express)</span>
+        </div>
+        <div class="cart-summary-row total-row">
+          <span>Łącznie:</span>
+          <span id="cartTotal">0.00 PLN</span>
+        </div>
+
+        <button class="btn-minimal checkout-btn" id="checkoutBtn" style="width: 100%; margin-top: 16px; background-color: var(--color-primary); color: var(--color-black);">Przejdź do dostawy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PRODUCT QUICK VIEW MODAL ================= -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-container">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Zamknij podgląd">&times;</button>
+      
+      <div class="modal-body-grid">
+        <div class="modal-gallery">
+          <div class="modal-main-img-wrap">
+            <img id="modalImg" src="" alt="Product Image">
+            <button id="modalGalleryPrev" class="gallery-nav prev" aria-label="Poprzednie zdjęcie">&lsaquo;</button>
+            <button id="modalGalleryNext" class="gallery-nav next" aria-label="Następne zdjęcie">&rsaquo;</button>
+          </div>
+          <div id="modalThumbnails" class="modal-thumbnails"></div>
+        </div>
+
+        <div class="modal-details">
+          <span id="modalCategory" class="product-category"></span>
+          <h2 id="modalTitle" class="modal-title"></h2>
+          <div class="rating-row">
+            <span id="modalReviewsCount" class="reviews-count"></span>
+          </div>
+          <div id="modalPrice" class="modal-price"></div>
+          <span id="modalMaterial" class="modal-material"></span>
+          
+          <div id="modalColors" class="modal-colors-wrap"></div>
+          
+          <p id="modalDesc" class="modal-description"></p>
+
+          <div class="modal-actions">
+            <div class="quantity-picker">
+              <button id="modalQtyMinus">-</button>
+              <span id="modalQtyVal">1</span>
+              <button id="modalQtyPlus">+</button>
+            </div>
+            <button id="modalAddBtn" class="btn-minimal accent" style="flex-grow: 1;">Dodaj do koszyka</button>
+          </div>
+
+          <div class="modal-tabs" style="margin-top: 24px;">
+            <div class="tab-headers" style="display: flex; gap: 16px; border-b: 1px solid var(--border-color-light); padding-bottom: 8px;">
+              <button class="tab-header active" data-tab="details" style="background: none; border: none; font-weight: bold; cursor: pointer;">Szczegóły</button>
+              <button class="tab-header" data-tab="reviews" style="background: none; border: none; font-weight: bold; cursor: pointer;">Opinie</button>
+            </div>
+            <div id="modalTabContent" class="tab-content" style="padding-top: 12px; font-size: 0.9rem;">
+              <div id="modalReviewsList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="./products.js"></script>
   <script src="./app.js"></script>
