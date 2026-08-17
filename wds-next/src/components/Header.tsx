@@ -60,7 +60,7 @@ export default function Header() {
           {/* Logo with double color version */}
           <Link href="/" className="flex items-center gap-3 group py-2">
             <Image
-              src={isScrolled ? "/assets/logo_black.png" : "/assets/logo_white.png"}
+              src={isScrolled ? "/assets/logo_white.png" : "/assets/logo_black.png"}
               alt="Warsaw Durag Store Logo"
               width={280}
               height={100}

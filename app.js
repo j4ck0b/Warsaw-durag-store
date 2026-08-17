@@ -180,6 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize Information & Legal Modals
   if (typeof initInfoModals === 'function') initInfoModals();
 
+  // Initialize About Us Section Carousel
+  if (typeof initAboutCarousel === 'function') initAboutCarousel();
+
   // Initialize Scroll Lock Observer
   if (typeof initScrollLockObserver === 'function') initScrollLockObserver();
 
@@ -197,7 +200,7 @@ window.addEventListener('scroll', () => {
   const headerLogo = document.getElementById('headerLogo');
   if (window.scrollY > 50) {
     DOM.siteHeader.classList.add('scrolled');
-    if (headerLogo) headerLogo.src = './assets/logo_black.png';
+    if (headerLogo) headerLogo.src = './assets/logo_white.png';
   } else {
     DOM.siteHeader.classList.remove('scrolled');
     if (headerLogo) headerLogo.src = './assets/logo_white.png';
@@ -337,6 +340,242 @@ function bindEventListeners() {
   }
 }
 
+// ========================================================================
+// I18N DICTIONARY & MULTI-LANGUAGE TRANSLATIONS
+// ========================================================================
+const I18N = {
+  PL: {
+    heroTitle: 'Ręcznie szyte duragi.<br><span style="color: #D9A87E; font-style: italic;">Bo styl rodzi się na głowie</span>.',
+    heroSubtitle: 'Jedyne duragi szyte w Polsce',
+    heroAccent: '[ Duragi Najlepszej Jakości ]',
+    heroCta: 'Odkryj kolekcję',
+    marquee: 'Wysyłamy z Warszawy w 1 dzień • kup dwa a trzeci otrzymasz gratis • Darmowa wysyłka • ręcznie szyte duragi • odbiór osobisty w warszawie • ',
+    filterAll: 'Wszystko',
+    filterSilk: 'Jedwabne',
+    filterSatin: 'Satynowe',
+    filterVelvet: 'Welurowe',
+    filterSeasonal: 'Sezonowe materiały',
+    filterAccessories: 'Akcesoria',
+    addToCart: 'Dodaj do koszyka',
+    dealBadge: '2+1 Gratis',
+    emptyCatalog: 'Brak dostępnych produktów w wybranej kategorii.',
+    categoryDesc: {
+      all: 'Kompletna kolekcja ręcznie szytych duragów w Warszawie — z czystego jedwabiu morwowego 19 Momme, satyny, weluru oraz materiałów sezonowych.',
+      silk: 'Luksusowy naturalny jedwab morwowy 19 Momme zapewniający najwyższą gładkość, zerowe tarcie i idealną ochronę fal 360.',
+      satin: 'Gładka satyna poliestrowa łącząca trwałość, komfort noszenia i charakterystyczny połysk na co dzień.',
+      velvet: 'Mięsisty, głęboko teksturowany welur o wyrazistej strukturze, idealny do stabilnej kompresji fal.',
+      seasonal: 'Wyjątkowe tkaniny takie jak len, cupro i krepa satynowa Mirella stworzone na różne pory roku.',
+      accessories: 'Szczotki wave brush z naturalnego włosia dzika, wave capy i niezbędne akcesoria do pielęgnacji 360 waves.'
+    }
+  },
+  EN: {
+    heroTitle: 'Handcrafted Luxury Durags.<br><span style="color: #D9A87E; font-style: italic;">Style begins at the crown</span>.',
+    heroSubtitle: 'The Only Durags Handcrafted in Poland',
+    heroAccent: '[ Premium Quality Durags ]',
+    heroCta: 'Explore Collection',
+    marquee: 'Express 24h shipping from Warsaw • Buy 2 Get 1 Free • Free EU Shipping • Handcrafted in Warsaw • Local pickup available • ',
+    filterAll: 'All Products',
+    filterSilk: 'Silk Durags',
+    filterSatin: 'Satin Durags',
+    filterVelvet: 'Velvet Durags',
+    filterSeasonal: 'Seasonal Fabrics',
+    filterAccessories: 'Accessories',
+    addToCart: 'Add to Cart',
+    dealBadge: 'Buy 2 Get 1 Free',
+    emptyCatalog: 'No products available in this category.',
+    categoryDesc: {
+      all: 'Complete collection of handcrafted luxury durags from Warsaw — 19 Momme mulberry silk, sleek satin, velvet and seasonal fabrics.',
+      silk: 'Grade-6A 19 Momme mulberry silk offering maximum smoothness, zero friction and superior 360 wave protection.',
+      satin: 'Ultra-smooth premium satin combining durability, comfortable stretch and radiant everyday shine.',
+      velvet: 'Plush, deeply textured velvet providing optimal compression, weight and rich aesthetic depth.',
+      seasonal: 'Unique breathable textiles including natural linen, cupro, and crepe satin crafted for each season.',
+      accessories: 'Natural boar bristle wave brushes, compression caps and essential 360 wave accessories.'
+    }
+  },
+  CZ: {
+    heroTitle: 'Ručně šité prémiové duragy.<br><span style="color: #D9A87E; font-style: italic;">Styl začíná na hlavě</span>.',
+    heroSubtitle: 'Jediné duragy šité v Polsku',
+    heroAccent: '[ Duragy nejvyšší kvality ]',
+    heroCta: 'Objevte kolekci',
+    marquee: 'Expresní odeslání z Varšavy do 24h • Kupte 2 Získejte 1 Zdarma • Doprava zdarma v EU • Ruční výroba • ',
+    filterAll: 'Všechny produkty',
+    filterSilk: 'Hedvábné duragy',
+    filterSatin: 'Saténové duragy',
+    filterVelvet: 'Sametové duragy',
+    filterSeasonal: 'Sezónní materiály',
+    filterAccessories: 'Doplňky',
+    addToCart: 'Přidat do košíku',
+    dealBadge: '2+1 Zdarma',
+    emptyCatalog: 'Žádné produkty v této kategorii.',
+    categoryDesc: {
+      all: 'Kompletní kolekce ručně šitých duragů z Varšavy — přírodní morušové hedvábí 19 Momme, satén, samet a sezónní len a cupro.',
+      silk: '100% přírodní morušové hedvábí 19 Momme pro nulové tření, maximální ochranu a luxusní péči o vlasy.',
+      satin: 'Hladký satén spojující odolnost, pohodlí při nošení a elegantní lesk pro každý den.',
+      velvet: 'Hustý, měkký samet s hlubokou strukturou pro pevnou a stabilní kompresi vln 360.',
+      seasonal: 'Sezónní přírodní len, cupro a saténový krep přizpůsobené měnícímu se počasí.',
+      accessories: 'Kartáče z kančích štětin na vlny, wave capy a prémiové doplňky pro péči o vlny.'
+    }
+  },
+  LT: {
+    heroTitle: 'Rankų darbo duragai.<br><span style="color: #D9A87E; font-style: italic;">Stilius prasideda nuo galvos</span>.',
+    heroSubtitle: 'Vieninteliai duragai, siuvami Lenkijoje',
+    heroAccent: '[ Aukščiausios kokybės duragai ]',
+    heroCta: 'Atraskite kolekciją',
+    marquee: 'Greitas išsiuntimas iš Varšuvos per 24 val. • Pirkite 2 Gaukite 1 Nemokamai • Nemokamas pristatymas ES • ',
+    filterAll: 'Visi produktai',
+    filterSilk: 'Šilkiniai duragai',
+    filterSatin: 'Satininiai duragai',
+    filterVelvet: 'Velūriniai duragai',
+    filterSeasonal: 'Sezoniniai audiniai',
+    filterAccessories: 'Aksesuarai',
+    addToCart: 'Įdėti į krepšelį',
+    dealBadge: '2+1 Nemokamai',
+    emptyCatalog: 'Šioje kategorijoje produktų nėra.',
+    categoryDesc: {
+      all: 'Pilna Varšuvoje rankomis siūtų duragų kolekcija — natūralus 19 Momme šilkmedžio šilkas, satinas, velūras ir sezoniniai audiniai.',
+      silk: '100% natūralus 19 Momme šilkmedžio šilkas suteikia maksimalų glotnumą ir 360 bangų apsaugą.',
+      satin: 'Aukščiausios kokybės satinas, derinantis ilgaamžiškumą, patogumą ir elegantišką blizgesį.',
+      velvet: 'Tvirtas velūras su gilia tekstūra, puikiai tinkantis patikimai kompresijai.',
+      seasonal: 'Sezoniniai audiniai, tokie kaip linas, cupro ir satino krepšas įvairiems metų laikams.',
+      accessories: 'Natūralių šerno šerių bangų šepečiai ir būtini 360 bangų priežiūros priedai.'
+    }
+  },
+  DE: {
+    heroTitle: 'Handgefertigte Luxus-Durags.<br><span style="color: #D9A87E; font-style: italic;">Stil beginnt am Kopf</span>.',
+    heroSubtitle: 'Die einzigen in Polen handgefertigten Durags',
+    heroAccent: '[ Höchste Qualität ]',
+    heroCta: 'Kollektion entdecken',
+    marquee: 'Express-Versand aus Warschau in 24h • Nimm 3 Zahle 2 • Kostenloser EU-Versand • Handarbeit • ',
+    filterAll: 'Alle Produkte',
+    filterSilk: 'Seidige Durags',
+    filterSatin: 'Satin Durags',
+    filterVelvet: 'Samt Durags',
+    filterSeasonal: 'Saisonale Stoffe',
+    filterAccessories: 'Zubehör',
+    addToCart: 'In den Warenkorb',
+    dealBadge: '3 für 2',
+    emptyCatalog: 'Keine Produkte in dieser Kategorie verfügbar.',
+    categoryDesc: {
+      all: 'Komplette Kollektion handgefertigter Durags aus Warschau — 19 Momme Maulbeerseide, Satin, Samt und Saisonstoffe.',
+      silk: '100% reine 19 Momme Maulbeerseide für minimale Reibung und maximalen Schutz der 360 Waves.',
+      satin: 'Glatter Premium-Satin für Langlebigkeit, Komfort und edlen Glanz im Alltag.',
+      velvet: 'Edler Samt mit dichter Struktur für optimale Kompression und Halt.',
+      seasonal: 'Besondere saisonale Stoffe wie Leinen, Cupro und Satin-Krepp.',
+      accessories: 'Wave-Bürsten aus echten Wildschweinborsten und Zubehör für 360 Waves.'
+    }
+  },
+  FR: {
+    heroTitle: 'Durags de luxe faits main.<br><span style="color: #D9A87E; font-style: italic;">Le style commence par la tête</span>.',
+    heroSubtitle: 'Les seuls durags confectionnés en Pologne',
+    heroAccent: '[ Qualité Supérieure ]',
+    heroCta: 'Découvrir la collection',
+    marquee: 'Expédition express depuis Varsovie en 24h • 2 achetés 1 offert • Livraison gratuite en Europe • ',
+    filterAll: 'Tous les produits',
+    filterSilk: 'Durags en Soie',
+    filterSatin: 'Durags en Satin',
+    filterVelvet: 'Durags en Velours',
+    filterSeasonal: 'Matières de Saison',
+    filterAccessories: 'Accessoires',
+    addToCart: 'Ajouter au panier',
+    dealBadge: '2+1 Offert',
+    emptyCatalog: 'Aucun produit dans cette catégorie.',
+    categoryDesc: {
+      all: 'Collection complète de durags de luxe cousus main à Varsovie — soie de mûrier 19 Momme, satin, velours et matières de saison.',
+      silk: 'Soie de mûrier naturelle 19 Momme pour zéro friction et une protection optimale des 360 waves.',
+      satin: 'Satin soyeux premium alliant confort, brillance et tenue quotidienne.',
+      velvet: 'Velours dense et texturé pour une compression parfaite.',
+      seasonal: 'Matières saisonnières comme le lin respirant et le cupro.',
+      accessories: 'Brosses en poils de sanglier et accessoires de compression 360 waves.'
+    }
+  },
+  ES: {
+    heroTitle: 'Durags artesanales de lujo.<br><span style="color: #D9A87E; font-style: italic;">El estilo nace en la cabeza</span>.',
+    heroSubtitle: 'Los únicos durags hechos en Polonia',
+    heroAccent: '[ Máxima Calidad ]',
+    heroCta: 'Descubrir colección',
+    marquee: 'Envío exprés desde Varsovia en 24h • Compra 2 y Llévate 1 Gratis • Envío gratis en Europa • ',
+    filterAll: 'Todos los productos',
+    filterSilk: 'Durags de Seda',
+    filterSatin: 'Durags de Satén',
+    filterVelvet: 'Durags de Terciopelo',
+    filterSeasonal: 'De Temporada',
+    filterAccessories: 'Accesorios',
+    addToCart: 'Añadir a la cesta',
+    dealBadge: '2+1 Gratis',
+    emptyCatalog: 'No hay productos disponibles en esta categoría.',
+    categoryDesc: {
+      all: 'Colección completa de durags cosidos a mano en Varsovia — seda de morera 19 Momme, satén, terciopelo y telas de temporada.',
+      silk: 'Seda de morera natural 19 Momme para cero fricción y máxima protección de 360 waves.',
+      satin: 'Satén suave de alta calidad que combina ligereza, brillo y durabilidad.',
+      velvet: 'Terciopelo suave y denso con excelente fijación y compresión.',
+      seasonal: 'Tejidos estacionales transpirables como lino natural y cupro.',
+      accessories: 'Cepillos de cerdas de jabalí y accesorios esenciales para ondas 360.'
+    }
+  }
+};
+
+function getActiveLanguage() {
+  const stored = localStorage.getItem('wds_lang');
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramLang = urlParams.get('lang');
+  if (paramLang && I18N[paramLang.toUpperCase()]) {
+    return paramLang.toUpperCase();
+  }
+  if (stored && I18N[stored]) {
+    return stored;
+  }
+  return 'PL';
+}
+
+function applyLanguage(lang) {
+  const dict = I18N[lang] || I18N.PL;
+  localStorage.setItem('wds_lang', lang);
+
+  const currentLangText = document.getElementById('currentLangText');
+  if (currentLangText) currentLangText.textContent = lang;
+
+  // Hero section translations
+  const heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) heroTitle.innerHTML = dict.heroTitle;
+  const heroSubtitle = document.querySelector('.hero-subtitle');
+  if (heroSubtitle) heroSubtitle.textContent = dict.heroSubtitle;
+  const heroAccent = document.querySelector('.hero-content .script-accent');
+  if (heroAccent) heroAccent.textContent = dict.heroAccent;
+  const heroCta = document.querySelector('.hero-actions a');
+  if (heroCta) heroCta.textContent = dict.heroCta;
+
+  // Category filter buttons
+  const catMap = {
+    all: dict.filterAll,
+    silk: dict.filterSilk,
+    satin: dict.filterSatin,
+    velvet: dict.filterVelvet,
+    seasonal: dict.filterSeasonal,
+    accessories: dict.filterAccessories
+  };
+  DOM.filterBtns.forEach(btn => {
+    const cat = btn.getAttribute('data-category');
+    if (cat && catMap[cat]) {
+      btn.textContent = catMap[cat];
+    }
+  });
+
+  // Category dynamic description box
+  updateCategoryDescription(state.activeCategory || 'all');
+
+  // Re-render product grid
+  renderProductGrid();
+}
+
+function updateCategoryDescription(category) {
+  const descBox = document.getElementById('categoryDescBox');
+  if (!descBox) return;
+  const lang = getActiveLanguage();
+  const dict = I18N[lang] || I18N.PL;
+  const desc = dict.categoryDesc[category] || dict.categoryDesc.all;
+  descBox.textContent = desc;
+}
+
 function initLanguageSwitcher() {
   const langBtn = document.getElementById('langBtn');
   const langDropdown = document.getElementById('langDropdown');
@@ -356,18 +595,15 @@ function initLanguageSwitcher() {
     langOpts.forEach(opt => {
       opt.addEventListener('click', () => {
         const lang = opt.getAttribute('data-lang');
-        if (lang) {
-          if (currentLangText) currentLangText.textContent = lang;
-          localStorage.setItem('wds_lang', lang);
+        if (lang && I18N[lang]) {
+          applyLanguage(lang);
           langDropdown.style.display = 'none';
         }
       });
     });
 
-    const saved = localStorage.getItem('wds_lang');
-    if (saved && currentLangText) {
-      currentLangText.textContent = saved;
-    }
+    const activeLang = getActiveLanguage();
+    applyLanguage(activeLang);
   }
 }
 
@@ -405,14 +641,16 @@ function setActiveFilter(category) {
     }
   });
 
+  updateCategoryDescription(category);
+
   // Fade-out catalog, filter, then fade-in
-  DOM.productGrid.style.transition = 'opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
+  DOM.productGrid.style.transition = 'opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
   DOM.productGrid.style.opacity = '0';
   
   setTimeout(() => {
     renderProductGrid();
     DOM.productGrid.style.opacity = '1';
-  }, 300);
+  }, 250);
 }
 
 // ========================================================================
@@ -425,9 +663,11 @@ function renderProductGrid() {
     : products.filter(p => p.category === state.activeCategory);
     
   DOM.productGrid.innerHTML = '';
+  const lang = getActiveLanguage();
+  const dict = I18N[lang] || I18N.PL;
   
   if (filtered.length === 0) {
-    DOM.productGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--color-secondary); padding: 40px 0;">Brak dostępnych produktów w wybranej kategorii.</p>`;
+    DOM.productGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--color-secondary); padding: 40px 0;">${dict.emptyCatalog}</p>`;
     return;
   }
   
@@ -436,47 +676,39 @@ function renderProductGrid() {
     card.className = 'product-card reveal active';
     card.setAttribute('data-id', p.id);
     
-    // Add specific visual flags
+    // Visual badge
     let badgeHtml = '';
-    if (p.id === 1) {
+    if (p.category === 'silk') {
       badgeHtml = `<span class="product-badge gold">Morwowy bestseller</span>`;
-    } else if (p.id === 3) {
-      badgeHtml = `<span class="product-badge">Wyścigowy Welwet</span>`;
+    } else if (p.category === 'seasonal') {
+      badgeHtml = `<span class="product-badge">Sezonowy Drop</span>`;
     }
     
-    // Swatches render
-    let swatchesHtml = '';
-    if (p.colors && p.colors.length > 0) {
-      swatchesHtml = `<div class="swatches">`;
-      p.colors.forEach(c => {
-        swatchesHtml += `<span class="swatch" style="background-color: ${c.hex};" title="${c.name}"></span>`;
-      });
-      swatchesHtml += `</div>`;
-    }
+    const displayName = (lang !== 'PL' && p.nameEn) ? p.nameEn : p.name;
+    const descSnippet = p.storyDescription || p.description;
 
     card.innerHTML = `
       <div class="product-image-container">
         ${badgeHtml}
-        <img class="product-card-img primary" src="${p.images[0]}" alt="${p.name}" loading="lazy">
-        <img class="product-card-img secondary" src="${p.images[1] || p.images[0]}" alt="${p.name} - detale" loading="lazy">
-        
-        <div class="quick-add-overlay">
-          <button class="btn-quick-add" data-action="quickadd" data-id="${p.id}">Dodaj do koszyka</button>
-        </div>
+        <img class="product-card-img primary" src="${p.images[0]}" alt="${displayName}" loading="lazy">
+        <img class="product-card-img secondary" src="${p.images[1] || p.images[0]}" alt="${displayName} - detale" loading="lazy">
       </div>
       
       <div class="product-info">
         <span class="product-category">${p.categoryLabel}</span>
-        <h3 class="product-title">${p.name}</h3>
+        <h3 class="product-title">${displayName}</h3>
+        <p class="product-card-desc">${descSnippet}</p>
         <div class="product-meta-row">
-          <span class="product-price">${p.price.toFixed(2)} PLN</span>
-          ${swatchesHtml}
+          <div class="product-price-box">
+            <span class="product-price">${p.price.toFixed(2)} PLN</span>
+            <span class="deal-badge">${dict.dealBadge}</span>
+          </div>
+          <button class="btn-card-add" data-action="quickadd" data-id="${p.id}">${dict.addToCart}</button>
         </div>
       </div>
     `;
     
     // Binding triggers
-    // Click card opens modal, except clicking the quick add button itself
     card.addEventListener('click', (e) => {
       if (e.target.closest('[data-action="quickadd"]')) {
         return;
@@ -496,6 +728,35 @@ function renderProductGrid() {
     }
     
     DOM.productGrid.appendChild(card);
+  });
+}
+
+// Carousel controller for About Us section
+function initAboutCarousel() {
+  const imgEl = document.getElementById('aboutCarouselImg');
+  const capEl = document.getElementById('aboutCarouselCaption');
+  const btns = document.querySelectorAll('.about-thumb-btn');
+  if (!imgEl || !btns.length) return;
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => {
+        b.classList.remove('active');
+        b.style.borderColor = 'rgba(255,255,255,0.2)';
+      });
+      btn.classList.add('active');
+      btn.style.borderColor = '#D9A87E';
+
+      const src = btn.getAttribute('data-src');
+      const cap = btn.getAttribute('data-cap');
+
+      imgEl.style.opacity = '0';
+      setTimeout(() => {
+        if (src) imgEl.src = src;
+        if (cap && capEl) capEl.textContent = cap;
+        imgEl.style.opacity = '1';
+      }, 200);
+    });
   });
 }
 
@@ -2577,7 +2838,13 @@ function initInfoModals() {
     linkDelivery: 'modalContentDelivery',
     linkTerms: 'modalContentTerms',
     linkPrivacy: 'modalContentPrivacy',
-    linkBlog: 'modalContentBlog'
+    linkBlog: 'modalContentBlog',
+    linkBlogFooter: 'modalContentBlog',
+    linkAboutModal: 'modalContentAbout',
+    linkAboutModalFooter: 'modalContentAbout',
+    linkAboutLegal: 'modalContentAbout',
+    linkContactModalFooter: 'modalContentContact',
+    linkContactLegal: 'modalContentContact'
   };
 
   function openModal(contentId) {

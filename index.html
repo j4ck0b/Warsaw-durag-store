@@ -293,7 +293,7 @@
           <h2 class="title">Unikalny styl</h2>
         </div>
         
-        <!-- Filter Tabs -->
+        <!-- Filter Tabs in exact required order -->
         <ul class="filter-tabs reveal" role="tablist">
           <li><button class="filter-btn active" data-category="all" role="tab" aria-selected="true">Wszystko</button></li>
           <li><button class="filter-btn" data-category="silk" role="tab" aria-selected="false">Jedwabne</button></li>
@@ -302,23 +302,30 @@
           <li><button class="filter-btn" data-category="seasonal" role="tab" aria-selected="false">Sezonowe materiały</button></li>
           <li><button class="filter-btn" data-category="accessories" role="tab" aria-selected="false">Akcesoria</button></li>
         </ul>
+
+        <!-- Category 1-Sentence Dynamic Description -->
+        <div class="category-desc-box reveal" id="categoryDescBox" style="text-align: center; margin: -10px auto 36px; max-width: 760px; color: var(--color-secondary); font-size: 14px; line-height: 1.6;">
+          Kompletna kolekcja ręcznie szytych duragów w Warszawie — z czystego jedwabiu morwowego 19 Momme, satyny, weluru oraz materiałów sezonowych.
+        </div>
         
-        <!-- Grid list of products (Pre-rendered for SEO & SSG/no-JS crawlers) -->
+        <!-- Grid list of products (Portrait 3/4 layout with clean button below photo) -->
         <div class="product-grid" id="productGrid">
           <article class="product-card reveal active" data-id="1160">
             <div class="product-image-container">
               <span class="product-badge gold">Morwowy bestseller</span>
-              <img class="product-card-img primary" src="./assets/durag_silk_black.png" alt="Durag Milanówek — Jedwabny" loading="lazy">
+              <img class="product-card-img primary" src="./assets/durag_silk_black.png" alt="Durag Milanówek — Jedwabny Czarny / Biały" loading="lazy">
               <img class="product-card-img secondary" src="./assets/durag_silk_champagne.png" alt="Durag Milanówek — detale" loading="lazy">
-              <div class="quick-add-overlay">
-                <button class="btn-quick-add" data-action="quickadd" data-id="1160">Dodaj do koszyka</button>
-              </div>
             </div>
             <div class="product-info">
               <span class="product-category">Czysty Jedwab Morwowy</span>
-              <h3 class="product-title">Durag Milanówek — Jedwabny</h3>
+              <h3 class="product-title">Durag Milanówek — Jedwabny Czarny / Biały</h3>
+              <p class="product-card-desc">Milanówek. Legendarna, polska stolica jedwabnictwa i przedwojenna elegancja. Najwyższej klasy naturalny jedwab – luksusowo gładki, prestiżowy minimalizm.</p>
               <div class="product-meta-row">
-                <span class="product-price">149.00 PLN</span>
+                <div class="product-price-box">
+                  <span class="product-price">149.00 PLN</span>
+                  <span class="deal-badge">2+1 Gratis</span>
+                </div>
+                <button class="btn-card-add" data-action="quickadd" data-id="1160">Dodaj do koszyka</button>
               </div>
             </div>
           </article>
@@ -327,15 +334,17 @@
             <div class="product-image-container">
               <img class="product-card-img primary" src="./assets/durag_silk_champagne.png" alt="Durag Wrocław — Biała Satyna" loading="lazy">
               <img class="product-card-img secondary" src="./assets/durag_silk_champagne.png" alt="Durag Wrocław — detale" loading="lazy">
-              <div class="quick-add-overlay">
-                <button class="btn-quick-add" data-action="quickadd" data-id="1335">Dodaj do koszyka</button>
-              </div>
             </div>
             <div class="product-info">
               <span class="product-category">Satyna Poliestrowa</span>
               <h3 class="product-title">Durag Wrocław — Biała Satyna</h3>
+              <p class="product-card-desc">Wrocław. Inspirowany architektoniczną lekkością i jasną, otwartą przestrzenią miasta mostów. Śnieżnobiała satyna o płynnym kształcie i czystej formie.</p>
               <div class="product-meta-row">
-                <span class="product-price">79.00 PLN</span>
+                <div class="product-price-box">
+                  <span class="product-price">79.00 PLN</span>
+                  <span class="deal-badge">2+1 Gratis</span>
+                </div>
+                <button class="btn-card-add" data-action="quickadd" data-id="1335">Dodaj do koszyka</button>
               </div>
             </div>
           </article>
@@ -344,32 +353,36 @@
             <div class="product-image-container">
               <img class="product-card-img primary" src="./assets/durag_velvet_emerald.png" alt="Durag Łódź — Czarny Welur" loading="lazy">
               <img class="product-card-img secondary" src="./assets/durag_velvet_emerald.png" alt="Durag Łódź — detale" loading="lazy">
-              <div class="quick-add-overlay">
-                <button class="btn-quick-add" data-action="quickadd" data-id="1365">Dodaj do koszyka</button>
-              </div>
             </div>
             <div class="product-info">
               <span class="product-category">Luksusowy Welur</span>
               <h3 class="product-title">Durag Łódź — Czarny Welur</h3>
+              <p class="product-card-desc">Łódź. Surowy, postindustrialny charakter i głębokie tradycje tekstylne przełożone na mięsisty welur w odcieniu absolutnej czerni.</p>
               <div class="product-meta-row">
-                <span class="product-price">89.00 PLN</span>
+                <div class="product-price-box">
+                  <span class="product-price">89.00 PLN</span>
+                  <span class="deal-badge">2+1 Gratis</span>
+                </div>
+                <button class="btn-card-add" data-action="quickadd" data-id="1365">Dodaj do koszyka</button>
               </div>
             </div>
           </article>
 
           <article class="product-card reveal active" data-id="1367">
             <div class="product-image-container">
-              <img class="product-card-img primary" src="./assets/durag_silk_champagne.png" alt="Durag Żyrardów — Przewiewny Len" loading="lazy">
+              <img class="product-card-img primary" src="./assets/durag_silk_champagne.png" alt="Durag Żyrardów — Czarny / Beżowy Len" loading="lazy">
               <img class="product-card-img secondary" src="./assets/durag_silk_champagne.png" alt="Durag Żyrardów — detale" loading="lazy">
-              <div class="quick-add-overlay">
-                <button class="btn-quick-add" data-action="quickadd" data-id="1367">Dodaj do koszyka</button>
-              </div>
             </div>
             <div class="product-info">
               <span class="product-category">Sezonowe Materiały</span>
-              <h3 class="product-title">Durag Żyrardów — Przewiewny Len</h3>
+              <h3 class="product-title">Durag Żyrardów — Czarny / Beżowy Len</h3>
+              <p class="product-card-desc">Żyrardów. Ukłon w stronę historycznej stolicy polskiego lnu i rzemiosła. Naturalna, oddychająca struktura tkaniny zapewniająca bezkompromisową lekkość.</p>
               <div class="product-meta-row">
-                <span class="product-price">99.00 PLN</span>
+                <div class="product-price-box">
+                  <span class="product-price">99.00 PLN</span>
+                  <span class="deal-badge">2+1 Gratis</span>
+                </div>
+                <button class="btn-card-add" data-action="quickadd" data-id="1367">Dodaj do koszyka</button>
               </div>
             </div>
           </article>
@@ -384,7 +397,7 @@
         <div class="lookbook-container">
           
           <div class="lookbook-media reveal">
-            <img src="./assets/lookbook_editorial.png" alt="Jedwab w Mieście — Durag Milanówek 19 Momme" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" loading="lazy">
+            <video src="./assets/hero_video.mp4" poster="./assets/durag_silk_black.png" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;"></video>
           </div>
           
           <div class="lookbook-content reveal" style="color: white;">
@@ -394,9 +407,9 @@
               W miejskim rytmie nasz Durag Milanówek to coś więcej niż dodatek — chroni, podkreśla styl i wyróżnia nas na tle innych. Wykonany z naturalnego jedwabiu o gramaturze 19 momme — oznaczającej wysoką gęstość, trwałość i jakość materiału — łączy lekkość z wyjątkową wytrzymałością, a jego gładka struktura ogranicza tarcie, pomaga chronić włosy przed łamaniem i puszeniem oraz jest delikatna dla skóry głowy.
             </p>
             <p class="desc" style="color: #CFCFCF; font-size: 14px; line-height: 1.8;">
-              Jedwabny durag to unikatowy modowy hidden gem, który w przeciwieństwie do chusty czy czepka wyróżnia Cię na tle innych zarówno jakością wykonania, jak i subtelną elegancją w stylizacji. Jego lekka tkanina osłania głowę przed wiatrem i promieniowaniem UV, a niepodrabialny, głęboki połysk zmienia światło miasta w część stylizacji. To jedyny w Polsce durag wykonany z prawdziwego jedwabiu — bo styl rodzi się na głowie.
+              Jedwabny durag to unikatowy modowy hidden gem, który w przeciwieństwie do chusty czy czepka wyróżnia Cię na tle innych zarówno jakością wykonania, jak i subtelną elegancją w stylizacji. Jego lekka tkanina osłania głowę przed wiatrem i promieniowaniem UV, a niepodrabialny, głęboki połysk zmienia światło miasta w część stylizacji. To jedyny w Polsce durag wykonany z prawdziwego jedwabiu — bo styl rodzi się w na głowie.
             </p>
-            <a href="#kolekcja" data-filter="silk" class="btn-minimal" style="background: #D9A87E; color: #0D0D0B; border-radius: 9999px; padding: 14px 32px; font-weight: bold;">Sprawdź</a>
+            <a href="#kolekcja" data-filter="silk" class="btn-minimal" style="background: #D9A87E; color: #0D0D0B; border-radius: 9999px; padding: 14px 32px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block; margin-top: 10px;">Sprawdź</a>
           </div>
           
         </div>
@@ -408,7 +421,7 @@
       <div class="container">
         
         <div class="section-header reveal">
-          <span class="subtitle">Nasze standardy tkanin</span>
+          <span class="script-accent">[ Standardy rzemiosła ]</span>
           <h2 class="title">Filozofia naszych materiałów</h2>
         </div>
         
@@ -417,28 +430,28 @@
           <div class="philosophy-card reveal">
             <h3 class="philosophy-card-title">Jedwab stworzony dla włosów</h3>
             <p class="philosophy-card-desc">
-              Użyta przy produkcji Durag Milanówek satyna jedwabna ma naturalnie gładką powierzchnię ograniczającą tarcie, dzięki czemu pozwala chronić włosy przed puszeniem, łamaniem i nadmiernym przesuszaniem. Delikatny dla skóry głowy materiał pozwala włosom zachować naturalną miękkość i zdrowy wygląd. Jedwab 19 momme jest lekki, elastyczny i trwały.
+              Użyta przy produkcji Durag Milanówek satyna jedwabna ma naturalnie gładką powierzchnię ograniczającą tarcie, dzięki czemu pozwala chronić włosy przed puszeniem, łamaniem i nadmiernym przesuszaniem. Delikatny dla skóry głowy materiał pozwala włosom zachować naturalną miękkość i zdrowy wygląd, nie odbierając nam komfortu nawet podczas dłuższego noszenia. W przeciwieństwie do syntetycznych tkanin jedwab nie tylko otula włosy, lecz także pomaga ograniczać utratę ich naturalnego nawilżenia. Zastosowany tutaj jedwab o gramaturze 19 momme jest odpowiednio lekki i elastyczny a zarazem odpowiednio gęsty oraz trwały.
             </p>
           </div>
           
           <div class="philosophy-card reveal">
             <h3 class="philosophy-card-title">Satyna stworzona dla codzienności</h3>
             <p class="philosophy-card-desc">
-              Satyna poliestrowa idealnie łączy gładkość, lekkość i trwałość — właśnie dlatego tak dobrze sprawdza się w szyciu duragów. Podobnie jak jedwab jest śliska, przyjemna w dotyku i ogranicza tarcie. Jest materiałem odporniejszym na codzienne użytkowanie i łatwiejszym w pielęgnacji.
+              Satyna poliestrowa to materiał, który idealnie łączy gładkość, lekkość i trwałość — właśnie dlatego tak dobrze sprawdza się w szyciu duragów i to właśnie z niej korzysta zdecydowana większość klientów. Podobnie jak jedwab satyna poliestrowa jest śliska, przyjemna w dotyku co ogranicza tarcie, pomagając zmniejszyć puszenie i chronić włosy przed niepotrzebnym łamaniem. W przeciwieństwie do naturalnego jedwabiu jest materiałem syntetycznym, bardziej odpornym na codzienne użytkowanie i znacznie łatwiejszym w pielęgnacji oraz tańszym, a równocześnie zachowującym przy tym charakterystyczną gładkość oraz połysk. Dobrze dopasowuje się do głowy, utrzymuje swój kształt i szybko schnie, dzięki czemu durag pozostaje wygodnym elementem codziennego stylu. Satyna poliestrowa to praktyczna alternatywa dla jedwabiu — połączenie funkcjonalności, trwałości - stworzone z myślą o codziennym noszeniu.
             </p>
           </div>
           
           <div class="philosophy-card reveal">
             <h3 class="philosophy-card-title">Welur na co dzień</h3>
             <p class="philosophy-card-desc">
-              Welur poliestrowy to miękki, gęsty materiał o wyrazistej strukturze i głębi koloru. Trwały i odporny na częste użytkowanie. Przyjemna w dotyku faktura sprawia, że materiał dobrze układa się na głowie i jest bardziej mięsisty niż lekki jedwab.
+              Welur poliestrowy to miękki, gęsty materiał o charakterystycznej, delikatnie włoskowatej powierzchni, która nadaje duragowi wyrazistą strukturę i głębię koloru. Wykonany z włókien poliestrowych jest trwały, odporny na częste użytkowanie. Jego przyjemna w dotyku faktura sprawia, że materiał dobrze układa się na głowie, a jednocześnie jest bardziej mięsisty i otulający niż lekki jedwab czy gładka satyna. Welur poliestrowy nie gniecie się łatwo, szybko schnie i jest prosty w codziennej pielęgnacji, dzięki czemu dobrze sprawdza się jako materiał codziennego użytkowania. To wybór dla osób, które cenią miękkość, trwałość i bardziej wyrazisty wygląd, bez rezygnowania z wygody.
             </p>
           </div>
 
           <div class="philosophy-card reveal">
             <h3 class="philosophy-card-title">Sezonowe materiały</h3>
             <p class="philosophy-card-desc">
-              Tworzymy serię duragów z sezonowych tkanin (cupro, len, krepa satynowa Mirella), które odpowiadają na zmieniającą się pogodę i temperaturę. Każdy materiał inaczej układa się na głowie i oferuje wyjątkowe właściwości.
+              Nie każdy materiał sprawdza się tak samo o każdej porze roku. Dlatego tworzymy serię duragów wykonanych z sezonowych tkanin, które odpowiadają na zmieniającą się pogodę, temperaturę i sposób noszenia. W tej kolekcji znalazł się Durag Bydgoszcz wykonany z cupro — lekkiej, gładkiej i przyjemnej w dotyku tkaniny o subtelnym połysku, Durag Żyrardów uszyty z naturalnego, przewiewnego lnu o charakterystycznej strukturze oraz Durag Stalowa Wola wykonany z krepy satynowej, która łączy mocniejszą strukturę, z eleganckim połyskiem. Każdy z tych materiałów inaczej układa się na głowie i oferuje inne właściwości, dzięki czemu kolekcja pozwala dopasować durag zarówno do własnego stylu, jak i do pory roku. To seria dla osób, które szukają mniej oczywistych tkanin i chcą odkrywać duragi również poza klasyczną satyną i welurem.
             </p>
           </div>
           
@@ -446,27 +459,50 @@
       </div>
     </section>
 
-    <!-- ================= O NAS SECTION ================= -->
+    <!-- ================= O NAS SECTION (WITH CAROUSEL & FULL STORY) ================= -->
     <section class="section-padding" id="o-nas" style="background: #0D0D0B; color: white;">
       <div class="container">
-        <div class="lookbook-container">
+        
+        <div class="section-header reveal" style="text-align: center; margin-bottom: 48px;">
+          <span class="script-accent" style="color: #D9A87E;">[ Warsaw Durag Store ]</span>
+          <h2 class="title" style="color: white;">O nas</h2>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; align-items: center;">
           
-          <div class="lookbook-media reveal">
-            <img src="./assets/lookbook_editorial.png" alt="Warsaw Durag Store Założyciele" style="border-radius: 12px; object-fit: cover;">
+          <!-- Visual Carousel / Showcase -->
+          <div class="reveal" style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="position: relative; aspect-ratio: 4/3; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+              <img id="aboutCarouselImg" src="./assets/lookbook_editorial.png" alt="Warsaw Durag Store — Założyciele i rzemiosło" style="width: 100%; height: 100%; object-fit: cover; transition: all 0.5s ease;">
+              <div id="aboutCarouselCaption" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 20px; background: linear-gradient(to top, rgba(13,13,11,0.9), transparent); font-size: 12px; color: #D9A87E; font-weight: 600;">
+                Kuba & Założyciele Warsaw Durag Store
+              </div>
+            </div>
+            
+            <!-- Carousel Thumbnails / Controls -->
+            <div style="display: flex; gap: 12px; justify-content: center;">
+              <button class="about-thumb-btn active" data-src="./assets/lookbook_editorial.png" data-cap="Kuba & Założyciele Warsaw Durag Store" style="background: rgba(255,255,255,0.1); border: 1px solid #D9A87E; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 11px; cursor: pointer;">Założyciele</button>
+              <button class="about-thumb-btn" data-src="./assets/durag_silk_black.png" data-cap="Ręcznie szyte z jedwabiu 19 Momme" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 11px; cursor: pointer;">Packaging & Rzemiosło</button>
+              <button class="about-thumb-btn" data-src="./assets/durag_velvet_emerald.png" data-cap="Opinie ze społeczności @warsawduragstore" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 11px; cursor: pointer;">Opinie na Insta</button>
+            </div>
           </div>
           
-          <div class="lookbook-content reveal" style="color: white;">
-            <span class="script-accent" style="color: #D9A87E;">[ nasza historia ]</span>
-            <h2 class="title" style="color: white;">O nas — Warsaw Durag Store</h2>
-            <p class="desc" style="color: #CFCFCF; font-size: 14px; line-height: 1.7;">
-              Warsaw Durag Store powstał w 2020 roku z potrzeby stworzenia miejsca, które przybliży duragi polskiej społeczności i pokaże ich różnorodność — nie tylko jako elementu stylu, ale również praktycznego dodatku z własną historią i charakterem.
+          <!-- Full Story Text -->
+          <div class="reveal" style="color: white;">
+            <p class="desc" style="color: #E0E0E0; font-size: 14px; line-height: 1.8; margin-bottom: 16px;">
+              Warsaw Durag Store powstał w 2020 roku z potrzeby stworzenia miejsca, które przybliży duragi polskiej społeczności i pokaże ich różnorodność — nie tylko jako elementu stylu, ale również praktycznego dodatku z własną historią i charakterem. Od tego czasu stale rozwijamy naszą ofertę, poszerzając ją o kolejne materiały, kolory i modele, szukając nowych sposobów na pokazanie, czym może być współczesny durag.
             </p>
-            <p class="desc" style="color: #CFCFCF; font-size: 14px; line-height: 1.7;">
-              Jesteśmy małym butikiem prowadzonym przez dwóch braci, którym często pomagają również nasi znajomi. Dzięki temu każdy produkt przechodzi przez nasze ręce — od wyboru materiału, przez przygotowanie zamówienia, aż po kontakt z klientem.
+            <p class="desc" style="color: #E0E0E0; font-size: 14px; line-height: 1.8; margin-bottom: 16px;">
+              Jesteśmy małym butikiem prowadzonym przez dwóch braci, którym często pomagają również nasi znajomi. Dzięki temu każdy produkt przechodzi przez nasze ręce — od wyboru materiału, przez przygotowanie zamówienia, aż po kontakt z klientem. Dokładamy wszelkich starań, aby każda klientka i każdy klient otrzymywali nie tylko świetny produkt, lecz także dobrą i indywidualną obsługę.
             </p>
-            <p class="desc" style="color: #D9A87E; font-size: 13px; line-height: 1.7;">
-              Na razie nie prowadzimy własnego sklepu stacjonarnego, jednak nasze duragi można odebrać osobiście przy ul. Włodarzewskiej 4 lub w centrum Warszawy — po wcześniejszym umówieniu. E-mail: support@warsawduragstore.pl | IG: @warsawduragstore
+            <p class="desc" style="color: #E0E0E0; font-size: 14px; line-height: 1.8; margin-bottom: 16px;">
+              Chcemy, aby Warsaw Durag Store był wsparciem dla artystów, sportowców i wszystkich osób, które poprzez swój styl wyrażają siebie, dlatego chętnie nawiązujemy z nimi współprace - robisz coś w sporcie, modzie lub muzyce pisz do nas po paczkę niespodziankę.
             </p>
+            <p class="desc" style="color: #D9A87E; font-size: 14px; line-height: 1.8; margin-bottom: 24px;">
+              Na razie nie prowadzimy własnego sklepu stacjonarnego, jednak nasze duragi można odebrać osobiście przy ul. Włodarzewskiej 4 lub w centrum Warszawy — po wcześniejszym umówieniu. Z informacji praktycznych to najłatwiej dorwać nas przez Instagram <a href="https://instagram.com/warsawduragstore" target="_blank" style="color: #fff; text-decoration: underline;">@warsawduragstore</a>, dla oldschoolowców mamy mail <a href="mailto:support@warsawduragstore.pl" style="color: #fff; text-decoration: underline;">support@warsawduragstore.pl</a>.
+            </p>
+
+            <a href="#" id="linkAboutModal" class="btn-minimal" style="background: #D9A87E; color: #0D0D0B; border-radius: 9999px; padding: 14px 32px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block;">Więcej o nas</a>
           </div>
           
         </div>
@@ -520,9 +556,10 @@
         <div class="footer-col reveal">
           <h4 class="footer-col-title">Informacje</h4>
           <ul class="footer-links">
-            <li><a href="#o-nas">O nas</a></li>
-            <li><a href="#o-nas">Kontakt & Odbiór w Warszawie</a></li>
+            <li><a href="#" id="linkAboutModalFooter">O nas</a></li>
+            <li><a href="#" id="linkContactModalFooter">Kontakt & Odbiór w Warszawie</a></li>
             <li><a href="#filozofia">Filozofia materiałów</a></li>
+            <li><a href="#" id="linkBlogFooter">Blog & Poradnik</a></li>
           </ul>
         </div>
         
@@ -541,8 +578,8 @@
       <div class="footer-bottom">
         <p>&copy; 2026 Warsaw Durag Store. Jedyne duragi szyte w Polsce. Wszelkie prawa zastrzeżone.</p>
         <div class="footer-legal">
-          <a href="#o-nas">O nas</a>
-          <a href="#o-nas">Kontakt</a>
+          <a href="#" id="linkAboutLegal">O nas</a>
+          <a href="#" id="linkContactLegal">Kontakt</a>
           <a href="#" id="linkBlog">Blog</a>
           <a href="#" id="linkTerms">Regulamin</a>
           <a href="#" id="linkPrivacy">Polityka Prywatności</a>
@@ -666,6 +703,33 @@
         </div>
       </div>
 
+      <!-- ABOUT US MODAL CONTENT -->
+      <div id="modalContentAbout" class="info-modal-section" style="display: none;">
+        <h2 class="info-modal-title">O nas — Warsaw Durag Store</h2>
+        <div class="info-modal-body">
+          <p>Warsaw Durag Store powstał w 2020 roku z potrzeby stworzenia miejsca, które przybliży duragi polskiej społeczności i pokaże ich różnorodność — nie tylko jako elementu stylu, ale również praktycznego dodatku z własną historią i charakterem. Od tego czasu stale rozwijamy naszą ofertę, poszerzając ją o kolejne materiały, kolory i modele, szukając nowych sposobów na pokazanie, czym może być współczesny durag.</p>
+          <p>Jesteśmy małym butikiem prowadzonym przez dwóch braci, którym często pomagają również nasi znajomi. Dzięki temu każdy produkt przechodzi przez nasze ręce — od wyboru materiału, przez przygotowanie zamówienia, aż po kontakt z klientem. Dokładamy wszelkich starań, aby każda klientka i każdy klient otrzymywali nie tylko świetny produkt, lecz także dobrą i indywidualną obsługę.</p>
+          <p>Chcemy, aby Warsaw Durag Store był wsparciem dla artystów, sportowców i wszystkich osób, które poprzez swój styl wyrażają siebie, dlatego chętnie nawiązujemy z nimi współprace - robisz coś w sporcie, modzie lub muzyce pisz do nas po paczkę niespodziankę.</p>
+          <p>Na razie nie prowadzimy własnego sklepu stacjonarnego, jednak nasze duragi można odebrać osobiście przy ul. Włodarzewskiej 4 lub w centrum Warszawy — po wcześniejszym umówieniu. Z informacji praktycznych to najłatwiej dorwać nas przez Instagram <strong>@warsawduragstore</strong>, dla oldschoolowców mamy mail <strong>support@warsawduragstore.pl</strong>.</p>
+        </div>
+      </div>
+
+      <!-- CONTACT MODAL CONTENT -->
+      <div id="modalContentContact" class="info-modal-section" style="display: none;">
+        <h2 class="info-modal-title">Kontakt & Odbiór Osobisty</h2>
+        <div class="info-modal-body">
+          <p><strong>Warsaw Durag Store</strong> — Polski butik duragów rzemieślniczych.</p>
+          <div style="background: rgba(255,255,255,0.04); padding: 16px; border-radius: 10px; margin: 14px 0;">
+            <p style="margin: 0 0 8px;">📍 <strong>Punkty odbioru osobistego (po wcześniejszym umówieniu):</strong></p>
+            <p style="margin: 4px 0;">• ul. Włodarzewska 4, Warszawa</p>
+            <p style="margin: 4px 0;">• Centrum Warszawy (okolice Śródmieścia)</p>
+          </div>
+          <p>📸 <strong>Instagram:</strong> <a href="https://instagram.com/warsawduragstore" target="_blank" style="color: #D9A87E;">@warsawduragstore</a> (odpowiadamy najszybciej!)</p>
+          <p>✉️ <strong>E-mail:</strong> <a href="mailto:support@warsawduragstore.pl" style="color: #D9A87E;">support@warsawduragstore.pl</a></p>
+          <p>⏱️ <strong>Godziny kontaktu:</strong> Poniedziałek – Sobota: 09:00 – 20:00</p>
+        </div>
+      </div>
+
       <!-- WAVE GUIDE MODAL CONTENT -->
       <div id="modalContentWaveGuide" class="info-modal-section" style="display: none;">
         <h2 class="info-modal-title">Przewodnik 360 Waves</h2>
@@ -729,7 +793,10 @@
         </div>
 
         <div class="modal-details">
-          <span id="modalCategory" class="product-category"></span>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <span id="modalCategory" class="product-category"></span>
+            <span class="deal-badge" style="background: rgba(46,125,50,0.1); color: #2E7D32; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 10px;">Kup 2, trzeci GRATIS!</span>
+          </div>
           <h2 id="modalTitle" class="modal-title"></h2>
           <div class="rating-row">
             <span id="modalReviewsCount" class="reviews-count"></span>

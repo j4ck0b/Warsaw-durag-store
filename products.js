@@ -2,13 +2,13 @@ window.products = [
   {
     "id": 1160,
     "slug": "durag-milanowek",
-    "name": "Durag Milanówek — Jedwabny",
-    "nameEn": "Durag Milanówek Silk",
+    "name": "Durag Milanówek — Jedwabny Czarny / Biały",
+    "nameEn": "Durag Milanówek Silk Black / White",
     "price": 149.0,
     "category": "silk",
     "categoryLabel": "Czysty Jedwab Morwowy",
     "material": "100% Jedwab Morwowy (19 Momme)",
-    "description": "Hołd dla legendarnej, polskiej stolicy jedwabnictwa i przedwojennej elegancji. Wykonany z najwyższej klasy naturalnego jedwabiu morwowego — luksusowo gładkiego, hipoalergicznego i ultralekkiego. Genialnie oddycha, redukuje tarcie do zera i oferuje prestiżowy, czysty minimalizm w wersji czarnej lub białej. Bo styl rodzi się na głowie.",
+    "description": "Hołd dla legendarnej, polskiej stolicy jedwabnictwa i przedwojennej elegancji. Wykonany z najwyższej klasy naturalnego jedwabiu – luksusowo gładkiego, hipoalergicznego i ultralekkiego. Genialnie oddycha, redukuje tarcie do zera i oferuje prestiżowy, czysty minimalizm w wersji czarnej lub białej.",
     "storyDescription": "Milanówek. Legendarna, polska stolica jedwabnictwa i przedwojenna elegancja. Najwyższej klasy naturalny jedwab – luksusowo gładki, prestiżowy minimalizm.",
     "images": [
       "./assets/durag_silk_black.png",
@@ -31,8 +31,8 @@ window.products = [
     "price": 79.0,
     "category": "satin",
     "categoryLabel": "Satyna Poliestrowa",
-    "material": "Gładka Satyna Poliestrowa",
-    "description": "Inspirowany architektoniczną lekkością i jasną, otwartą przestrzenią miasta mostów. Śnieżnobiała satyna o płynnym kształcie i czystej formie. Śliska struktura włókna minimalizuje tarcie włosów, pomagając utrzymać fale 360 w nienaruszonym stanie.",
+    "material": "Lśniąca Satyna Poliestrowa",
+    "description": "Inspirowany architektoniczną lekkością i jasną, otwartą przestrzenią miasta mostów. Wykonany z lśniącej, śnieżnobiałej satyny, która gładko otula głowę, chroniąc jej strukturę. Kontrolowana elastyczność i długie pasy gwarantują stabilność bez uczucia napięcia. Czysta, świetlista forma.",
     "storyDescription": "Wrocław. Inspirowany architektoniczną lekkością i jasną, otwartą przestrzenią miasta mostów. Śnieżnobiała satyna o płynnym kształcie i czystej formie.",
     "images": [
       "./assets/durag_silk_champagne.png"
@@ -50,9 +50,9 @@ window.products = [
     "price": 89.0,
     "category": "velvet",
     "categoryLabel": "Luksusowy Welur",
-    "material": "Welur Poliestrowy Premium",
-    "description": "Łódź. Surowy, postindustrialny charakter i głębokie tradycje tekstylne przełożone na mięsisty welur w odcieniu absolutnej czerni. Teksturowany minimalizm, który nie potrzebuje słów. Głęboka czerni z aksamitnym finiszem zapewnia niesamowite wrażenia dotykowe i komfort.",
-    "storyDescription": "Łódź. Surowy, postindustrialny charakter i głębokie tradycje tekstylne przełożone na mięsisty welur w odcieniu absolutnej czerni.",
+    "material": "Mięsisty Welur Poliestrowy",
+    "description": "Nazwany na cześć miasta o głębokich, tekstylnych tradycjach i surowym, postindustrialnym charakterze. Miękki, mięsisty welur w odcieniu głębokiej czerni doskonale magnetyzuje światło. Zapewnia precyzyjne dopasowanie i wyjątkowe poczucie komfortu na co dzień. Teksturowany minimalizm, który broni się sam.",
+    "storyDescription": "Łódź. Surowy, postindustrialny charakter i głębokie tradycje tekstylne przełożone na mięsisty welur w odcieniu absolutnej czerni. Teksturowany minimalizm, który nie potrzebuje słów.",
     "images": [
       "./assets/durag_velvet_emerald.png"
     ],
@@ -69,9 +69,9 @@ window.products = [
     "price": 89.0,
     "category": "velvet",
     "categoryLabel": "Luksusowy Welur",
-    "material": "Welur Poliestrowy Premium",
-    "description": "Białystok. Odzwierciedlenie dzikiej natury i głębokich, leśnych barw Podlasia. Ciepły, czekoladowy welur o szlachetnym, organicznym wyrazie. Wyjątkowo gęsty i otulający materiał, który wyróżnia się w każdej codziennej stylizacji.",
-    "storyDescription": "Białystok. Odzwierciedlenie dzikiej natury i głębokich, leśnych barw Podlasia. Ciepły, czekoladowy welur o szlachetnym wyrazie.",
+    "material": "Czekoladowy Welur Poliestrowy",
+    "description": "Nazwany na cześć bramy do dzikiej natury i głębokich, leśnych barw Podlasia. Ciepły, czekoladowy odcień weluru nadaje mu szlachetnego, organicznego wyrazu. Wyjątkowo miękki dla skóry i trwały w noszeniu, staje się wyrazistym dopełnieniem Twojego stylu. Estetyka zakorzeniona w klasyce.",
+    "storyDescription": "Białystok. Odzwierciedlenie dzikiej natury i głębokich, leśnych barw Podlasia. Ciepły, czekoladowy welur o szlachetnym, organicznym wyrazie.",
     "images": [
       "./assets/durag_velvet_emerald.png"
     ],
@@ -83,45 +83,45 @@ window.products = [
   {
     "id": 1367,
     "slug": "durag-zyrardow",
-    "name": "Durag Żyrardów — Przewiewny Len",
-    "nameEn": "Durag Żyrardów Linen",
+    "name": "Durag Żyrardów — Czarny / Beżowy Len",
+    "nameEn": "Durag Żyrardów Black / Beige Linen",
     "price": 99.0,
     "category": "seasonal",
     "categoryLabel": "Sezonowe Materiały",
     "material": "Naturalny Przewiewny Len",
-    "description": "Żyrardów. Ukłon w stronę historycznej stolicy polskiego lnu i rzemiosła. Naturalna, oddychająca struktura tkaniny zapewniająca bezkompromisową, surową lekkość. Dostępny w klasycznej czerni i czystej bieli — idealny wybór na cieplejsze dni.",
-    "storyDescription": "Żyrardów. Ukłon w stronę historycznej stolicy polskiego lnu i rzemiosła. Naturalna, oddychająca struktura tkaniny.",
+    "description": "Ukłon w stronę historycznej stolicy polskiego lnu i rzemiosła z tradycjami. Naturalna, oddychająca struktura lnianej tkaniny zapewnia bezkompromisową lekkość i przewiewność. Minimalistyczny wariant w czerni lub beżu, idealny na ciepłe dni. Surowa faktura, która z czasem zyskuje charakter.",
+    "storyDescription": "Żyrardów. Ukłon w stronę historycznej stolicy polskiego lnu i rzemiosła. Naturalna, oddychająca struktura tkaniny zapewniająca bezkompromisową, surową lekkość.",
     "images": [
       "./assets/durag_silk_champagne.png"
     ],
     "colors": [
       { "name": "Linen Black", "hex": "#1A1A1A" },
-      { "name": "Linen White", "hex": "#F5F5F0" }
+      { "name": "Natural Beige", "hex": "#E0D7C6" }
     ],
     "reviews": [
-      { "author": "Jan D.", "rating": 5, "comment": "Świetny przewiewny materiał na lato.", "date": "01.06.2026" }
+      { "author": "Oskar P.", "rating": 5, "comment": "Świetna przewiewność na upały!", "date": "22.06.2026" }
     ]
   },
   {
     "id": 1368,
     "slug": "durag-stalowa-wola",
-    "name": "Durag Stalowa Wola — Krepa Mirella",
-    "nameEn": "Durag Stalowa Wola Satin Crepe",
+    "name": "Durag Stalowa Wola — Biała / Czarna Mirella",
+    "nameEn": "Durag Stalowa Wola White / Black Mirella",
     "price": 99.0,
     "category": "seasonal",
     "categoryLabel": "Sezonowe Materiały",
     "material": "Krepa Satynowa Mirella",
-    "description": "Stalowa Wola. Stworzony na cześć miasta o silnych, modernistycznych korzeniach i geometrycznej strukturze. Krepa satynowa łącząca mat z technicznym połyskiem. Posiada mocniejszą strukturę, która stabilnie układa się na głowie.",
-    "storyDescription": "Stalowa Wola. Stworzony na cześć miasta o silnych, modernistycznych korzeniach. Krepa satynowa łącząca mat z technicznym połyskiem.",
+    "description": "Nazwany na cześć miasta o silnych, geometrycznych korzeniach i nowoczesnej strukturze. Krepa satynowa (mirella) łączy matowe, subtelnie ziarniste wykończenie z jednej strony z gładkim połyskiem z drugiej. Perfekcyjnie układa się na głowie, łącząc surową formę z techniczną doskonałością.",
+    "storyDescription": "Stalowa Wola. Stworzony na cześć miasta o silnych, modernistycznych korzeniach i geometrycznej strukturze. Krepa satynowa łącząca mat z technicznym połyskiem.",
     "images": [
       "./assets/durag_silk_black.png"
     ],
     "colors": [
-      { "name": "Mirella Black", "hex": "#0F0F0F" },
-      { "name": "Mirella White", "hex": "#FFFFFF" }
+      { "name": "Pure White", "hex": "#FFFFFF" },
+      { "name": "Deep Black", "hex": "#0D0D0B" }
     ],
     "reviews": [
-      { "author": "Krzysztof O.", "rating": 5, "comment": "Bardzo ciekawa struktura materiału.", "date": "12.05.2026" }
+      { "author": "Michał T.", "rating": 5, "comment": "Mirella to absolutny sztos w dotyku.", "date": "05.06.2026" }
     ]
   },
   {
@@ -132,15 +132,15 @@ window.products = [
     "price": 79.0,
     "category": "satin",
     "categoryLabel": "Satyna Poliestrowa",
-    "material": "Satyna Poliestrowa Premium",
-    "description": "Barbie. Projekt czerpiący z popkulturowej ikony stylu i bezkompromisowej wyrazistości. Intensywny, magnetyczny róż o spektakularnym błysku. Gładka tkanina redukuje tarcie i nadaje wyjątkowy charakter każdej stylizacji.",
+    "material": "Gładka Satyna Różowa",
+    "description": "Projekt czerpiący z popkulturowej ikony stylu, energii i bezkompromisowej wyrazistości. Satyna w odcieniu intensywnego, magnetycznego różu nadaje mu gładkości i spektakularnego błysku. Chroni i stabilizuje, stanowiąc odważny akcent w codziennym outficie.",
     "storyDescription": "Barbie. Projekt czerpiący z popkulturowej ikony stylu i bezkompromisowej wyrazistości. Intensywny, magnetyczny róż o spektakularnym błysku.",
     "images": [
-      "./assets/durag_velvet_royal.png"
+      "./assets/durag_silk_champagne.png"
     ],
-    "colors": [{ "name": "Hot Pink", "hex": "#FF69B4" }],
+    "colors": [{ "name": "Barbie Pink", "hex": "#E0218A" }],
     "reviews": [
-      { "author": "Ola W.", "rating": 5, "comment": "Cudowny kolor i żywy błysk!", "date": "05.06.2026" }
+      { "author": "Julia N.", "rating": 5, "comment": "Cudowny, nasycony róż i świetny połysk!", "date": "19.05.2026" }
     ]
   },
   {
@@ -151,15 +151,15 @@ window.products = [
     "price": 89.0,
     "category": "velvet",
     "categoryLabel": "Luksusowy Welur",
-    "material": "Welur Poliestrowy Premium",
-    "description": "Bielsko-Biała. Inspirowany surowymi, górskimi szczytami i czystym minimalizmem podbeskidzkiej natury. Mięsisty, luksusowo miękki welur w czystej bieli.",
-    "storyDescription": "Bielsko-Biała. Inspirowany surowymi, górskimi szczytami i czystym minimalizmem natury. Mięsisty welur w czystej bieli.",
+    "material": "Mięsisty Biały Welur",
+    "description": "Inspirowany górskimi szczytami i czystym, geometrycznym minimalizmem. Mięsisty, biały welur łączy w sobie luksusową miękkość z trwałą, solidną konstrukcją. Zapewnia doskonałe otulenie i dopasowanie bez zbędnego nacisku. Ponadczasowy kontrast dla ciemniejszych stylizacji.",
+    "storyDescription": "Bielsko-Biała. Inspirowany surowymi, górskimi szczytami i czystym minimalizmem podbeskidzkiej natury. Mięsisty, luksusowo miękki welur w czystej bieli.",
     "images": [
       "./assets/durag_silk_champagne.png"
     ],
-    "colors": [{ "name": "Alpine White", "hex": "#F8F9FA" }],
+    "colors": [{ "name": "Snow White", "hex": "#FFFFFF" }],
     "reviews": [
-      { "author": "Łukasz R.", "rating": 5, "comment": "Niezwykle miękki i wyrazisty.", "date": "14.06.2026" }
+      { "author": "Klaudiusz M.", "rating": 5, "comment": "Gruby, biały welur robi ogromne wrażenie.", "date": "11.04.2026" }
     ]
   },
   {
@@ -170,15 +170,15 @@ window.products = [
     "price": 89.0,
     "category": "velvet",
     "categoryLabel": "Luksusowy Welur",
-    "material": "Welur Poliestrowy Premium",
-    "description": "Radom. Nawiązanie do robotniczego charakteru, dumnej historii i autentycznego, miejskiego klimatu. Głęboki, wieczorny granat na stabilnej, welurowej fakturze.",
-    "storyDescription": "Radom. Nawiązanie do robotniczego charakteru i autentycznego klimatu. Głęboki granat na stabilnej welurowej fakturze.",
+    "material": "Granatowy Welur Poliestrowy",
+    "description": "Nazwany na cześć miasta o mocnym, robotniczym charakterze i dumnej historii. Głęboki, wieczorny odcień granatu na welurowej fakturze tworzy szlachetną, matową kompozycję. Delikatny dla skóry, niezwykle stabilny dzięki elastycznym pasom. Siła ukryta w prostocie.",
+    "storyDescription": "Radom. Nawiązanie do robotniczego charakteru, dumnej historii i autentycznego, miejskiego klimatu. Głęboki, wieczorny granat na stabilnej, welurowej fakturze.",
     "images": [
-      "./assets/durag_velvet_royal.png"
+      "./assets/durag_velvet_emerald.png"
     ],
-    "colors": [{ "name": "Midnight Navy", "hex": "#1B263B" }],
+    "colors": [{ "name": "Navy Blue", "hex": "#1B263B" }],
     "reviews": [
-      { "author": "Bartek K.", "rating": 5, "comment": "Elegancki granatowy odcień.", "date": "08.06.2026" }
+      { "author": "Damian G.", "rating": 5, "comment": "Głęboki granat, idealna kompresja fal.", "date": "29.05.2026" }
     ]
   },
   {
@@ -189,15 +189,15 @@ window.products = [
     "price": 79.0,
     "category": "satin",
     "categoryLabel": "Satyna Poliestrowa",
-    "material": "Satyna Poliestrowa Premium",
-    "description": "Katowice. Czerpie z neonowej energii nocnego Śląska i nowoczesnej transformacji regionu. Fioletowa satyna intrygująca metalicznym refleksem.",
-    "storyDescription": "Katowice. Neonowa energia nocnego Śląska i nowoczesna transformacja. Fioletowa satyna z metalicznym refleksem.",
+    "material": "Fioletowa Satyna Metaliczna",
+    "description": "Inspirowany neonową energią nocnego Śląska i nowoczesną transformacją miasta. Fioletowa satyna intryguje głębią koloru i gładkim, metalicznym połyskiem pod wpływem światła. Lekki, oddychający materiał precyzyjnie przylega do głowy, tworząc wyrafinowany detal.",
+    "storyDescription": "Katowice. Czerpie z neonowej energii nocnego Śląska i nowoczesnej transformacji regionu. Fioletowa satyna intrygująca metalicznym refleksem.",
     "images": [
-      "./assets/durag_velvet_royal.png"
+      "./assets/durag_silk_champagne.png"
     ],
-    "colors": [{ "name": "Neon Violet", "hex": "#8A2BE2" }],
+    "colors": [{ "name": "Neon Purple", "hex": "#5E239D" }],
     "reviews": [
-      { "author": "Grzegorz P.", "rating": 5, "comment": "Super światło i refleks w słońcu.", "date": "17.05.2026" }
+      { "author": "Artur B.", "rating": 5, "comment": "Połysk w świetle ulicznych lamp jest niesamowity.", "date": "08.06.2026" }
     ]
   },
   {
@@ -208,15 +208,15 @@ window.products = [
     "price": 79.0,
     "category": "satin",
     "categoryLabel": "Satyna Poliestrowa",
-    "material": "Satyna Poliestrowa Premium",
-    "description": "Zabrze. Hołd dla industrialnego serca, gdzie stal i surowy, fabryczny połysk łączą się z nowoczesnością. Srebrzysta satyna o futurystycznym sznycie.",
-    "storyDescription": "Zabrze. Industrialne serce, stal i surowy fabryczny połysk. Srebrzysta satyna o futurystycznym sznycie.",
+    "material": "Srebrna Satyna Poliestrowa",
+    "description": "Nazwany na cześć industrialnego serca, gdzie stal i industrialny błysk łączą się z nowoczesnością. Srebrzysta satyna nadaje mu futurystycznego, surowego charakteru. Perfekcyjnie skrojony, gwarantuje optymalną ochronę i płynne dopasowanie. Minimalizm w nowoczesnym wydaniu.",
+    "storyDescription": "Zabrze. Hołd dla industrialnego serca, gdzie stal i surowy, fabryczny połysk łączą się z nowoczesnością. Srebrzysta satyna o futurystycznym sznycie.",
     "images": [
       "./assets/durag_silk_champagne.png"
     ],
     "colors": [{ "name": "Futuristic Silver", "hex": "#C0C0C0" }],
     "reviews": [
-      { "author": "Szymon M.", "rating": 5, "comment": "Unikalny srebrzysty blesk.", "date": "22.05.2026" }
+      { "author": "Konrad W.", "rating": 5, "comment": "Futurystyczny metaliczny look!", "date": "14.05.2026" }
     ]
   },
   {
@@ -227,72 +227,72 @@ window.products = [
     "price": 79.0,
     "category": "satin",
     "categoryLabel": "Satyna Poliestrowa",
-    "material": "Satyna Poliestrowa Premium",
-    "description": "Kielce. Inspirowany dynamicznym rytmem miasta i jego zdecydowanym, wyrazistym charakterem. Intensywna, krwista czerwień, która natychmiast przyciąga spojrzenia.",
-    "storyDescription": "Kielce. Dynamiczny rytm miasta i wyrazisty charakter. Intensywna czerwień przyciągająca spojrzenia.",
+    "material": "Karminowa Satyna Poliestrowa",
+    "description": "Inspirowany dynamicznym rytmem miasta i wyrazistym, zdecydowanym charakterem. Intensywna, krwista czerwień satyny przyciąga spojrzenia i doskonale odbija światło. Gładka struktura i szerokie wiązania zapewniają trwałość noszenia bez uczucia napięcia. Energia i styl.",
+    "storyDescription": "Kielce. Inspirowany dynamicznym rytmem miasta i jego zdecydowanym, wyrazistym charakterem. Intensywna, krwista czerwień, która natychmiast przyciąga spojrzenia.",
     "images": [
-      "./assets/durag_silk_black.png"
+      "./assets/durag_silk_champagne.png"
     ],
-    colors: [{ "name": "Crimson Red", "hex": "#DC143C" }],
-    reviews: [
-      { "author": "Dominik T.", "rating": 5, "comment": "Czerwony ogień!", "date": "03.06.2026" }
+    "colors": [{ "name": "Crimson Red", "hex": "#C9184A" }],
+    "reviews": [
+      { "author": "Grzegorz N.", "rating": 5, "comment": "Mocna, żywa czerwień.", "date": "03.06.2026" }
     ]
   },
   {
     "id": 1375,
     "slug": "durag-rzeszow",
-    "name": "Durag Rzeszów — Wzorzysty Fiolet",
-    "nameEn": "Durag Rzeszów Pattern Purple",
-    "price": 79.0,
+    "name": "Durag Rzeszów — Wzorzysty Fiolet Satyna",
+    "nameEn": "Durag Rzeszów Patterned Purple Satin",
+    "price": 85.0,
     "category": "satin",
     "categoryLabel": "Satyna Poliestrowa",
-    "material": "Satyna Poliestrowa Wzorzysta",
-    "description": "Rzeszów. Dynamicznie rozwijająca się stolica innowacji, łącząca technologię z nowoczesną estetyką. Unikalny, geometryczny wzór na fioletowej satynie przełamuje monotonię.",
-    "storyDescription": "Rzeszów. Stolica innowacji i technologia z estetyką. Geometryczny wzór na fioletowej satynie.",
+    "material": "Wzorzysta Satyna Poliestrowa",
+    "description": "Nazwany na cześć dynamicznie rozwijającej się stolicy innowacji, łączącej technologię z nowoczesną estetyką. Unikalny, geometryczny wzór na fioletowej satynie przełamuje monotonię. Śliska, delikatna tkanina chroni strukturę przed tarciem, tworząc unikalny element rozpoznawczy.",
+    "storyDescription": "Rzeszów. Dynamicznie rozwijająca się stolica innowacji, łącząca technologię z nowoczesną estetyką. Unikalny, geometryczny wzór na fioletowej satynie.",
     "images": [
-      "./assets/durag_velvet_royal.png"
+      "./assets/durag_silk_champagne.png"
     ],
-    "colors": [{ "name": "Pattern Purple", "hex": "#6A5ACD" }],
+    "colors": [{ "name": "Pattern Purple", "hex": "#6A0572" }],
     "reviews": [
-      { "author": "Kacper S.", "rating": 5, "comment": "Fajny niespotykany wzór.", "date": "11.06.2026" }
+      { "author": "Łukasz K.", "rating": 5, "comment": "Genialny wzór, wyróżnia się z tłumu.", "date": "17.05.2026" }
     ]
   },
   {
     "id": 1376,
     "slug": "durag-elblag",
-    "name": "Durag Elbląg — Blue Camo Satyna",
-    "nameEn": "Durag Elbląg Blue Camo Satin",
-    "price": 79.0,
+    "name": "Durag Elbląg — Niebieskie Military Camo Satyna",
+    "nameEn": "Durag Elbląg Blue Military Camo",
+    "price": 85.0,
     "category": "satin",
     "categoryLabel": "Satyna Poliestrowa",
-    "material": "Satyna Poliestrowa Camo",
-    "description": "Elbląg. Inspirowany bliskością wody, portowym rodowodem i surowym, północnym klimatem. Niebieski motyw military camo w technicznym wydaniu.",
-    "storyDescription": "Elbląg. Inspirowany bliskością wody i surowym klimatem. Niebieskie military camo w technicznym wydaniu.",
+    "material": "Satyna Niebieskie Moro",
+    "description": "Inspirowany bliskością wody, portowym charakterem i surowym, północnym klimatem. Niebieski motyw military camo naniesiony na gładką satynę nadaje mu technicznego, nowoczesnego wyrazu. Zapewnia precyzyjne trzymanie i odporność na codzienny ruch.",
+    "storyDescription": "Elbląg. Inspirowany bliskością wody, portowym rodowodem i surowym, północnym klimatem. Niebieski motyw military camo w technicznym wydaniu.",
     "images": [
-      "./assets/durag_silk_black.png"
+      "./assets/durag_silk_champagne.png"
     ],
-    "colors": [{ "name": "Blue Camo", "hex": "#4682B4" }],
+    "colors": [{ "name": "Blue Camo", "hex": "#2B4C7E" }],
     "reviews": [
-      { "author": "Robert V.", "rating": 5, "comment": "Świetne camo na głowie.", "date": "19.05.2026" }
+      { "author": "Marcin O.", "rating": 5, "comment": "Bardzo oryginalne camo!", "date": "24.04.2026" }
     ]
   },
   {
     "id": 1377,
     "slug": "durag-legionowo",
-    "name": "Durag Legionowo — Klasyczne Camo Satyna",
-    "nameEn": "Durag Legionowo Classic Camo Satin",
-    "price": 79.0,
+    "name": "Durag Legionowo — Klasyczne Military Camo Satyna",
+    "nameEn": "Durag Legionowo Classic Military Camo",
+    "price": 85.0,
     "category": "satin",
     "categoryLabel": "Satyna Poliestrowa",
-    "material": "Satyna Poliestrowa Camo",
-    "description": "Legionowo. Ukłon w stronę wojskowych tradycji miasta i bezkompromisowej, użytkowej klasyki. Tradycyjny wzór moro na gładkiej, satynowej bazie.",
-    "storyDescription": "Legionowo. Ukłon w stronę wojskowych tradycji miasta. Tradycyjne moro na gładkiej satynie.",
+    "material": "Satyna Klasyczne Moro",
+    "description": "Ukłon w stronę wojskowych tradycji miasta i bezkompromisowej, użytkowej klasyki. Tradycyjny wzór moro na satynowej bazie łączy surowy, militarny sznyt z gładkością i delikatnością dla skóry. Funkcjonalność i styl dopracowane do perfekcji.",
+    "storyDescription": "Legionowo. Ukłon w stronę wojskowych tradycji miasta i bezkompromisowej, użytkowej klasyki. Tradycyjny wzór moro na gładkiej, satynowej bazie.",
     "images": [
       "./assets/durag_silk_black.png"
     ],
-    "colors": [{ "name": "Classic Camo", "hex": "#556B2F" }],
+    "colors": [{ "name": "Classic Camo", "hex": "#4A5D23" }],
     "reviews": [
-      { "author": "Adrian K.", "rating": 5, "comment": "Klasyk nie do podrobienia.", "date": "07.06.2026" }
+      { "author": "Robert Z.", "rating": 5, "comment": "Klasyka ulicznego stylu, solidny materiał.", "date": "12.05.2026" }
     ]
   },
   {
@@ -303,15 +303,15 @@ window.products = [
     "price": 79.0,
     "category": "satin",
     "categoryLabel": "Satyna Poliestrowa",
-    "material": "Satyna Poliestrowa Premium",
-    "description": "Chałupy. Złapany w formę klimat nadmorskiej wolności, surfingu i bezkresu Bałtyku. Satyna w odcieniu czystego, letniego błękitu.",
-    "storyDescription": "Chałupy. Złapany w formę klimat nadmorskiej wolności i Bałtyku. Satyna w odcieniu letniego błękitu.",
+    "material": "Błękitna Satyna Poliestrowa",
+    "description": "Inspirowany nadmorską wolnością, kultowym klimatem surfingu i bezkresem Bałtyku. Satyna w odcieniu klasycznego, czystego błękitu przynosi lekkość i świeżość. Oddychająca struktura doskonale sprawdza się w ruchu, gwarantując komfort i stabilność.",
+    "storyDescription": "Chałupy. Złapany w formę klimat nadmorskiej wolności, surfingu i bezkresu Bałtyku. Satyna w odcieniu czystego, letniego błękitu.",
     "images": [
       "./assets/durag_silk_champagne.png"
     ],
-    "colors": [{ "name": "Ocean Blue", "hex": "#00BFFF" }],
+    "colors": [{ "name": "Ocean Blue", "hex": "#0077B6" }],
     "reviews": [
-      { "author": "Michał F.", "rating": 5, "comment": "Wspaniały błękitny kolor.", "date": "16.06.2026" }
+      { "author": "Jan B.", "rating": 5, "comment": "Kolor nieba i morza, świetny na lato!", "date": "15.06.2026" }
     ]
   },
   {
@@ -322,15 +322,15 @@ window.products = [
     "price": 79.0,
     "category": "satin",
     "categoryLabel": "Satyna Poliestrowa",
-    "material": "Satyna Poliestrowa Premium",
-    "description": "Tychy. Odniesienie do precyzyjnie zaplanowanej urbanistyki i głębokich tafli tyskich jezior. Klasyczny, harmonijny granat na gładkiej satynie.",
-    "storyDescription": "Tychy. Precyzyjna urbanistyka i tafle jezior. Klasyczny, harmonijny granat na gładkiej satynie.",
+    "material": "Granatowa Satyna Poliestrowa",
+    "description": "Nazwany na cześć miasta słynącego z precyzyjnego planowania, spokoju i głębokich tafli tyskich jezior. Klasyczny granat na gładkiej satynie to synonim harmonii i uniwersalności. Długie wiązania pozwalają na idealną regulację, tworząc bazę dla każdej stylizacji.",
+    "storyDescription": "Tychy. Odniesienie do precyzyjnie zaplanowanej urbanistyki i głębokich tafli tyskich jezior. Klasyczny, harmonijny granat na gładkiej satynie.",
     "images": [
-      "./assets/durag_silk_black.png"
+      "./assets/durag_silk_champagne.png"
     ],
-    "colors": [{ "name": "Deep Navy", "hex": "#000080" }],
+    "colors": [{ "name": "Navy Blue", "hex": "#03045E" }],
     "reviews": [
-      { "author": "Sebastian L.", "rating": 5, "comment": "Idealny klasyczny granat.", "date": "04.06.2026" }
+      { "author": "Bartek P.", "rating": 5, "comment": "Elegancki, uniwersalny granat do każdego fitu.", "date": "20.05.2026" }
     ]
   },
   {
@@ -341,15 +341,15 @@ window.products = [
     "price": 89.0,
     "category": "velvet",
     "categoryLabel": "Luksusowy Welur",
-    "material": "Welur Poliestrowy Premium",
-    "description": "Sosnowiec. Inspirowany rozległymi parkami miasta i jego wyrazistą, miejską tożsamością. Welur w głębokim odcieniu butelkowej zieleni. Oferuje luksusową mięsistość i świetnie dopasowuje się do głowy.",
-    "storyDescription": "Sosnowiec. Inspirowany rozległymi parkami i miejską tożsamością. Welur w odcieniu butelkowej zieleni.",
+    "material": "Butelkowozielony Welur",
+    "description": "Inspirowany rozległymi parkami miasta i jego wyrazistą, miejską tożsamością. Welur w odcieniu głębokiej, butelkowej zieleni oferuje luksusową mięsistość i miękkość. Świetnie dopasowuje się do kształtu głowy, chroniąc jej strukturę przed szkodliwymi czynnikami otoczenia.",
+    "storyDescription": "Sosnowiec. Inspirowany rozległymi parkami miasta i jego wyrazistą, miejską tożsamością. Welur w głębokim odcieniu butelkowej zieleni.",
     "images": [
       "./assets/durag_velvet_emerald.png"
     ],
-    "colors": [{ "name": "Emerald Green", "hex": "#004B49" }],
+    "colors": [{ "name": "Bottle Green", "hex": "#132A13" }],
     "reviews": [
-      { "author": "Filip Z.", "rating": 5, "comment": "Kolor butelkowej zieleni robi ogromne wrażenie.", "date": "15.06.2026" }
+      { "author": "Seweryn M.", "rating": 5, "comment": "Głęboka zieleń i miękki welur. Cudo.", "date": "27.05.2026" }
     ]
   },
   {
@@ -360,15 +360,15 @@ window.products = [
     "price": 89.0,
     "category": "velvet",
     "categoryLabel": "Luksusowy Welur",
-    "material": "Welur Poliestrowy Premium",
-    "description": "Włocławek. Stworzony z myślą o mieście o bogatej historii fabrycznego rzemiosła. Królewska, nasycona czerwień weluru nadająca unikalnej ciężkości i wyrazistego charakteru.",
-    "storyDescription": "Włocławek. Fabryczne rzemiosło i nasycona czerwień weluru nadająca unikalnej ciężkości.",
+    "material": "Królewski Czerwony Welur",
+    "description": "Nazwany na cześć miasta o bogatej historii rzemiosła fabrycznego i wyrazistym charakterze. Robotnicza, głęboka czerwień weluru nadaje mu unikalnej tekstury i ciężaru. Doskonale izoluje, trzyma się na miejscu przez cały dzień i podkreśla autentyczność Twojego vibe'u.",
+    "storyDescription": "Włocławek. Stworzony z myślą o mieście o bogatej historii fabrycznego rzemiosła. Królewska, nasycona czerwień weluru nadająca unikalnej ciężkości.",
     "images": [
-      "./assets/durag_velvet_royal.png"
+      "./assets/durag_velvet_emerald.png"
     ],
-    "colors": [{ "name": "Royal Red Velvet", "hex": "#8B0000" }],
+    "colors": [{ "name": "Imperial Red", "hex": "#780000" }],
     "reviews": [
-      { "author": "Damian P.", "rating": 5, "comment": "Ciężki, mięsisty welur najwyższej próby.", "date": "09.05.2026" }
+      { "author": "Kacper S.", "rating": 5, "comment": "Mega intensywny welur, trzyma fale całą noc.", "date": "04.06.2026" }
     ]
   },
   {
@@ -379,15 +379,15 @@ window.products = [
     "price": 89.0,
     "category": "velvet",
     "categoryLabel": "Luksusowy Welur",
-    "material": "Welur Poliestrowy Premium",
-    "description": "Gdańsk. Inspirowany głębią wzburzonego, zimowego morza i surową, hanzeatycką architekturą. Mięsisty welur w odcieniu głębokiego niebieskiego łączy morską melancholię z najwyższym komfortem.",
-    "storyDescription": "Gdańsk. Głębokie zimowe morze i surowa architektura. Mięsisty welur w głębokim niebieskim odcieniu.",
+    "material": "Niebieski Welur Morski",
+    "description": "Inspirowany głębią wzburzonego, zimowego morza i surową, hanzeatycką architekturą. Welur w odcieniu głębokiego niebieskiego łączy morską melancholię z najwyższym komfortem noszenia. Miękki w dotyku, stabilny i odporny – stworzony, by stawić czoła każdemu wyzwaniu.",
+    "storyDescription": "Gdańsk. Inspirowany głębią wzburzonego, zimowego morza i surową, hanzeatycką architekturą. Mięsisty welur w odcieniu głębokiego niebieskiego.",
     "images": [
-      "./assets/durag_velvet_royal.png"
+      "./assets/durag_velvet_emerald.png"
     ],
-    "colors": [{ "name": "Oceanic Navy Velvet", "hex": "#1034A6" }],
+    "colors": [{ "name": "Baltic Deep Blue", "hex": "#0F4C81" }],
     "reviews": [
-      { "author": "Patryk G.", "rating": 5, "comment": "Głęboki granatowo-niebieski welur.", "date": "13.06.2026" }
+      { "author": "Tymon W.", "rating": 5, "comment": "Morski odcień weluru robi genialną robotę.", "date": "01.06.2026" }
     ]
   },
   {
@@ -398,15 +398,15 @@ window.products = [
     "price": 89.0,
     "category": "velvet",
     "categoryLabel": "Luksusowy Welur",
-    "material": "Welur Poliestrowy Premium",
-    "description": "Szczecin. Stoczniowy rodowód otoczony wodą i nowoczesna architektura przełożone na surowy, srebrzysto-szary welur z metalicznym refleksem. Zapewnia idealny balans między formą a miękkością.",
-    "storyDescription": "Szczecin. Stoczniowy rodowód i nowoczesna architektura. Srebrzysto-szary welur z metalicznym refleksem.",
+    "material": "Srebrzysto-Szary Welur",
+    "description": "Nazwany na cześć miasta o stoczniowym rodowodzie, otoczonego wodą i nowoczesną architekturą filharmonii. Srebrzysto-szary welur intryguje metalicznym refleksem i grubszą, miękką strukturą. Zapewnia idealny balans między surową formą a delikatnością dla skóry.",
+    "storyDescription": "Szczecin. Stoczniowy rodowód otoczony wodą i nowoczesna architektura przełożone na surowy, srebrzysto-szary welur z metalicznym refleksem.",
     "images": [
       "./assets/durag_velvet_emerald.png"
     ],
-    "colors": [{ "name": "Metallic Silver Velvet", "hex": "#8A9EA7" }],
+    "colors": [{ "name": "Stocznia Silver", "hex": "#8D99AE" }],
     "reviews": [
-      { "author": "Adam B.", "rating": 5, "comment": "Srebrny refleks w welurze czad!", "date": "09.06.2026" }
+      { "author": "Norbert D.", "rating": 5, "comment": "Srebrny welur wygląda bardzo luksusowo.", "date": "16.05.2026" }
     ]
   },
   {
@@ -417,15 +417,15 @@ window.products = [
     "price": 89.0,
     "category": "velvet",
     "categoryLabel": "Luksusowy Welur",
-    "material": "Welur Poliestrowy Premium",
-    "description": "Poznań. Wielkomiejski, nowoczesny rytm i dumna estetyka stolicy Wielkopolski. Welur w odcieniu nasyconego fioletu dla szukających unikalnej faktury.",
-    "storyDescription": "Poznań. Wielkomiejski rytm i dumna estetyka. Welur w odcieniu nasyconego fioletu.",
+    "material": "Nasycony Fioletowy Welur",
+    "description": "Inspirowany wielkomiejskim, nowoczesnym rytmem i dumną, geometryczną estetyką stolicy Wielkopolski. Welur w odcieniu nasyconego fioletu to propozycja dla tych, którzy szukają unikalnej faktury. Kontrolowana elastyczność zapewnia pewny chwyt i całodniową wygodę.",
+    "storyDescription": "Poznań. Wielkomiejski, nowoczesny rytm i dumna estetyka stolicy Wielkopolski. Welur w odcieniu nasyconego fioletu dla szukających unikalnej faktury.",
     "images": [
-      "./assets/durag_velvet_royal.png"
+      "./assets/durag_velvet_emerald.png"
     ],
-    "colors": [{ "name": "Royal Purple Velvet", "hex": "#4B0082" }],
+    "colors": [{ "name": "Imperial Purple", "hex": "#4A0E4E" }],
     "reviews": [
-      { "author": "Tomasz N.", "rating": 5, "comment": "Fiolet jest niesamowity.", "date": "28.05.2026" }
+      { "author": "Krystian L.", "rating": 5, "comment": "Niesamowity fiolet, miękki i gęsty materiał.", "date": "09.06.2026" }
     ]
   },
   {
@@ -436,34 +436,15 @@ window.products = [
     "price": 99.0,
     "category": "seasonal",
     "categoryLabel": "Sezonowe Materiały",
-    "material": "Innowacyjna Tkanina Cupro",
-    "description": "Bydgoszcz. Industrialne spichrze, rzeczne kanały i metaliczne refleksy nad Brdą. Nowoczesne tworzywo cupro w szlachetnym, miedzianym odcieniu. Łączy jedwabistą gładkość z naturalną przewiewnością i unikalnym, matowo-lśniącym finiszem.",
-    "storyDescription": "Bydgoszcz. Industrialne spichrze i metaliczne refleksy nad Brdą. Nowoczesne tworzywo cupro w miedzianym odcieniu.",
+    "material": "Innowacyjne Tworzywo Cupro",
+    "description": "Inspirowany industrialnymi spichrzami, rzecznymi kanałami i metalicznymi refleksami nad Brdą. Wykonany z innowacyjnego materiału cupro w szlachetnym, miedzianym odcieniu. Łączy jedwabistą gładkość z naturalną przewiewnością i unikalnym, matowo-lśniącym finiszem. Nowa definicja nowoczesnej formy.",
+    "storyDescription": "Bydgoszcz. Industrialne spichrze, rzeczne kanały i metaliczne refleksy nad Brdą. Nowoczesne tworzywo cupro w szlachetnym, miedzianym odcieniu.",
     "images": [
       "./assets/durag_silk_champagne.png"
     ],
-    "colors": [{ "name": "Copper Bronze", "hex": "#B87333" }],
+    "colors": [{ "name": "Copper Cupro", "hex": "#B87333" }],
     "reviews": [
-      { "author": "Igor B.", "rating": 5, "comment": "Cupro to niesamowite odkrycie, bardzo lekkie.", "date": "20.06.2026" }
-    ]
-  },
-  {
-    "id": 9901,
-    "slug": "szczotka-wave-brush-medium",
-    "name": "Szczotka Wave Brush Premium (Medium)",
-    "nameEn": "Premium Wave Brush Medium",
-    "price": 69.0,
-    "category": "accessories",
-    "categoryLabel": "Pielęgnacja & Akcesoria",
-    "material": "Drewno Bukowe + 100% Włosie Dzika",
-    "description": "Ergonomiczna szczotka do fal 360 waves wykonana z impregnowanego drewna bukowego i profilowanego naturalnego włosia dzika. Idealny stopień twardości (medium) do codziennej sesji brushingu.",
-    "storyDescription": "Szczotka z naturalnego włosia dzika do profesjonalnej pielęgnacji fal 360 waves.",
-    "images": [
-      "./assets/wave_brush_premium.png"
-    ],
-    "colors": [{ "name": "Natural Wood", "hex": "#8B4513" }],
-    "reviews": [
-      { "author": "Wojciech C.", "rating": 5, "comment": "Niezbędnik każdego wavera. Bardzo wygodna rączka.", "date": "19.06.2026" }
+      { "author": "Igor W.", "rating": 5, "comment": "Miedź na cupro wygląda zjawiskowo.", "date": "13.06.2026" }
     ]
   }
 ];
