@@ -12,8 +12,8 @@
   const seedProductsIfEmpty = window.seedProductsIfEmpty;
   const EDGE_FUNCTION_URL = window.EDGE_FUNCTION_URL;
 
-// --- Products array (populated from Supabase on init) ---
-let products = [];
+/// --- Products array (populated synchronously from window.products, updated from Supabase async) ---
+let products = (typeof window !== 'undefined' && window.products && window.products.length > 0) ? [...window.products] : [];
 
 // --- Application State ---
 let state = {
@@ -25,45 +25,47 @@ let state = {
   activeImageIndexInModal: 0
 };
 
-// --- Load products from Supabase (async) ---
+// --- Load products from Supabase (async background sync) ---
 async function loadProductsFromSupabase() {
   try {
-    // Seed on first use if DB is empty
-    await seedProductsIfEmpty();
+    if (typeof window.seedProductsIfEmpty === 'function') {
+      await window.seedProductsIfEmpty();
+    }
 
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .eq('visible', true)
-      .order('id', { ascending: true });
+    if (window.supabaseClient) {
+      const { data, error } = await window.supabaseClient
+        .from('products')
+        .select('*')
+        .eq('visible', true)
+        .order('id', { ascending: true });
 
-    if (error) {
-      console.warn('[WDS] Supabase products load error, falling back to window.products:', error.message);
-      products = window.products ? [...window.products] : [];
-    } else {
-      // Map snake_case DB columns to camelCase used throughout the app
-      products = (data || []).map(p => ({
-        id: p.id,
-        name: p.name,
-        nameEn: p.name_en,
-        price: parseFloat(p.price),
-        category: p.category,
-        categoryLabel: p.category_label,
-        material: p.material,
-        description: p.description,
-        images: p.images || [],
-        colors: p.colors || [],
-        reviews: p.reviews || [],
-        stock: p.stock,
-        visible: p.visible
-      }));
-      console.log(`[WDS] ✓ Załadowano ${products.length} produktów z Supabase.`);
+      if (!error && data && data.length > 0) {
+        products = data.map(p => ({
+          id: p.id,
+          name: p.name,
+          nameEn: p.name_en,
+          price: parseFloat(p.price),
+          category: p.category,
+          categoryLabel: p.category_label,
+          material: p.material,
+          description: p.description,
+          images: p.images || [],
+          colors: p.colors || [],
+          reviews: p.reviews || [],
+          stock: p.stock,
+          visible: p.visible
+        }));
+        console.log(`[WDS] ✓ Załadowano ${products.length} produktów z Supabase.`);
+        renderProductGrid();
+      }
     }
   } catch (err) {
-    console.warn('[WDS] Błąd ładowania produktów:', err);
-    products = window.products ? [...window.products] : [];
+    console.warn('[WDS] Supabase fallback to local products:', err);
   }
 
+  if (!products || products.length === 0) {
+    products = (typeof window !== 'undefined' && window.products) ? [...window.products] : [];
+  }
   renderProductGrid();
 }
 
@@ -130,8 +132,23 @@ const DOM = {
 // 1. INITIALIZATION & LAYOUT TRIGGERS
 // ========================================================================
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // Load Cart from localStorage (cart stays local for session speed)
+const hidePreloader = () => {
+  const preloader = document.getElementById('preloader') || DOM.preloader;
+  if (preloader) {
+    preloader.style.opacity = '0';
+    preloader.style.pointerEvents = 'none';
+    setTimeout(() => {
+      preloader.style.display = 'none';
+      preloader.style.visibility = 'hidden';
+    }, 400);
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Hide Preloader immediately on DOM ready
+  hidePreloader();
+
+  // Load Cart from localStorage
   const savedCart = localStorage.getItem('wds_cart');
   if (savedCart) {
     try {
@@ -142,8 +159,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Load products from Supabase (async - renders grid when ready)
-  await loadProductsFromSupabase();
+  // Render product grid immediately
+  renderProductGrid();
   
   // Initialize IntersectionObserver for Scroll Reveals
   initScrollReveals();
@@ -152,36 +169,27 @@ document.addEventListener('DOMContentLoaded', async () => {
   bindEventListeners();
   
   // Initialize Admin CMS Portal Controls
-  initAdminCMS();
+  if (typeof initAdminCMS === 'function') initAdminCMS();
 
   // Initialize Multi-step Checkout and Paczkomat API
-  initCheckoutFlow();
+  if (typeof initCheckoutFlow === 'function') initCheckoutFlow();
   
   // Initialize WooCommerce Clientside Importers
-  initWooCommerceImporter();
+  if (typeof initWooCommerceImporter === 'function') initWooCommerceImporter();
 
   // Initialize Information & Legal Modals
-  initInfoModals();
+  if (typeof initInfoModals === 'function') initInfoModals();
 
   // Initialize Scroll Lock Observer
-  initScrollLockObserver();
+  if (typeof initScrollLockObserver === 'function') initScrollLockObserver();
 
+  // Async load from Supabase in background
+  loadProductsFromSupabase();
 });
 
-// Hide Preloader on Page Load with Safety Timeout Fallback
-const hidePreloader = () => {
-  if (DOM.preloader && DOM.preloader.style.opacity !== '0') {
-    DOM.preloader.style.opacity = '0';
-    setTimeout(() => {
-      DOM.preloader.style.display = 'none';
-      DOM.preloader.style.visibility = 'hidden';
-    }, 800);
-  }
-};
-
+// Run hidePreloader immediately & safety fallbacks
+hidePreloader();
 window.addEventListener('load', hidePreloader);
-
-// Safety timeout: hide preloader after 2s maximum anyway to avoid hanging on slow network asset load
 setTimeout(hidePreloader, 2000);
 
 // Sticky Navigation Header transition on scroll with logo color swapping
