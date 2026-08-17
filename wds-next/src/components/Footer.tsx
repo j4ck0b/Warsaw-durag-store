@@ -72,6 +72,7 @@ export default function Footer() {
             <Link href="/strona/blog" className="hover:text-white transition-colors">Blog</Link>
             <Link href="/strona/regulamin" className="hover:text-white transition-colors">Regulamin</Link>
             <Link href="/strona/polityka-prywatnosci" className="hover:text-white transition-colors">Polityka Prywatności</Link>
+            <Link href="/admin" className="text-[#D9A87E] font-bold hover:text-white transition-colors">🔒 Panel CMS</Link>
           </div>
         </div>
 
