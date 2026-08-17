@@ -189,10 +189,10 @@ window.addEventListener('scroll', () => {
   const headerLogo = document.getElementById('headerLogo');
   if (window.scrollY > 50) {
     DOM.siteHeader.classList.add('scrolled');
-    if (headerLogo) headerLogo.src = './assets/logo_white.png';
+    if (headerLogo) headerLogo.src = './assets/logo_black.png';
   } else {
     DOM.siteHeader.classList.remove('scrolled');
-    if (headerLogo) headerLogo.src = './assets/logo_black.png';
+    if (headerLogo) headerLogo.src = './assets/logo_white.png';
   }
 });
 

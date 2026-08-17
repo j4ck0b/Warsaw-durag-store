@@ -46,16 +46,16 @@ export default function Header() {
             : 'bg-white/90 backdrop-blur-md text-[#0D0D0B] border-b border-[#CFCFCF]/50'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 h-24 md:h-28 flex items-center justify-between">
           
           {/* Logo with double color version */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-3 group py-2">
             <Image
-              src={isScrolled ? "/assets/logo_white.png" : "/assets/logo_black.png"}
+              src={isScrolled ? "/assets/logo_black.png" : "/assets/logo_white.png"}
               alt="Warsaw Durag Store Logo"
-              width={160}
-              height={42}
-              className="h-10 w-auto object-contain transition-all duration-300"
+              width={320}
+              height={100}
+              className="h-16 md:h-20 lg:h-22 w-auto object-contain transition-all duration-300 transform group-hover:scale-105"
               priority
             />
           </Link>
