@@ -27,6 +27,11 @@ let state = {
 
 // --- Load products from Supabase (async background sync) ---
 async function loadProductsFromSupabase() {
+  const localMap = new Map();
+  if (typeof window !== 'undefined' && window.products) {
+    window.products.forEach(p => localMap.set(p.id, p));
+  }
+
   try {
     if (typeof window.seedProductsIfEmpty === 'function') {
       await window.seedProductsIfEmpty();
@@ -40,23 +45,33 @@ async function loadProductsFromSupabase() {
         .order('id', { ascending: true });
 
       if (!error && data && data.length > 0) {
-        products = data.map(p => ({
-          id: p.id,
-          name: p.name,
-          nameEn: p.name_en,
-          price: parseFloat(p.price),
-          category: p.category,
-          categoryLabel: p.category_label,
-          material: p.material,
-          description: p.description,
-          images: p.images || [],
-          colors: p.colors || [],
-          reviews: p.reviews || [],
-          stock: p.stock,
-          visible: p.visible
-        }));
-        console.log(`[WDS] ✓ Załadowano ${products.length} produktów z Supabase.`);
+        products = data.map(p => {
+          const localItem = localMap.get(p.id);
+          // If Supabase has old mock images or empty images, prioritize authentic local images
+          const hasOldMockImage = !p.images || p.images.length === 0 || p.images[0].includes('durag_silk_') || p.images[0].includes('durag_velvet_');
+          const finalImages = (hasOldMockImage && localItem && localItem.images && localItem.images.length > 0) 
+            ? localItem.images 
+            : (p.images || (localItem ? localItem.images : []));
+
+          return {
+            id: p.id,
+            name: p.name,
+            nameEn: p.name_en,
+            price: parseFloat(p.price),
+            category: p.category,
+            categoryLabel: p.category_label,
+            material: p.material,
+            description: p.description,
+            images: finalImages,
+            colors: p.colors || (localItem ? localItem.colors : []),
+            reviews: p.reviews || (localItem ? localItem.reviews : []),
+            stock: p.stock,
+            visible: p.visible
+          };
+        });
+        console.log(`[WDS] ✓ Załadowano ${products.length} produktów z Supabase z autentycznymi zdjęciami.`);
         renderProductGrid();
+        return;
       }
     }
   } catch (err) {

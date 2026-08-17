@@ -46,19 +46,12 @@
         return false;
       }
 
-      if (count > 0) {
-        console.log(`[WDS] Supabase: ${count} produktów już w bazie.`);
-        return true;
-      }
-
-      // Seed from window.products
       if (!window.products || window.products.length === 0) {
         console.warn('[WDS] Brak produktów do seedowania.');
         return false;
       }
 
-      console.log('[WDS] Seedowanie produktów do Supabase...');
-
+      // Upsert products to ensure authentic images are always updated in Supabase
       const rows = window.products.map(p => ({
         id: p.id,
         name: p.name,
@@ -75,16 +68,15 @@
         visible: true
       }));
 
-      const { error: insertError } = await supabase
+      const { error: upsertError } = await supabase
         .from('products')
-        .insert(rows);
+        .upsert(rows, { onConflict: 'id' });
 
-      if (insertError) {
-        console.error('[WDS] Błąd seedowania produktów:', insertError.message);
-        return false;
+      if (upsertError) {
+        console.warn('[WDS] Supabase upsert note:', upsertError.message);
+      } else {
+        console.log(`[WDS] ✓ Zsynchronizowano ${rows.length} produktów z autentycznymi zdjęciami w Supabase.`);
       }
-
-      console.log(`[WDS] ✓ Zaimportowano ${rows.length} produktów do Supabase.`);
       return true;
     } catch (err) {
       console.warn('[WDS] Seed function error:', err);
