@@ -5,12 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ShoppingBag, Menu, X, Globe } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useLanguage, Language } from '@/context/LanguageContext';
 
 export default function Header() {
   const { cartCount, setIsCartOpen } = useCart();
+  const { language, setLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [currentLang, setCurrentLang] = useState<'PL' | 'EN' | 'CZ' | 'LT'>('PL');
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
 
   useEffect(() => {
@@ -25,16 +26,24 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const marqueeText = "Wysyłamy z Warszawy w 1 dzień • Kup dwa a trzeci otrzymasz gratis • Darmowa wysyłka • Ręcznie szyte duragi • Odbiór osobisty w Warszawie • ";
+  const languages: { code: Language; label: string }[] = [
+    { code: 'PL', label: 'Polski' },
+    { code: 'EN', label: 'English' },
+    { code: 'DE', label: 'Deutsch' },
+    { code: 'FR', label: 'Français' },
+    { code: 'ES', label: 'Español' },
+    { code: 'CZ', label: 'Čeština' },
+    { code: 'LT', label: 'Lietuvių' },
+  ];
 
   return (
     <>
       {/* Announcement Ticker */}
       <div className="bg-[#0D0D0B] text-[#D9A87E] text-[11px] uppercase tracking-[0.15em] py-2 overflow-hidden border-b border-[#3B3C40]/30 select-none" aria-hidden="true">
         <div className="flex whitespace-nowrap animate-marquee">
-          <span className="pr-8">{marqueeText}</span>
-          <span className="pr-8">{marqueeText}</span>
-          <span className="pr-8">{marqueeText}</span>
+          <span className="pr-8">{t.announcement}</span>
+          <span className="pr-8">{t.announcement}</span>
+          <span className="pr-8">{t.announcement}</span>
         </div>
       </div>
 
@@ -62,13 +71,13 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className={`hidden lg:flex items-center gap-6 text-xs font-semibold uppercase tracking-[0.15em] ${isScrolled ? 'text-gray-200' : 'text-[#3B3C40]'}`}>
-            <Link href="/kolekcja/all" className="hover:text-[#D9A87E] transition-colors py-2">Wszystko</Link>
-            <Link href="/kolekcja/silk" className="hover:text-[#D9A87E] transition-colors py-2">Jedwabne</Link>
-            <Link href="/kolekcja/satin" className="hover:text-[#D9A87E] transition-colors py-2">Satynowe</Link>
-            <Link href="/kolekcja/velvet" className="hover:text-[#D9A87E] transition-colors py-2">Welurowe</Link>
-            <Link href="/kolekcja/seasonal" className="hover:text-[#D9A87E] transition-colors py-2">Sezonowe</Link>
-            <Link href="/kolekcja/accessories" className="hover:text-[#D9A87E] transition-colors py-2">Akcesoria</Link>
-            <Link href="/poradnik/wave-guide" className="hover:text-[#D9A87E] transition-colors py-2 text-[#D9A87E]">Wave Guide</Link>
+            <Link href="/kolekcja/all" className="hover:text-[#D9A87E] transition-colors py-2">{t.navAll}</Link>
+            <Link href="/kolekcja/silk" className="hover:text-[#D9A87E] transition-colors py-2">{t.navSilk}</Link>
+            <Link href="/kolekcja/satin" className="hover:text-[#D9A87E] transition-colors py-2">{t.navSatin}</Link>
+            <Link href="/kolekcja/velvet" className="hover:text-[#D9A87E] transition-colors py-2">{t.navVelvet}</Link>
+            <Link href="/kolekcja/seasonal" className="hover:text-[#D9A87E] transition-colors py-2">{t.navSeasonal}</Link>
+            <Link href="/kolekcja/accessories" className="hover:text-[#D9A87E] transition-colors py-2">{t.navAccessories}</Link>
+            <Link href="/poradnik/wave-guide" className="hover:text-[#D9A87E] transition-colors py-2 text-[#D9A87E]">{t.navGuide}</Link>
           </nav>
 
           {/* Cart & Language Selector */}
@@ -78,32 +87,32 @@ export default function Header() {
             <div className="relative">
               <button
                 onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-                className={`flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-2.5 py-1.5 rounded-full border transition-colors ${
+                className={`flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full border transition-colors ${
                   isScrolled 
-                    ? 'border-white/20 hover:border-[#D9A87E] text-white' 
-                    : 'border-gray-300 hover:border-[#0D0D0B] text-[#0D0D0B]'
+                    ? 'border-white/20 hover:border-[#D9A87E] text-white bg-white/5' 
+                    : 'border-gray-300 hover:border-[#0D0D0B] text-[#0D0D0B] bg-gray-50'
                 }`}
                 title="Wybierz język / Change language"
               >
                 <Globe className="w-3.5 h-3.5" />
-                <span>{currentLang}</span>
+                <span>{language}</span>
               </button>
 
               {langDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-28 bg-[#0D0D0B] border border-white/20 rounded-xl shadow-xl py-2 z-50 text-xs font-medium text-gray-200 animate-scale-in">
-                  {(['PL', 'EN', 'CZ', 'LT'] as const).map((lang) => (
+                <div className="absolute right-0 mt-2 w-36 bg-[#0D0D0B] border border-white/20 rounded-xl shadow-2xl py-2 z-50 text-xs font-medium text-gray-200 animate-scale-in">
+                  {languages.map(({ code, label }) => (
                     <button
-                      key={lang}
+                      key={code}
                       onClick={() => {
-                        setCurrentLang(lang);
+                        setLanguage(code);
                         setLangDropdownOpen(false);
                       }}
-                      className={`w-full text-left px-4 py-1.5 hover:bg-[#1A1A1A] hover:text-[#D9A87E] flex items-center justify-between ${
-                        currentLang === lang ? 'text-[#D9A87E] font-bold' : ''
+                      className={`w-full text-left px-4 py-2 hover:bg-[#1A1A1A] hover:text-[#D9A87E] flex items-center justify-between transition-colors ${
+                        language === code ? 'text-[#D9A87E] font-bold bg-white/5' : ''
                       }`}
                     >
-                      <span>{lang === 'PL' ? 'Polski' : lang === 'EN' ? 'English' : lang === 'CZ' ? 'Čeština' : 'Lietuvių'}</span>
-                      <span className="text-[10px] text-gray-400">[{lang}]</span>
+                      <span>{label}</span>
+                      <span className="text-[10px] text-gray-400 font-mono">[{code}]</span>
                     </button>
                   ))}
                 </div>

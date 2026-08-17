@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { X, Trash2, Plus, Minus, CheckCircle } from 'lucide-react';
 
 export default function CartDrawer() {
+  const { t } = useLanguage();
   const {
     cart,
     isCartOpen,
@@ -36,7 +38,7 @@ export default function CartDrawer() {
     if (ok) {
       setPromoInput('');
     } else {
-      setPromoError('Nieprawidłowy lub nieaktywny kod rabatowy.');
+      setPromoError('Nieprawidłowy kod rabatowy.');
     }
   };
 
@@ -63,7 +65,7 @@ export default function CartDrawer() {
         {/* Header */}
         <div className="p-6 border-b border-[#CFCFCF]/50 flex items-center justify-between">
           <h2 className="font-serif text-xl font-medium text-[#0D0D0B]">
-            Twój Koszyk ({cart.length})
+            {t.cartTitle} ({cart.length})
           </h2>
           <button
             onClick={() => setIsCartOpen(false)}

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Product } from '@/lib/products';
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { ShoppingBag, Truck, ShieldCheck, RefreshCw, Star, Check, Sparkles, MapPin } from 'lucide-react';
 
 interface ProductDetailsClientProps {
@@ -12,9 +13,12 @@ interface ProductDetailsClientProps {
 
 export default function ProductDetailsClient({ product }: ProductDetailsClientProps) {
   const { addToCart } = useCart();
+  const { language, t } = useLanguage();
   const [selectedImage, setSelectedImage] = useState(product.images[0] || '');
   const [quantity, setQuantity] = useState(1);
   const [addedMessage, setAddedMessage] = useState(false);
+
+  const displayName = language !== 'PL' && product.nameEn ? product.nameEn : product.name;
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
@@ -29,8 +33,8 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
       <div className="space-y-4">
         <div className="relative aspect-[3/4] bg-[#F7F5F2] border border-[#CFCFCF]/50 rounded-xl overflow-hidden shadow-lg">
           <Image
-            src={selectedImage || product.images[0]}
-            alt={product.name}
+            src={selectedImage || product.images[0] || '/assets/durag_silk_black.png'}
+            alt={displayName}
             fill
             priority
             className="object-cover"
@@ -51,7 +55,7 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
                   selectedImage === img ? 'border-[#734C1D] ring-2 ring-[#734C1D]/30 shadow-md' : 'border-[#CFCFCF] opacity-70 hover:opacity-100'
                 }`}
               >
-                <Image src={img} alt={`${product.name} - ujęcie ${idx + 1}`} fill className="object-cover" />
+                <Image src={img} alt={`${displayName} - ${idx + 1}`} fill className="object-cover" />
               </button>
             ))}
           </div>
@@ -65,7 +69,7 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
             {product.material}
           </span>
           <h1 className="font-serif text-3xl sm:text-4xl text-[#0D0D0B] font-medium">
-            {product.name}
+            {displayName}
           </h1>
 
           {/* Rating */}
@@ -76,7 +80,7 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
               ))}
             </div>
             <span className="text-xs text-[#3B3C40] font-light">
-              ({product.reviews.length} opinie klienta)
+              ({product.reviews.length} {t.reviewsTab.toLowerCase()})
             </span>
           </div>
         </div>
@@ -88,12 +92,12 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#D9A87E]">Zestaw 2 + 1 GRATIS</h4>
-              <p className="text-[12px] text-gray-300 font-light mt-0.5">Kup dwa duragi, a trzeci otrzymasz gratis!</p>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#D9A87E]">2 + 1 GRATIS / FREE</h4>
+              <p className="text-[12px] text-gray-300 font-light mt-0.5">Kup 2 duragi, 3 trzymasz gratis w koszyku!</p>
             </div>
           </div>
           <span className="text-xs font-semibold uppercase tracking-wider text-[#D9A87E] bg-white/10 px-3 py-1 rounded-full">
-            Promocja
+            EU PROMO
           </span>
         </div>
 
@@ -101,7 +105,7 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
         <div className="text-3xl font-bold text-[#0D0D0B] pb-4 border-b border-[#CFCFCF]/40 flex items-center justify-between">
           <div>
             <span>{product.price.toFixed(2)} PLN</span>
-            <span className="text-xs text-[#2E7D32] font-normal block mt-1">Darmowa dostawa w całej Polsce</span>
+            <span className="text-xs text-[#2E7D32] font-normal block mt-1">{t.trustShippingDesc}</span>
           </div>
         </div>
 
@@ -134,7 +138,7 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
               className="flex-grow bg-[#0D0D0B] hover:bg-[#734C1D] text-white py-4 px-8 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-full flex items-center justify-center gap-2 shadow-lg"
             >
               <ShoppingBag className="w-4 h-4" />
-              <span>Dodaj do koszyka</span>
+              <span>{addedMessage ? t.addedToCart : t.addToCart}</span>
             </button>
           </div>
 

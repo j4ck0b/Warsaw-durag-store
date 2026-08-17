@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { CartProvider } from '@/context/CartContext';
+import { LanguageProvider } from '@/context/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
@@ -33,12 +34,14 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body className="bg-white text-[#0D0D0B] font-sans antialiased selection:bg-[#734C1D] selection:text-white">
-        <CartProvider>
-          <Header />
-          <CartDrawer />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-        </CartProvider>
+        <LanguageProvider>
+          <CartProvider>
+            <Header />
+            <CartDrawer />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -505,15 +505,43 @@ export const PRODUCTS: Product[] = [
   }
 ];
 
+let mutableProducts: Product[] = [...PRODUCTS];
+
 export function getAllProducts(): Product[] {
-  return PRODUCTS;
+  return mutableProducts;
 }
 
 export function getProductBySlug(slug: string): Product | undefined {
-  return PRODUCTS.find(p => p.slug === slug);
+  return mutableProducts.find(p => p.slug === slug);
 }
 
 export function getProductsByCategory(category: string): Product[] {
-  if (category === 'all') return PRODUCTS;
-  return PRODUCTS.filter(p => p.category === category);
+  if (category === 'all') return mutableProducts;
+  return mutableProducts.filter(p => p.category === category);
+}
+
+export function addProduct(newProduct: Omit<Product, 'id'>): Product {
+  const nextId = mutableProducts.length > 0 ? Math.max(...mutableProducts.map(p => p.id)) + 1 : 1001;
+  const created: Product = {
+    ...newProduct,
+    id: nextId,
+    reviews: newProduct.reviews || [],
+    images: newProduct.images.length > 0 ? newProduct.images : ['/assets/durag_silk_black.png'],
+    colors: newProduct.colors.length > 0 ? newProduct.colors : [{ name: 'Classic Black', hex: '#0A0A0A' }]
+  };
+  mutableProducts.unshift(created);
+  return created;
+}
+
+export function updateProduct(id: number, updatedFields: Partial<Product>): Product | null {
+  const idx = mutableProducts.findIndex(p => p.id === id);
+  if (idx === -1) return null;
+  mutableProducts[idx] = { ...mutableProducts[idx], ...updatedFields };
+  return mutableProducts[idx];
+}
+
+export function deleteProduct(id: number): boolean {
+  const initialLen = mutableProducts.length;
+  mutableProducts = mutableProducts.filter(p => p.id !== id);
+  return mutableProducts.length < initialLen;
 }
