@@ -51,6 +51,8 @@ export default function HomePage() {
         <div className="absolute inset-0 z-0 opacity-40">
           <video
             src="/assets/hero_video.mp4"
+            poster="/assets/durag_silk_black.png"
+            preload="metadata"
             autoPlay
             loop
             muted
@@ -69,8 +71,8 @@ export default function HomePage() {
           </span>
           
           <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl font-medium tracking-tight text-white leading-tight mb-8">
-            Bo styl rodzi się <br />
-            <span className="italic text-[#D9A87E]">na głowie</span>.
+            Ręcznie szyte duragi.<br />
+            <span className="italic text-[#D9A87E]">Bo styl rodzi się na głowie</span>.
           </h1>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -183,15 +185,15 @@ export default function HomePage() {
       <section className="bg-[#0D0D0B] text-white py-24 border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
-          {/* Video showcasing sewing process & silk smoothness */}
+          {/* Editorial Image Showcase */}
           <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-[#111111] shadow-2xl border border-white/10 group">
-            <video
-              src="/assets/hero_video.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
+            <Image
+              src="/assets/lookbook_editorial.png"
+              alt="Jedwab w mieście — Durag Milanówek 19 Momme"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0B]/80 via-transparent to-transparent pointer-events-none" />
             <div className="absolute bottom-6 left-6 right-6">

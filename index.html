@@ -6,15 +6,33 @@
   <title>Warsaw Durag Store — Jedyne duragi szyte w Polsce</title>
   <meta name="description" content="Jedyne duragi szyte w Polsce z prawdziwego jedwabiu morwowego 19 Momme, satyny i weluru. Darmowa dostawa w Polsce, wysyłka 1 dzień z Warszawy.">
   <meta name="author" content="Warsaw Durag Store">
-  <link rel="canonical" href="https://warsaw-durag-store.vercel.app/">
+  <link rel="canonical" href="https://warsawduragstore.pl/">
+  <link rel="alternate" hreflang="pl" href="https://warsawduragstore.pl/">
+  <link rel="alternate" hreflang="en" href="https://warsawduragstore.pl/?lang=EN">
+  <link rel="alternate" hreflang="de" href="https://warsawduragstore.pl/?lang=DE">
+  <link rel="alternate" hreflang="fr" href="https://warsawduragstore.pl/?lang=FR">
+  <link rel="alternate" hreflang="es" href="https://warsawduragstore.pl/?lang=ES">
+  <link rel="alternate" hreflang="cs" href="https://warsawduragstore.pl/?lang=CZ">
+  <link rel="alternate" hreflang="lt" href="https://warsawduragstore.pl/?lang=LT">
+  <link rel="alternate" hreflang="x-default" href="https://warsawduragstore.pl/">
+
+  <!-- Prevent Indexing on Preview & Vercel Subdomains -->
+  <script>
+    if (window.location.hostname.includes('vercel.app')) {
+      var metaRobots = document.createElement('meta');
+      metaRobots.name = 'robots';
+      metaRobots.content = 'noindex, nofollow';
+      document.head.appendChild(metaRobots);
+    }
+  </script>
   
   <!-- Open Graph / Facebook / Instagram -->
   <meta property="og:site_name" content="Warsaw Durag Store">
   <meta property="og:title" content="Warsaw Durag Store — Jedyne duragi szyte w Polsce">
-  <meta property="og:description" content="Jedyne duragi szyte w Polsce z jedwabiu morwowego 19 Momme i aksamitu. Darmowa dostawa, wysyłka 1 dzień z Warszawy.">
-  <meta property="og:url" content="https://warsaw-durag-store.vercel.app/">
+  <meta property="og:description" content="Jedyne duragi szyte w Polsce z prawdziwego jedwabiu morwowego 19 Momme i aksamitu. Darmowa dostawa, wysyłka 1 dzień z Warszawy.">
+  <meta property="og:url" content="https://warsawduragstore.pl/">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://warsaw-durag-store.vercel.app/assets/logo_black.png">
+  <meta property="og:image" content="https://warsawduragstore.pl/assets/logo_black.png">
   <meta property="og:locale" content="pl_PL">
 
   <!-- Modern Styling -->
@@ -30,18 +48,46 @@
     "@graph": [
       {
         "@type": "Organization",
-        "@id": "https://warsaw-durag-store.vercel.app/#organization",
+        "@id": "https://warsawduragstore.pl/#organization",
         "name": "Warsaw Durag Store",
-        "url": "https://warsaw-durag-store.vercel.app/",
-        "logo": "https://warsaw-durag-store.vercel.app/assets/logo_black.png",
+        "url": "https://warsawduragstore.pl/",
+        "logo": "https://warsawduragstore.pl/assets/logo_black.png",
         "contactPoint": {
           "@type": "ContactPoint",
           "email": "support@warsawduragstore.pl",
           "contactType": "customer service",
-          "availableLanguage": ["Polish", "English", "Czech", "Lithuanian"]
+          "availableLanguage": ["Polish", "English", "German", "French", "Spanish", "Czech", "Lithuanian"]
         },
         "sameAs": [
           "https://instagram.com/warsawduragstore"
+        ]
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://warsawduragstore.pl/#localbusiness",
+        "name": "Warsaw Durag Store",
+        "image": "https://warsawduragstore.pl/assets/logo_black.png",
+        "priceRange": "79 - 149 PLN",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "ul. Włodarzewska 4",
+          "addressLocality": "Warszawa",
+          "postalCode": "02-384",
+          "addressCountry": "PL"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 52.2052,
+          "longitude": 20.9634
+        },
+        "url": "https://warsawduragstore.pl/",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "09:00",
+            "closes": "20:00"
+          }
         ]
       }
     ]
@@ -177,14 +223,14 @@
   <!-- ================= HERO SECTION ================= -->
   <section class="hero-section" id="heroSection">
     <div class="hero-bg">
-      <video src="./assets/hero_video.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+      <video src="./assets/hero_video.mp4" poster="./assets/durag_silk_black.png" preload="metadata" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
     </div>
     <div class="hero-overlay" style="background: rgba(13,13,11,0.5);"></div>
     <div class="container" style="position: relative; z-index: 5;">
       <div class="hero-content">
         <span class="script-accent" style="margin-bottom: 15px; color: #D9A87E;">[ Duragi Najlepszej Jakości ]</span>
         <span class="hero-subtitle" style="letter-spacing: 0.2em; text-transform: uppercase;">Jedyne duragi szyte w Polsce</span>
-        <h1 class="hero-title">Bo styl rodzi się <br><span style="color: #D9A87E; font-style: italic;">na głowie</span>.</h1>
+        <h1 class="hero-title">Ręcznie szyte duragi.<br><span style="color: #D9A87E; font-style: italic;">Bo styl rodzi się na głowie</span>.</h1>
         <div class="hero-actions">
           <a href="#kolekcja" class="btn-minimal" style="background: white; color: #0D0D0B; border-radius: 9999px; padding: 16px 36px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.2em; font-size: 11px;">Odkryj kolekcję</a>
         </div>
@@ -257,11 +303,76 @@
           <li><button class="filter-btn" data-category="accessories" role="tab" aria-selected="false">Akcesoria</button></li>
         </ul>
         
-        <!-- Grid list of products -->
+        <!-- Grid list of products (Pre-rendered for SEO & SSG/no-JS crawlers) -->
         <div class="product-grid" id="productGrid">
-          <noscript>
-            <p style="grid-column: 1 / -1; text-align: center; color: var(--color-secondary);">Włącz JavaScript, aby załadować całą kolekcję.</p>
-          </noscript>
+          <article class="product-card reveal active" data-id="1160">
+            <div class="product-image-container">
+              <span class="product-badge gold">Morwowy bestseller</span>
+              <img class="product-card-img primary" src="./assets/durag_silk_black.png" alt="Durag Milanówek — Jedwabny" loading="lazy">
+              <img class="product-card-img secondary" src="./assets/durag_silk_champagne.png" alt="Durag Milanówek — detale" loading="lazy">
+              <div class="quick-add-overlay">
+                <button class="btn-quick-add" data-action="quickadd" data-id="1160">Dodaj do koszyka</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Czysty Jedwab Morwowy</span>
+              <h3 class="product-title">Durag Milanówek — Jedwabny</h3>
+              <div class="product-meta-row">
+                <span class="product-price">149.00 PLN</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card reveal active" data-id="1335">
+            <div class="product-image-container">
+              <img class="product-card-img primary" src="./assets/durag_silk_champagne.png" alt="Durag Wrocław — Biała Satyna" loading="lazy">
+              <img class="product-card-img secondary" src="./assets/durag_silk_champagne.png" alt="Durag Wrocław — detale" loading="lazy">
+              <div class="quick-add-overlay">
+                <button class="btn-quick-add" data-action="quickadd" data-id="1335">Dodaj do koszyka</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Satyna Poliestrowa</span>
+              <h3 class="product-title">Durag Wrocław — Biała Satyna</h3>
+              <div class="product-meta-row">
+                <span class="product-price">79.00 PLN</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card reveal active" data-id="1365">
+            <div class="product-image-container">
+              <img class="product-card-img primary" src="./assets/durag_velvet_emerald.png" alt="Durag Łódź — Czarny Welur" loading="lazy">
+              <img class="product-card-img secondary" src="./assets/durag_velvet_emerald.png" alt="Durag Łódź — detale" loading="lazy">
+              <div class="quick-add-overlay">
+                <button class="btn-quick-add" data-action="quickadd" data-id="1365">Dodaj do koszyka</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Luksusowy Welur</span>
+              <h3 class="product-title">Durag Łódź — Czarny Welur</h3>
+              <div class="product-meta-row">
+                <span class="product-price">89.00 PLN</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card reveal active" data-id="1367">
+            <div class="product-image-container">
+              <img class="product-card-img primary" src="./assets/durag_silk_champagne.png" alt="Durag Żyrardów — Przewiewny Len" loading="lazy">
+              <img class="product-card-img secondary" src="./assets/durag_silk_champagne.png" alt="Durag Żyrardów — detale" loading="lazy">
+              <div class="quick-add-overlay">
+                <button class="btn-quick-add" data-action="quickadd" data-id="1367">Dodaj do koszyka</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <span class="product-category">Sezonowe Materiały</span>
+              <h3 class="product-title">Durag Żyrardów — Przewiewny Len</h3>
+              <div class="product-meta-row">
+                <span class="product-price">99.00 PLN</span>
+              </div>
+            </div>
+          </article>
         </div>
         
       </div>
@@ -273,7 +384,7 @@
         <div class="lookbook-container">
           
           <div class="lookbook-media reveal">
-            <video src="./assets/hero_video.mp4" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;"></video>
+            <img src="./assets/lookbook_editorial.png" alt="Jedwab w Mieście — Durag Milanówek 19 Momme" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" loading="lazy">
           </div>
           
           <div class="lookbook-content reveal" style="color: white;">
@@ -432,9 +543,9 @@
         <div class="footer-legal">
           <a href="#o-nas">O nas</a>
           <a href="#o-nas">Kontakt</a>
-          <a href="#">Blog</a>
-          <a href="#">Regulamin</a>
-          <a href="#">Polityka Prywatności</a>
+          <a href="#" id="linkBlog">Blog</a>
+          <a href="#" id="linkTerms">Regulamin</a>
+          <a href="#" id="linkPrivacy">Polityka Prywatności</a>
         </div>
       </div>
       
@@ -479,6 +590,126 @@
 
         <button class="btn-minimal checkout-btn" id="checkoutBtn" style="width: 100%; margin-top: 16px; background-color: var(--color-primary); color: var(--color-black);">Przejdź do dostawy</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ================= INFORMATION & LEGAL MODAL OVERLAY ================= -->
+  <div class="info-modal-overlay" id="infoModalOverlay" aria-hidden="true">
+    <div class="info-modal-container">
+      <button class="info-modal-close" id="infoModalCloseBtn" aria-label="Zamknij">&times;</button>
+      
+      <!-- BLOG MODAL CONTENT -->
+      <div id="modalContentBlog" class="info-modal-section" style="display: none;">
+        <h2 class="info-modal-title">Blog & Poradnik Warsaw Durag Store</h2>
+        <div class="info-modal-body">
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="background: rgba(255,255,255,0.03); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+              <span style="color: #D9A87E; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em;">Poradnik Waves</span>
+              <h3 style="margin: 6px 0; color: #fff;">1. Jak uzyskać idealne 360 waves z jedwabnym duragiem?</h3>
+              <p>Kompleksowy przewodnik krok po kroku: od wyboru odpowiedniej szczotki z naturalnego włosia dzika, przez technikę szczotkowania, aż po kompresję jedwabiem 19 Momme na noc.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+              <span style="color: #D9A87E; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em;">Materiały & Jakość</span>
+              <h3 style="margin: 6px 0; color: #fff;">2. Jedwab morwowy 19 Momme vs Satyna i Welur</h3>
+              <p>Dlaczego naturalny jedwab morwowy to złoty standard ochrony włosów przed puszeniem i łamaniem? Zobacz porównanie właściwości termoregulacyjnych, oddychalności i trwałości poszczególnych materiałów.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+              <span style="color: #D9A87E; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em;">Pielęgnacja</span>
+              <h3 style="margin: 6px 0; color: #fff;">3. Jak prać i dbać o duragi z naturalnego jedwabiu?</h3>
+              <p>Praktyczne wskazówki dotyczące prania ręcznego w letniej wodzie (max 30°C) z łagodnym szamponem lub płynem do jedwabiu. Jak zachować luksusowy połysk przez lata.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TERMS MODAL CONTENT -->
+      <div id="modalContentTerms" class="info-modal-section" style="display: none;">
+        <h2 class="info-modal-title">Regulamin Sklepu Warsaw Durag Store</h2>
+        <div class="info-modal-body">
+          <h3>§ 1. Postanowienia Ogólne</h3>
+          <p>1. Sklep internetowy Warsaw Durag Store dostępny pod adresem <strong>warsawduragstore.pl</strong> prowadzony jest przez Warsaw Durag Store w Warszawie (ul. Włodarzewska 4, e-mail: support@warsawduragstore.pl).</p>
+          <p>2. Sklep prowadzi sprzedaż detaliczną ręcznie szytych duragów i akcesoriów na terenie Polski i UE.</p>
+          
+          <h3>§ 2. Ceny i Płatności</h3>
+          <p>1. Ceny produktów podane są w polskich złotych (PLN) i zawierają podatki (ceny brutto).</p>
+          <p>2. Dostępne metody płatności: BLIK, szybki przelew, karta płatnicza, płatność przy odbiorze.</p>
+
+          <h3>§ 3. Dostawa</h3>
+          <p>1. Wysyłka z magazynu w Warszawie w ciągu 1–2 dni roboczych.</p>
+          <p>2. Dostawa Paczkomatami InPost oraz kurierem jest darmowa dla każdego zamówienia na terenie Polski.</p>
+
+          <h3>§ 4. Prawo do Odstąpienia od Umowy (Zwroty)</h3>
+          <p>1. Klient ma prawo odstąpić od umowy w ciągu <strong>14 dni</strong> od odbioru przesyłki bez podawania przyczyny.</p>
+          <p>2. Zwracany towar nie może nosić śladów użytkowania. Zwroty prosimy zgłaszać na adres: support@warsawduragstore.pl.</p>
+        </div>
+      </div>
+
+      <!-- PRIVACY MODAL CONTENT -->
+      <div id="modalContentPrivacy" class="info-modal-section" style="display: none;">
+        <h2 class="info-modal-title">Polityka Prywatności & RODO</h2>
+        <div class="info-modal-body">
+          <h3>1. Administrator Danych</h3>
+          <p>Administratorem danych osobowych jest Warsaw Durag Store z siedzibą w Warszawie przy ul. Włodarzewskiej 4. Kontakt: <strong>support@warsawduragstore.pl</strong>.</p>
+          
+          <h3>2. Cele Przetwarzania Danych</h3>
+          <ul>
+            <li><strong>Realizacja zamówień:</strong> (art. 6 ust. 1 lit. b RODO) – przetwarzanie danych adresowych, telefonu i emaila.</li>
+            <li><strong>Rozliczenia i księgowość:</strong> (art. 6 ust. 1 lit. c RODO).</li>
+            <li><strong>Newsletter i kontakt:</strong> na podstawie dobrowolnej zgody (art. 6 ust. 1 lit. a RODO).</li>
+          </ul>
+
+          <h3>3. Prawa Użytkownika</h3>
+          <p>Użytkownik ma prawo do wglądu w swoje dane, ich sprostowania, usunięcia ("prawo do bycia zapomnianym"), ograniczenia przetwarzania oraz wniesienia sprzeciwu lub skargi do UODO.</p>
+
+          <h3>4. Pliki Cookies</h3>
+          <p>Sklep wykorzystuje niezbędne pliki cookies do obsługi koszyka zakupowego oraz preferencji językowych. Użytkownik może w każdej chwili zmienić ustawienia cookies w przeglądarce.</p>
+        </div>
+      </div>
+
+      <!-- WAVE GUIDE MODAL CONTENT -->
+      <div id="modalContentWaveGuide" class="info-modal-section" style="display: none;">
+        <h2 class="info-modal-title">Przewodnik 360 Waves</h2>
+        <div class="info-modal-body">
+          <h3>Kompletna rutyna uzyskiwania fal 360:</h3>
+          <ol>
+            <li><strong>Mycie i odżywianie:</strong> Umyj włosy szamponem nawilżającym, nałóż naturalny olejek lub masło shea.</li>
+            <li><strong>Szczotkowanie:</strong> Szczotkuj włosy ruchem od czubka głowy (korony) na zewnątrz pod kątem 45 stopni minimum 15-30 minut dziennie.</li>
+            <li><strong>Kompresja:</strong> Natychmiast po szczotkowaniu załóż durag (najlepiej jedwabny Milanówek 19 Momme), aby docisnąć włosy do skóry głowy.</li>
+            <li><strong>Sen w duragu:</strong> Zawsze śpij w duragu, aby nie zniszczyć wypracowanego ułożenia fal podczas snu.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- DELIVERY MODAL CONTENT -->
+      <div id="modalContentDelivery" class="info-modal-section" style="display: none;">
+        <h2 class="info-modal-title">Dostawa & Zwroty</h2>
+        <div class="info-modal-body">
+          <p><strong>Darmowa wysyłka w Polsce:</strong> Każde zamówienie wysyłamy bezpłatnie Paczkomatem InPost lub kurierem.</p>
+          <p><strong>Czas wysyłki:</strong> 1-2 dni robocze z Warszawy.</p>
+          <p><strong>Odbiór osobisty:</strong> ul. Włodarzewska 4 lub Centrum Warszawy po wcześniejszym umówieniu.</p>
+          <p><strong>Zwroty:</strong> 14 dni na bezproblemowy zwrot.</p>
+        </div>
+      </div>
+
+      <!-- SIZE CHART MODAL CONTENT -->
+      <div id="modalContentSizeChart" class="info-modal-section" style="display: none;">
+        <h2 class="info-modal-title">Tabela Rozmiarów & Tkanin</h2>
+        <div class="info-modal-body">
+          <p>Wszystkie duragi są w rozmiarze <strong>One-Size Unisex</strong> z pasami o długości ok. 100 cm dopasowanymi do każdego obwodu głowy.</p>
+          <table class="info-specs-table">
+            <thead>
+              <tr><th>Kategoria</th><th>Tkanina</th><th>Właściwości</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Jedwabne</td><td>100% Jedwab Morwowy 19 Momme</td><td>Maksymalna gładkość, ochrona włosów</td></tr>
+              <tr><td>Satynowe</td><td>Satyna Poliestrowa Premium</td><td>Lekkość, wysoki połysk, trwałość</td></tr>
+              <tr><td>Welurowe</td><td>Welur Poliestrowy</td><td>Głęboka tekstura, mięsistość</td></tr>
+              <tr><td>Sezonowe</td><td>Len, Cupro, Krepa</td><td>Przewiewność i termoregulacja</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   </div>
 

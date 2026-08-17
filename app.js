@@ -852,9 +852,11 @@ function openProductModal(productId) {
     DOM.modalReviewsList.appendChild(revEl);
   });
 
-  // Reset tab accordions
-  document.querySelectorAll('.tab-content').forEach(c => c.style.maxHeight = null);
-  document.querySelectorAll('.tab-header').forEach(h => h.classList.remove('active'));
+  // Reset tab selection to details by default
+  const defaultTabHeader = document.querySelector('.tab-header[data-tab="details"]');
+  if (defaultTabHeader) {
+    toggleModalTab(defaultTabHeader, 'details');
+  }
 
   // Trigger modal visibility
   DOM.productModal.classList.add('active');
@@ -897,26 +899,40 @@ function handleAddFromModal() {
   }, 800);
 }
 
-// Collapsible Detail Tab Accordions
+// Tab Switching in Product Modal
 function toggleModalTab(header, tabName) {
-  const content = header.nextElementSibling;
-  const isActive = header.classList.contains('active');
-  
-  // Close all other accordions first
   document.querySelectorAll('.tab-header').forEach(h => {
-    if (h !== header) {
-      h.classList.remove('active');
-      h.nextElementSibling.style.maxHeight = null;
-    }
+    h.classList.remove('active');
+    h.style.color = '#8E8E93';
   });
+  header.classList.add('active');
+  header.style.color = '#FFFFFF';
 
-  if (isActive) {
-    header.classList.remove('active');
-    content.style.maxHeight = null;
+  const tabContent = document.getElementById('modalTabContent');
+  const reviewsList = document.getElementById('modalReviewsList');
+  if (!tabContent || !state.activeProductInModal) return;
+
+  let specDetails = document.getElementById('modalSpecDetails');
+  if (!specDetails) {
+    specDetails = document.createElement('div');
+    specDetails.id = 'modalSpecDetails';
+    tabContent.prepend(specDetails);
+  }
+
+  if (tabName === 'reviews') {
+    if (reviewsList) reviewsList.style.display = 'block';
+    specDetails.style.display = 'none';
   } else {
-    header.classList.add('active');
-    // Set scrolling container height
-    content.style.maxHeight = content.scrollHeight + "px";
+    if (reviewsList) reviewsList.style.display = 'none';
+    specDetails.style.display = 'block';
+    specDetails.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 8px; color: #CFCFCF; font-size: 13px; line-height: 1.6;">
+        <p><strong style="color: #fff;">Materiał:</strong> ${state.activeProductInModal.material}</p>
+        <p><strong style="color: #fff;">Kategoria:</strong> ${state.activeProductInModal.categoryLabel}</p>
+        <p><strong style="color: #fff;">Wysyłka:</strong> 1–2 dni z magazynu w Warszawie (Darmowa dostawa)</p>
+        <p><strong style="color: #fff;">Zwrot:</strong> 14 dni na bezpłatny zwrot</p>
+      </div>
+    `;
   }
 }
 
@@ -2560,7 +2576,8 @@ function initInfoModals() {
     linkSizeChart: 'modalContentSizeChart',
     linkDelivery: 'modalContentDelivery',
     linkTerms: 'modalContentTerms',
-    linkPrivacy: 'modalContentPrivacy'
+    linkPrivacy: 'modalContentPrivacy',
+    linkBlog: 'modalContentBlog'
   };
 
   function openModal(contentId) {

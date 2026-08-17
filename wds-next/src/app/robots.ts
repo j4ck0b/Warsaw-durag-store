@@ -1,0 +1,24 @@
+import { MetadataRoute } from 'next';
+
+export default function robots(): MetadataRoute.Robots {
+  const isProduction = process.env.VERCEL_ENV === 'production';
+
+  if (!isProduction) {
+    return {
+      rules: {
+        userAgent: '*',
+        disallow: '/',
+      },
+      sitemap: 'https://warsawduragstore.pl/sitemap.xml',
+    };
+  }
+
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: ['/admin', '/api/'],
+    },
+    sitemap: 'https://warsawduragstore.pl/sitemap.xml',
+  };
+}
