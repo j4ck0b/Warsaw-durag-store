@@ -207,19 +207,7 @@ window.addEventListener('scroll', () => {
 // Scroll Reveal Observer Setup
 function initScrollReveals() {
   const revealElements = document.querySelectorAll('.reveal');
-  
-  const observer = new IntersectionObserver((entries, self) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        self.unobserve(entry.target); // Reveal once
-      }
-    });
-  }, {
-    threshold: 0.15
-  });
-  
-  revealElements.forEach(el => observer.observe(el));
+  revealElements.forEach(el => el.classList.add('active'));
 }
 
 // ========================================================================
