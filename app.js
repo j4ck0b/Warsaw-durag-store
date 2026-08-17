@@ -195,17 +195,19 @@ hidePreloader();
 window.addEventListener('load', hidePreloader);
 setTimeout(hidePreloader, 2000);
 
-// Sticky Navigation Header transition on scroll with logo color swapping
-window.addEventListener('scroll', () => {
-  const headerLogo = document.getElementById('headerLogo');
-  if (window.scrollY > 50) {
+// Sticky Navigation Header transition on scroll
+function updateHeaderScrollState() {
+  if (!DOM.siteHeader) return;
+  if (window.scrollY > 40) {
     DOM.siteHeader.classList.add('scrolled');
-    if (headerLogo) headerLogo.src = './assets/logo_white.png';
   } else {
     DOM.siteHeader.classList.remove('scrolled');
-    if (headerLogo) headerLogo.src = './assets/logo_white.png';
   }
-});
+}
+
+window.addEventListener('scroll', updateHeaderScrollState, { passive: true });
+document.addEventListener('DOMContentLoaded', updateHeaderScrollState);
+updateHeaderScrollState();
 
 // Scroll Reveal Observer Setup
 function initScrollReveals() {

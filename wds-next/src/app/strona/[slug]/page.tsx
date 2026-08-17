@@ -19,8 +19,8 @@ const PAGES_DATA: Record<string, { title: string; subtitle: string; content: Rea
       <div className="space-y-8 text-sm text-[#3B3C40] leading-relaxed font-light">
         <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg border border-[#CFCFCF]">
           <Image
-            src="/assets/lookbook_editorial.png"
-            alt="Kuba i brat - założyciele Warsaw Durag Store"
+            src="/assets/founders.jpg"
+            alt="Kuba i brat bliźniak - założyciele Warsaw Durag Store"
             fill
             className="object-cover"
           />
