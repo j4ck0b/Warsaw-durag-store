@@ -53,9 +53,9 @@ export default function Header() {
             <Image
               src={isScrolled ? "/assets/logo_black.png" : "/assets/logo_white.png"}
               alt="Warsaw Durag Store Logo"
-              width={320}
+              width={280}
               height={100}
-              className="h-16 md:h-20 lg:h-22 w-auto object-contain transition-all duration-300 transform group-hover:scale-105"
+              className="h-12 md:h-14 lg:h-16 w-auto object-contain transition-all duration-300 transform group-hover:scale-105"
               priority
             />
           </Link>
