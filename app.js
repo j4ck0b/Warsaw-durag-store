@@ -330,6 +330,11 @@ function bindEventListeners() {
 
   // Initialize EU Multi-language Switcher
   initLanguageSwitcher();
+
+  // Newsletter Submit Form validation
+  if (DOM.newsletterForm) {
+    DOM.newsletterForm.addEventListener('submit', handleNewsletterSubmit);
+  }
 }
 
 function initLanguageSwitcher() {
@@ -363,12 +368,6 @@ function initLanguageSwitcher() {
     if (saved && currentLangText) {
       currentLangText.textContent = saved;
     }
-  }
-}
-
-  // Newsletter Submit Form validation
-  if (DOM.newsletterForm) {
-    DOM.newsletterForm.addEventListener('submit', handleNewsletterSubmit);
   }
 }
 
