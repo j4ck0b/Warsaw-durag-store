@@ -391,11 +391,11 @@ const I18N = {
     },
     about: {
       tag: '[ Warsaw Durag Store ]',
-      title: 'O nas',
-      p1: 'Warsaw Durag Store powstał w 2020 roku z potrzeby stworzenia miejsca, które przybliży duragi polskiej społeczności i pokaże ich różnorodność — nie tylko jako elementu stylu, ale również praktycznego dodatku z własną historią i charakterem. Od tego czasu stale rozwijamy naszą ofertę, poszerzając ją o kolejne materiały, kolory i modele, szukając nowych sposobów na pokazanie, czym może być współczesny durag.',
-      p2: 'Jesteśmy małym butikiem prowadzonym przez dwóch braci, którym często pomagają również nasi znajomi. Dzięki temu każdy produkt przechodzi przez nasze ręce — od wyboru materiału, przez przygotowanie zamówienia, aż po kontakt z klientem. Dokładamy wszelkich starań, aby każda klientka i każdy klient otrzymywali nie tylko świetny produkt, lecz także dobrą i indywidualną obsługę.',
-      p3: 'Chcemy, aby Warsaw Durag Store był wsparciem dla artystów, sportowców i wszystkich osób, które poprzez swój styl wyrażają siebie, dlatego chętnie nawiązujemy z nimi współprace - robisz coś w sporcie, modzie lub muzyce pisz do nas po paczkę niespodziankę.',
-      p4: 'Na razie nie prowadzimy własnego sklepu stacjonarnego, jednak nasze duragi można odebrać osobiście przy ul. Włodarzewskiej 4 lub w centrum Warszawy — po wcześniejszym umówieniu. Z informacji praktycznych to najłatwiej dorwać nas przez Instagram @warsawduragstore, dla oldschoolowców mamy mail support@warsawduragstore.pl.',
+      title: 'Jak powstał Warsaw Durag Store?',
+      p1: 'Opowiadamy tę historię każdemu, kto zapyta, skąd wziął się pomysł na Warsaw Durag Store. Wracając z Częstochowy, w drodze powrotnej z Jasnej Góry słuchaliśmy świeżego wówczas utworu Baby Keem\'a Durag Activity i olśniło nas, że w Polsce nie ma gdzie kupić porządnego duraga.',
+      p2: 'Wspólnie z bratem bliźniakiem zaczęliśmy od totalnego zera — wystawiając pierwsze sztuki na Vinted, OLX i FB Marketplace. Każde zamówienie to była czysta radość. Dziś realizujemy dziesiątki zamówień tygodniowo, a każdy durag przechodzi przez nasze ręce: od doboru naturalnego jedwabiu morwowego 19 Momme, przez precyzyjne szycie, aż po pakowanie.',
+      p3: 'Jesteśmy marką otwartą na współprace — robisz coś w sporcie, modzie lub muzyce? Pisz do nas, w zamian za ładne, solidne promo wysyłamy pakę za darmola!',
+      p4: 'Darmowy odbiór osobisty w Warszawie: przy ul. Włodarzewskiej 4 (Ochota), w Centrum oraz stacjonarnie w salonie barberskim Eclipse pod Rondem Waszyngtona. Piszcie śmiało na Instagramie @warsawduragstore lub mailowo support@warsawduragstore.pl.',
       btn: 'Więcej o nas',
       thumb1: 'Założyciele', thumb2: 'Packaging & Rzemiosło', thumb3: 'Opinie na Insta',
       cap1: 'Kuba & Założyciele Warsaw Durag Store', cap2: 'Ręcznie szyte z jedwabiu 19 Momme', cap3: 'Opinie ze społeczności @warsawduragstore'

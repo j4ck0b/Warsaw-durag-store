@@ -13,8 +13,8 @@ interface PageProps {
 
 const PAGES_DATA: Record<string, { title: string; subtitle: string; content: React.ReactNode }> = {
   'o-nas': {
-    title: 'O nas — Warsaw Durag Store',
-    subtitle: 'Historia polskiej marki tworzonej przez dwóch braci od 2020 roku',
+    title: 'Jak powstał Warsaw Durag Store?',
+    subtitle: 'Tworzymy ten sklep wspólnie z bratem bliźniakiem, a zaczynaliśmy od zera',
     content: (
       <div className="space-y-8 text-sm text-[#3B3C40] leading-relaxed font-light">
         <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg border border-[#CFCFCF]">
@@ -27,27 +27,34 @@ const PAGES_DATA: Record<string, { title: string; subtitle: string; content: Rea
         </div>
 
         <p className="text-base text-[#0D0D0B] font-serif leading-relaxed">
-          Warsaw Durag Store powstał w 2020 roku z potrzeby stworzenia miejsca, które przybliży duragi polskiej społeczności i pokaże ich różnorodność — nie tylko jako elementu stylu, ale również praktycznego dodatku z własną historią i charakterem.
+          Opowiadamy tę historię każdemu, kto zapyta, skąd wziął się pomysł na sprzedawanie duragów w Polsce. Możecie wierzyć lub nie, ale po wycieczce do Częstochowy, w drodze powrotnej z Jasnej Góry słuchaliśmy świeżego wówczas utworu Baby Keem'a <em>Durag Activity</em> i olśniło nas, że nawet jakbyśmy chcieli, to nie ma gdzie w tym kraju kupić duraga, a ten problem musi dzielić jeszcze co najmniej garstka podobnych do nas.
         </p>
 
         <p>
-          Od tego czasu stale rozwijamy naszą ofertę, poszerzając ją o kolejne materiały, kolory i modele, szukając nowych sposobów na pokazanie, czym może być współczesny durag. Jesteśmy małym butikiem prowadzonym przez dwóch braci, którym często pomagają również nasi znajomi. Dzięki temu każdy produkt przechodzi przez nasze ręce — od wyboru materiału, przez przygotowanie zamówienia, aż po kontakt z klientem. Dokładamy wszelkich starań, aby każda klientka i każdy klient otrzymywali nie tylko świetny produkt, lecz także dobrą i indywidualną obsługę.
+          Dlatego wspólnie z moim bratem bliźniakiem zaczęliśmy od totalnego zera i wystawiania się na Vinted, FB Marketplace i OLX. Każde zamówienie to była radość. Teraz realizujemy dziesiątki zamówień tygodniowo. To niesamowita braterska przyjaźń i zaufanie pozwoliły temu sklepowi zaistnieć.
         </p>
 
         <div className="bg-[#F7F5F2] p-6 rounded-xl border border-[#CFCFCF] space-y-3">
-          <h4 className="font-serif text-lg font-medium text-[#0D0D0B]">Współpraca z artystami i sportowcami</h4>
+          <h4 className="font-serif text-lg font-medium text-[#0D0D0B]">Nasza filozofia</h4>
           <p>
-            Chcemy, aby Warsaw Durag Store był wsparciem dla artystów, sportowców i wszystkich osób, które poprzez swój styl wyrażają siebie, dlatego chętnie nawiązujemy z nimi współprace - robisz coś w sporcie, modzie lub muzyce pisz do nas po paczkę niespodziankę!
+            Chcemy, aby nasze duragi były dostępne, stąd na naszej stronie różne opcje cenowe produktów. Cena wynika tylko i wyłącznie z różnic materiałowych (naturalny jedwab morwowy 19 Momme, satyna, welur, len, cupro). Każdy jeden wykonany jest z tą samą starannością. Jesteśmy bardzo otwarci na feedback i z chęcią wprowadzamy Wasze pomysły w życie.
+          </p>
+        </div>
+
+        <div className="bg-[#F7F5F2] p-6 rounded-xl border border-[#CFCFCF] space-y-3">
+          <h4 className="font-serif text-lg font-medium text-[#0D0D0B]">Współpraca & Promo</h4>
+          <p>
+            Jesteśmy młodą marką otwartą na wszelkie współprace — oferta sesji, collabu — rozpatrzymy wszystko. Robisz coś w sporcie, modzie lub muzyce? Pisz do nas, w zamian za ładne, solidne promo wysyłamy pakę za darmola!
           </p>
         </div>
 
         <div className="bg-[#0D0D0B] text-white p-6 rounded-xl space-y-2 border border-[#D9A87E]/30">
           <h4 className="font-serif text-lg font-medium text-[#D9A87E]">Odbiór Osobisty w Warszawie</h4>
           <p className="text-xs text-gray-300">
-            Na razie nie prowadzimy własnego sklepu stacjonarnego, jednak nasze duragi można odebrać osobiście przy ul. Włodarzewskiej 4 lub w centrum Warszawy — po wcześniejszym umówieniu.
+            Niestety nie mamy jeszcze własnej miejscówki w Warszawie, ale łatwo umówisz się na darmowy odbiór osobisty pod <strong>Włodarzewską 4</strong> na dalszej Ochocie lub w centrum. Dodatkowo nasze produkty znajdziesz w salonie barberskim <strong>Eclipse pod Rondem Waszyngtona</strong>.
           </p>
           <p className="text-xs text-gray-300 pt-2">
-            Instagram: <strong>@warsawduragstore</strong> | Mail: <strong>support@warsawduragstore.pl</strong>
+            Instagram: <strong>@WARSAWDURAGSTORE</strong> | Mail: <strong>support@warsawduragstore.pl</strong>, <strong>finance@warsawduragstore.pl</strong>
           </p>
         </div>
       </div>
@@ -55,31 +62,35 @@ const PAGES_DATA: Record<string, { title: string; subtitle: string; content: Rea
   },
 
   kontakt: {
-    title: 'Kontakt & Odbiór Osobisty',
-    subtitle: 'Napisz do nas lub umów się na odbiór osobisty w Warszawie',
+    title: 'Złap się z nami — Kontakt',
+    subtitle: 'Napisz do nas lub umów się na darmowy odbiór w Warszawie',
     content: (
       <div className="space-y-8 text-sm text-[#3B3C40] leading-relaxed font-light">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-[#F7F5F2] p-8 rounded-xl border border-[#CFCFCF] space-y-4">
-            <h3 className="font-serif text-xl text-[#0D0D0B] font-medium">Odbiór Osobisty Warszawa</h3>
-            <p>Duragi można odebrać osobiście po wcześniejszym ustaleniu godziny:</p>
+            <h3 className="font-serif text-xl text-[#0D0D0B] font-medium">Punkty w Warszawie</h3>
+            <p>Bardzo lubimy przekazywać nasze duragi osobiście:</p>
             <ul className="list-disc pl-5 space-y-2 font-medium text-[#0D0D0B]">
-              <li>ul. Włodarzewska 4, Warszawa</li>
-              <li>Centrum Warszawy (do uzgodnienia)</li>
+              <li><strong>ul. Włodarzewska 4</strong> (Warszawska Ochota) — darmowy odbiór po umówieniu</li>
+              <li><strong>Centrum Warszawy</strong> — często można nas złapać w Śródmieściu</li>
+              <li><strong>Salon barberski Eclipse</strong> — pod Rondem Waszyngtona (Saska Kępa / Praga)</li>
             </ul>
             <p className="text-xs text-[#734C1D] pt-2 font-semibold">
-              Najszybciej skontaktujesz się z nami przez wiadomość na Instagramie!
+              Jeśli masz wolną półkę do wynajęcia w swoim sklepie, z chęcią umieścimy tam swoje produkty (Warszawa, Katowice, Wrocław)!
             </p>
           </div>
 
           <div className="bg-[#F7F5F2] p-8 rounded-xl border border-[#CFCFCF] space-y-4">
             <h3 className="font-serif text-xl text-[#0D0D0B] font-medium">Dane Kontaktowe</h3>
             <div className="space-y-2 text-xs">
-              <p><strong>Instagram:</strong> @warsawduragstore</p>
-              <p><strong>E-mail:</strong> support@warsawduragstore.pl</p>
-              <p><strong>Godziny odpowiedzi:</strong> Pn–Sob: 9:00 – 20:00</p>
+              <p><strong>Instagram:</strong> @WARSAWDURAGSTORE</p>
+              <p><strong>E-maile:</strong> support@warsawduragstore.pl, finance@warsawduragstore.pl</p>
+              <p><strong>Godziny kontaktu:</strong> Pn–Sob: 9:00 – 20:00</p>
             </div>
-            <div className="pt-4">
+            <p className="text-xs text-gray-500">
+              Jest XXI wiek, najwygodniej skomunikować się z nami przez Insta. Pisz w każdej sprawie – jak się ładnie poprosi to i kuponik wleci 😉
+            </p>
+            <div className="pt-2">
               <a
                 href="https://instagram.com/warsawduragstore"
                 target="_blank"
@@ -96,8 +107,8 @@ const PAGES_DATA: Record<string, { title: string; subtitle: string; content: Rea
   },
 
   blog: {
-    title: 'Blog & Poradnik Warsaw Durag Store',
-    subtitle: 'Artykuły, kultura streetwear, porady pielęgnacji i 360 waves',
+    title: 'Duragopedia — Blog & Baza Wiedzy',
+    subtitle: 'Sekcja, w której dowiesz się wszystkiego co musisz lub chcesz wiedzieć na temat duragów.',
     content: (
       <div className="space-y-12 text-sm text-[#3B3C40] leading-relaxed font-light">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -105,10 +116,10 @@ const PAGES_DATA: Record<string, { title: string; subtitle: string; content: Rea
           {/* Article 1 */}
           <article className="bg-white border border-[#CFCFCF] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between p-6">
             <div className="space-y-3">
-              <span className="text-[10px] text-[#734C1D] uppercase font-bold tracking-widest block">Poradnik Waves</span>
-              <h3 className="font-serif text-xl text-[#0D0D0B] font-medium">Jak uzyskać idealne 360 waves z jedwabnym duragiem?</h3>
+              <span className="text-[10px] text-[#734C1D] uppercase font-bold tracking-widest block">Pielęgnacja</span>
+              <h3 className="font-serif text-xl text-[#0D0D0B] font-medium">Czym są 360 waves? Kompleksowy przewodnik dla początkujących</h3>
               <p className="text-xs text-gray-600 leading-relaxed">
-                Kompleksowy przewodnik krok po kroku: od wyboru odpowiedniej szczotki z naturalnego włosia dzika, przez technikę szczotkowania, aż po kompresję jedwabiem 19 Momme na noc.
+                360 waves to regularne fale układające się wokół całej głowy. Jak dobrać szczotkę z włosia dzika, utrzymać nawilżenie i kompresować jedwabiem 19 Momme?
               </p>
             </div>
             <div className="pt-6 border-t border-[#CFCFCF]/40 mt-4">
@@ -121,15 +132,15 @@ const PAGES_DATA: Record<string, { title: string; subtitle: string; content: Rea
           {/* Article 2 */}
           <article className="bg-white border border-[#CFCFCF] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between p-6">
             <div className="space-y-3">
-              <span className="text-[10px] text-[#734C1D] uppercase font-bold tracking-widest block">Materiały & Jakość</span>
-              <h3 className="font-serif text-xl text-[#0D0D0B] font-medium">Jedwab morwowy 19 Momme vs Satyna i Welur</h3>
+              <span className="text-[10px] text-[#734C1D] uppercase font-bold tracking-widest block">Lifestyle & Know-How</span>
+              <h3 className="font-serif text-xl text-[#0D0D0B] font-medium">Durag w sporcie — siłownia, deskorolka i motocykl</h3>
               <p className="text-xs text-gray-600 leading-relaxed">
-                Dlaczego naturalny jedwab morwowy to złoty standard ochrony włosów przed puszeniem i łamaniem? Zobacz dokładne porównanie właściwości termoregulacyjnych i oddychalności.
+                Durag łączy funkcjonalność z charakterystycznym stylem. Chroni włosy pod kaskiem motocyklowym, odprowadza wilgoć podczas treningu i stabilnie trzyma fryzurę.
               </p>
             </div>
             <div className="pt-6 border-t border-[#CFCFCF]/40 mt-4">
-              <Link href="/strona/tabela-rozmiarow" className="text-xs font-bold text-[#734C1D] hover:underline flex items-center gap-1">
-                Porównaj właściwości tkanin →
+              <Link href="/kolekcja/all" className="text-xs font-bold text-[#734C1D] hover:underline flex items-center gap-1">
+                Sprawdź kolekcję sportową →
               </Link>
             </div>
           </article>
@@ -137,10 +148,10 @@ const PAGES_DATA: Record<string, { title: string; subtitle: string; content: Rea
           {/* Article 3 */}
           <article className="bg-white border border-[#CFCFCF] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between p-6">
             <div className="space-y-3">
-              <span className="text-[10px] text-[#734C1D] uppercase font-bold tracking-widest block">Pielęgnacja Tkanin</span>
-              <h3 className="font-serif text-xl text-[#0D0D0B] font-medium">Jak prawidłowo prać i dbać o jedwabny durag?</h3>
+              <span className="text-[10px] text-[#734C1D] uppercase font-bold tracking-widest block">Haircare</span>
+              <h3 className="font-serif text-xl text-[#0D0D0B] font-medium">Ochrona włosów podczas snu i jazdy autem</h3>
               <p className="text-xs text-gray-600 leading-relaxed">
-                Praktyczne wskazówki prania ręcznego w letniej wodzie z łagodnym szamponem lub płynem do jedwabiu. Jak zachować blask i gęstość 19 Momme przez lata użytkowania.
+                Jak durag zapobiega nadmiernemu tarciu o poduszkę i zagłówek fotela samochodowego, chroniąc przed łamaniem i przesuszeniem końcówek.
               </p>
             </div>
             <div className="pt-6 border-t border-[#CFCFCF]/40 mt-4">
