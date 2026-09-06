@@ -2,9 +2,11 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getAllProducts, getProductBySlug } from '@/lib/products';
+import { fetchServerProducts, fetchServerProductBySlug } from '@/lib/supabase';
 import ProductDetailsClient from '@/components/ProductDetailsClient';
 import ProductCard from '@/components/ProductCard';
+
+export const revalidate = 60;
 
 interface ProductPageProps {
   params: Promise<{
@@ -13,7 +15,7 @@ interface ProductPageProps {
 }
 
 export async function generateStaticParams() {
-  const products = getAllProducts();
+  const products = await fetchServerProducts();
   return products.map((p) => ({
     slug: p.slug,
   }));
@@ -21,7 +23,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await fetchServerProductBySlug(slug);
 
   if (!product) {
     return { title: 'Produkt | Warsaw Durag Store' };
@@ -30,6 +32,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const title = `${product.name} — ${product.material} | Warsaw Durag Store`;
   const description = `${product.name}. ${product.description.slice(0, 150)}... Darmowa dostawa w Polsce. Zamów teraz na Warsaw Durag Store.`;
   const canonicalUrl = `https://warsawduragstore.pl/produkt/${product.slug}`;
+  const imageUrl = product.images[0]?.startsWith('http')
+    ? product.images[0]
+    : `https://warsawduragstore.pl${product.images[0] || '/assets/durag_silk_black.png'}`;
 
   return {
     title,
@@ -43,9 +48,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       url: canonicalUrl,
       images: [
         {
-          url: product.images[0].startsWith('http')
-            ? product.images[0]
-            : `https://warsawduragstore.pl${product.images[0]}`,
+          url: imageUrl,
           alt: product.name,
         },
       ],
@@ -54,30 +57,26 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       card: 'summary_large_image',
       title,
       description,
-      images: [
-        product.images[0].startsWith('http')
-          ? product.images[0]
-          : `https://warsawduragstore.pl${product.images[0]}`,
-      ],
+      images: [imageUrl],
     },
   };
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await fetchServerProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
 
-  const allProducts = getAllProducts();
-  const relatedProducts = allProducts.filter((p) => p.id !== product.id).slice(0, 3);
+  const allProducts = await fetchServerProducts();
+  const relatedProducts = allProducts.filter((p) => p.id !== product.id).slice(0, 4);
 
   const productUrl = `https://warsawduragstore.pl/produkt/${product.slug}`;
-  const imageUrl = product.images[0].startsWith('http')
+  const imageUrl = product.images[0]?.startsWith('http')
     ? product.images[0]
-    : `https://warsawduragstore.pl${product.images[0]}`;
+    : `https://warsawduragstore.pl${product.images[0] || '/assets/durag_silk_black.png'}`;
 
   // Schema.org Product JSON-LD with reviews and offer
   const jsonLdProduct = {
@@ -194,7 +193,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {/* Breadcrumbs */}
       <nav aria-label="Breadcrumb" className="bg-[#F7F5F2] border-b border-[#CFCFCF]/50 py-4">
         <div className="max-w-7xl mx-auto px-6 text-xs text-[#3B3C40] flex items-center gap-2">
-          <Link href="/" className="hover:text-[#0D0D0B] transition-colors">Strona Główna</Link>
+          <Link href="/" className="hover:text-[#0D0D0B] transition-colors">
+            Strona Główna
+          </Link>
           <span>/</span>
           <Link href={`/kolekcja/${product.category}`} className="hover:text-[#0D0D0B] uppercase transition-colors">
             {product.categoryLabel}
@@ -210,12 +211,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </div>
 
       {/* Related Products */}
-      <section className="bg-[#F7F5F2] py-16 border-t border-[#CFCFCF]/50">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="font-serif text-2xl text-[#0D0D0B] font-medium text-center mb-10">
-            Inni Klienci Wybrali Równieź
+      <section className="bg-[#F7F5F2] py-12 sm:py-16 border-t border-[#CFCFCF]/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <h2 className="font-serif text-xl sm:text-2xl text-[#0D0D0B] font-medium text-center mb-8 sm:mb-10">
+            Inni Klienci Wybrali Również
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {relatedProducts.map((rel) => (
               <ProductCard key={rel.id} product={rel} />
             ))}

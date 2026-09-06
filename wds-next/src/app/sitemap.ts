@@ -1,10 +1,10 @@
 import { MetadataRoute } from 'next';
-import { getAllProducts } from '@/lib/products';
+import { fetchServerProducts } from '@/lib/supabase';
 
 const BASE_URL = 'https://warsawduragstore.pl';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const products = getAllProducts();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await fetchServerProducts();
   const currentDate = new Date();
 
   // Static core routes
@@ -74,7 +74,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  // Product routes
+  // Dynamic Product routes from Supabase CMS
   const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({
     url: `${BASE_URL}/produkt/${product.slug}`,
     lastModified: currentDate,

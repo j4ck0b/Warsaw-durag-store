@@ -46,16 +46,19 @@ export default function ProductDetailsClient({ product }: ProductDetailsClientPr
         </div>
 
         {product.images.length > 1 && (
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-2 sm:gap-3 pt-2 overflow-x-auto no-scrollbar scroll-smooth pb-1">
             {product.images.map((img, idx) => (
               <button
                 key={idx}
                 onClick={() => setSelectedImage(img)}
-                className={`relative w-20 h-24 bg-[#F7F5F2] border rounded-lg overflow-hidden transition-all ${
-                  selectedImage === img ? 'border-[#734C1D] ring-2 ring-[#734C1D]/30 shadow-md' : 'border-[#CFCFCF] opacity-70 hover:opacity-100'
+                className={`relative w-16 h-20 sm:w-20 sm:h-24 flex-shrink-0 bg-[#F7F5F2] border rounded-lg overflow-hidden transition-all cursor-pointer ${
+                  selectedImage === img
+                    ? 'border-[#734C1D] ring-2 ring-[#734C1D]/30 shadow-md scale-105'
+                    : 'border-[#CFCFCF] opacity-70 hover:opacity-100'
                 }`}
+                aria-label={`Pokaż zdjęcie ${idx + 1}`}
               >
-                <Image src={img} alt={`${displayName} - ${idx + 1}`} fill className="object-cover" />
+                <Image src={img} alt={`${displayName} - ${idx + 1}`} fill className="object-cover" sizes="80px" />
               </button>
             ))}
           </div>

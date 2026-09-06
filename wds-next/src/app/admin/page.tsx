@@ -1,8 +1,29 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Lock, LogOut, Package, ShoppingBag, Plus, Edit, Trash2, CheckCircle2, Image as ImageIcon, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {
+  Lock,
+  LogOut,
+  Package,
+  ShoppingBag,
+  Plus,
+  Edit,
+  Trash2,
+  CheckCircle2,
+  X,
+  Database,
+  Cloud,
+  RefreshCw,
+  AlertCircle
+} from 'lucide-react';
 import { getAllProducts, addProduct, updateProduct, deleteProduct, Product } from '@/lib/products';
+import {
+  getSupabaseBrowserClient,
+  isSupabaseConfigured,
+  saveProductToSupabase,
+  deleteProductFromSupabase,
+  mapSupabaseRowToProduct
+} from '@/lib/supabase';
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -10,6 +31,11 @@ export default function AdminPage() {
   const [errorMsg, setErrorMsg] = useState('');
   const [activeTab, setActiveTab] = useState<'products' | 'orders'>('products');
   const [productsList, setProductsList] = useState<Product[]>(getAllProducts());
+
+  // Supabase CMS state
+  const [supabaseConnected, setSupabaseConnected] = useState<boolean>(false);
+  const [isSyncing, setIsSyncing] = useState<boolean>(false);
+  const [syncMessage, setSyncMessage] = useState<string | null>(null);
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,19 +57,105 @@ export default function AdminPage() {
 
   // Orders Mock/Log Data
   const [orders] = useState([
-    { id: 'WDS-9901', customer: 'Jan Kowalski', email: 'jan@example.com', item: 'Durag Milanówek — Jedwabny', total: '149.00 PLN', status: 'Wysłane (InPost 1D)', date: '17.08.2026' },
-    { id: 'WDS-9902', customer: 'Pierre Dupont', email: 'pierre@paris.fr', item: 'Durag Łódź — Czarny Welur', total: '89.00 PLN', status: 'Pakowanie (EU Express)', date: '17.08.2026' },
-    { id: 'WDS-9903', customer: 'Michael Weber', email: 'm.weber@berlin.de', item: 'Durag Wrocław — Satyna', total: '79.00 PLN', status: 'Zrealizowane', date: '16.08.2026' },
+    {
+      id: 'WDS-9901',
+      customer: 'Jan Kowalski',
+      email: 'jan@example.com',
+      item: 'Durag Milanówek — Jedwabny',
+      total: '149.00 PLN',
+      status: 'Wysłane (InPost 1D)',
+      date: '17.08.2026',
+    },
+    {
+      id: 'WDS-9902',
+      customer: 'Pierre Dupont',
+      email: 'pierre@paris.fr',
+      item: 'Durag Łódź — Czarny Welur',
+      total: '89.00 PLN',
+      status: 'Pakowanie (EU Express)',
+      date: '17.08.2026',
+    },
+    {
+      id: 'WDS-9903',
+      customer: 'Michael Weber',
+      email: 'm.weber@berlin.de',
+      item: 'Durag Wrocław — Satyna',
+      total: '79.00 PLN',
+      status: 'Zrealizowane',
+      date: '16.08.2026',
+    },
   ]);
+
+  // Try to load products from Supabase
+  const loadProductsFromSupabase = async () => {
+    const client = getSupabaseBrowserClient();
+    if (!client) {
+      setSupabaseConnected(false);
+      return;
+    }
+
+    try {
+      const { data, error } = await client
+        .from('products')
+        .select('*')
+        .order('id', { ascending: true });
+
+      if (error || !data || data.length === 0) {
+        setSupabaseConnected(false);
+      } else {
+        setSupabaseConnected(true);
+        const mapped = data.map(mapSupabaseRowToProduct);
+        setProductsList(mapped);
+      }
+    } catch {
+      setSupabaseConnected(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadProductsFromSupabase();
+    }
+  }, [isAuthenticated]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === 'wds2026' || password === 'admin') {
       setIsAuthenticated(true);
       setErrorMsg('');
-      setProductsList([...getAllProducts()]);
+      loadProductsFromSupabase();
     } else {
       setErrorMsg('Nieprawidłowe hasło dostępowe.');
+    }
+  };
+
+  // Seed / Sync local products into Supabase
+  const handleSyncToSupabase = async () => {
+    const client = getSupabaseBrowserClient();
+    if (!client) {
+      alert('Klient Supabase nie jest skonfigurowany. Uzupełnij dane w .env.local');
+      return;
+    }
+
+    setIsSyncing(true);
+    setSyncMessage('Synchronizowanie produktów z bazą danych Supabase...');
+
+    try {
+      const allLocal = getAllProducts();
+      let successCount = 0;
+
+      for (const prod of allLocal) {
+        const res = await saveProductToSupabase(prod);
+        if (res.success) successCount++;
+      }
+
+      setSupabaseConnected(true);
+      setSyncMessage(`✓ Pomyślnie zsynchronizowano ${successCount} produktów z Supabase CMS.`);
+      loadProductsFromSupabase();
+    } catch (err: any) {
+      setSyncMessage(`Błąd synchronizacji: ${err.message || 'Nieznany błąd'}`);
+    } finally {
+      setIsSyncing(false);
     }
   };
 
@@ -92,48 +204,53 @@ export default function AdminPage() {
     setImages(images.filter((_, i) => i !== index));
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const finalSlug = slug.trim() || name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     const numPrice = parseFloat(price) || 99.0;
     const finalImages = images.length > 0 ? images : ['/assets/durag_silk_black.png'];
 
+    const productPayload: Partial<Product> = {
+      name,
+      nameEn: nameEn || name,
+      slug: finalSlug,
+      price: numPrice,
+      category,
+      categoryLabel,
+      material,
+      description,
+      images: finalImages,
+      colors: [{ name: colorName, hex: colorHex }],
+    };
+
     if (editingProductId) {
-      updateProduct(editingProductId, {
-        name,
-        nameEn: nameEn || name,
-        slug: finalSlug,
-        price: numPrice,
-        category,
-        categoryLabel,
-        material,
-        description,
-        images: finalImages,
-        colors: [{ name: colorName, hex: colorHex }],
-      });
+      updateProduct(editingProductId, productPayload);
+      productPayload.id = editingProductId;
     } else {
-      addProduct({
-        name,
-        nameEn: nameEn || name,
-        slug: finalSlug,
-        price: numPrice,
-        category,
-        categoryLabel,
-        material,
-        description,
-        images: finalImages,
-        colors: [{ name: colorName, hex: colorHex }],
-        reviews: []
+      const created = addProduct({
+        ...productPayload as any,
+        reviews: [],
       });
+      productPayload.id = created.id;
+    }
+
+    // Save to Supabase
+    const res = await saveProductToSupabase(productPayload);
+    if (res.success) {
+      setSyncMessage(`✓ Produkt "${name}" został zapisany w Supabase CMS.`);
+      setSupabaseConnected(true);
+    } else {
+      setSyncMessage(`Zapisano lokalnie. Status bazy: ${res.error || 'offline'}`);
     }
 
     setProductsList([...getAllProducts()]);
     setIsModalOpen(false);
   };
 
-  const handleDeleteProduct = (id: number) => {
+  const handleDeleteProduct = async (id: number) => {
     if (confirm('Czy na pewno chcesz usunąć ten produkt ze sklepu?')) {
       deleteProduct(id);
+      await deleteProductFromSupabase(id);
       setProductsList([...getAllProducts()]);
     }
   };
@@ -171,7 +288,7 @@ export default function AdminPage() {
 
             <button
               type="submit"
-              className="w-full bg-[#0D0D0B] text-white py-3.5 text-xs font-semibold uppercase tracking-widest hover:bg-[#734C1D] transition-colors rounded-full"
+              className="w-full bg-[#0D0D0B] text-white py-3.5 text-xs font-semibold uppercase tracking-widest hover:bg-[#734C1D] transition-colors rounded-full cursor-pointer"
             >
               Zaloguj się
             </button>
@@ -184,21 +301,34 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-[#F7F5F2] py-10">
       <div className="max-w-7xl mx-auto px-6">
-        
         {/* Top Header */}
-        <div className="bg-[#0D0D0B] text-white p-6 rounded-lg shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+        <div className="bg-[#0D0D0B] text-white p-6 rounded-lg shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-widest bg-[#734C1D] text-white px-2 py-0.5 rounded font-bold">LIVE EU STORE</span>
+              <span className="text-[10px] uppercase tracking-widest bg-[#734C1D] text-white px-2 py-0.5 rounded font-bold">
+                LIVE EU STORE
+              </span>
               <span className="text-xs text-[#D9A87E]">WDS Content Management System</span>
             </div>
-            <h1 className="font-serif text-2xl font-medium mt-1">Zarządzanie Katalogiem i Zamówieniami</h1>
+            <h1 className="font-serif text-2xl font-medium mt-1">
+              Zarządzanie Katalogiem i Zamówieniami
+            </h1>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 flex-wrap">
+            <button
+              onClick={handleSyncToSupabase}
+              disabled={isSyncing}
+              className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white text-xs uppercase tracking-wider px-4 py-2 rounded-full transition-colors cursor-pointer disabled:opacity-50"
+              title="Synchronizuj katalog produktów z bazą danych Supabase"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
+              <span>{isSyncing ? 'Synchronizowanie...' : 'Sync Supabase'}</span>
+            </button>
+
             <button
               onClick={openAddModal}
-              className="flex items-center gap-2 bg-[#D9A87E] text-[#0D0D0B] font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-white transition-colors shadow-md"
+              className="flex items-center gap-2 bg-[#D9A87E] text-[#0D0D0B] font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-full hover:bg-white transition-colors shadow-md cursor-pointer"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>Dodaj Nowy Durag</span>
@@ -206,7 +336,7 @@ export default function AdminPage() {
 
             <button
               onClick={() => setIsAuthenticated(false)}
-              className="flex items-center gap-2 text-xs uppercase tracking-wider bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-colors"
+              className="flex items-center gap-2 text-xs uppercase tracking-wider bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-colors cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
               <span>Wyloguj</span>
@@ -214,12 +344,45 @@ export default function AdminPage() {
           </div>
         </div>
 
+        {/* Database Connection Status Bar */}
+        <div className="bg-white border border-[#CFCFCF] rounded-lg p-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-3">
+            <div
+              className={`w-3 h-3 rounded-full ${
+                supabaseConnected ? 'bg-green-500 animate-pulse' : 'bg-amber-400'
+              }`}
+            />
+            <div>
+              <span className="font-semibold text-[#0D0D0B] block">
+                {supabaseConnected
+                  ? 'Supabase Cloud CMS: Aktywny (Baza danych online)'
+                  : isSupabaseConfigured
+                  ? 'Supabase: Oczekiwanie na połączenie / Tryb lokalny'
+                  : 'Supabase: Nieskonfigurowany (Uruchomiony tryb awaryjny)'}
+              </span>
+              <span className="text-gray-500 text-[11px]">
+                {supabaseConnected
+                  ? 'Zmiany cen, zdjęć i opisów są natychmiast synchronizowane z bazą PostgreSQL i serwowane w trybie SSR.'
+                  : 'Sklep działa w trybie bezpiecznego fallbacku. Uzupełnij zmienne w pliku .env.local aby połączyć instancję chmurową.'}
+              </span>
+            </div>
+          </div>
+
+          {syncMessage && (
+            <div className="bg-gray-100 text-gray-800 px-3 py-1 rounded text-[11px] font-mono">
+              {syncMessage}
+            </div>
+          )}
+        </div>
+
         {/* Tabs */}
         <div className="flex gap-4 mb-8">
           <button
             onClick={() => setActiveTab('products')}
-            className={`flex items-center gap-2 px-6 py-3 text-xs uppercase tracking-wider font-semibold rounded-full transition-all ${
-              activeTab === 'products' ? 'bg-[#0D0D0B] text-white shadow-md' : 'bg-white text-[#3B3C40] border border-[#CFCFCF]'
+            className={`flex items-center gap-2 px-6 py-3 text-xs uppercase tracking-wider font-semibold rounded-full transition-all cursor-pointer ${
+              activeTab === 'products'
+                ? 'bg-[#0D0D0B] text-white shadow-md'
+                : 'bg-white text-[#3B3C40] border border-[#CFCFCF]'
             }`}
           >
             <Package className="w-4 h-4" />
@@ -227,8 +390,10 @@ export default function AdminPage() {
           </button>
           <button
             onClick={() => setActiveTab('orders')}
-            className={`flex items-center gap-2 px-6 py-3 text-xs uppercase tracking-wider font-semibold rounded-full transition-all ${
-              activeTab === 'orders' ? 'bg-[#0D0D0B] text-white shadow-md' : 'bg-white text-[#3B3C40] border border-[#CFCFCF]'
+            className={`flex items-center gap-2 px-6 py-3 text-xs uppercase tracking-wider font-semibold rounded-full transition-all cursor-pointer ${
+              activeTab === 'orders'
+                ? 'bg-[#0D0D0B] text-white shadow-md'
+                : 'bg-white text-[#3B3C40] border border-[#CFCFCF]'
             }`}
           >
             <ShoppingBag className="w-4 h-4" />
@@ -242,11 +407,13 @@ export default function AdminPage() {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="font-serif text-xl text-[#0D0D0B]">Aktywne Duragi i Akcesoria</h2>
-                <p className="text-xs text-gray-500">Zarządzaj cenami, opisami, kategoriami i zdjęciami w czasie rzeczywistym.</p>
+                <p className="text-xs text-gray-500">
+                  Zarządzaj cenami, opisami, kategoriami i zdjęciami w czasie rzeczywistym.
+                </p>
               </div>
               <button
                 onClick={openAddModal}
-                className="bg-[#0D0D0B] text-white text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded hover:bg-[#734C1D] transition-colors"
+                className="bg-[#0D0D0B] text-white text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded hover:bg-[#734C1D] transition-colors cursor-pointer"
               >
                 + Dodaj produkt
               </button>
@@ -271,7 +438,11 @@ export default function AdminPage() {
                       <td className="py-3 px-3 font-mono text-gray-400">#{p.id}</td>
                       <td className="py-3 px-3">
                         <div className="w-10 h-10 bg-gray-100 rounded overflow-hidden relative border">
-                          <img src={p.images[0] || '/assets/durag_silk_black.png'} alt={p.name} className="w-full h-full object-cover" />
+                          <img
+                            src={p.images[0] || '/assets/durag_silk_black.png'}
+                            alt={p.name}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                       </td>
                       <td className="py-3 px-3">
@@ -282,19 +453,21 @@ export default function AdminPage() {
                         <span className="bg-gray-100 px-2 py-0.5 rounded border">{p.category}</span>
                       </td>
                       <td className="py-3 px-3 text-[#734C1D] font-medium">{p.material}</td>
-                      <td className="py-3 px-3 text-right font-bold text-[#0D0D0B]">{p.price.toFixed(2)} PLN</td>
+                      <td className="py-3 px-3 text-right font-bold text-[#0D0D0B]">
+                        {p.price.toFixed(2)} PLN
+                      </td>
                       <td className="py-3 px-3 text-center">
                         <div className="flex items-center justify-center gap-2">
                           <button
                             onClick={() => openEditModal(p)}
-                            className="p-1.5 bg-gray-100 hover:bg-[#734C1D] hover:text-white rounded text-gray-600 transition-colors"
+                            className="p-1.5 bg-gray-100 hover:bg-[#734C1D] hover:text-white rounded text-gray-600 transition-colors cursor-pointer"
                             title="Edytuj produkt"
                           >
                             <Edit className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => handleDeleteProduct(p.id)}
-                            className="p-1.5 bg-red-50 hover:bg-red-600 hover:text-white rounded text-red-600 transition-colors"
+                            className="p-1.5 bg-red-50 hover:bg-red-600 hover:text-white rounded text-red-600 transition-colors cursor-pointer"
                             title="Usuń produkt"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -311,7 +484,9 @@ export default function AdminPage() {
           /* Tab Content: Orders */
           <div className="bg-white p-6 border border-[#CFCFCF] rounded-lg shadow-sm">
             <h2 className="font-serif text-xl text-[#0D0D0B] mb-2">Ostatnie Zamówienia w Sklepie</h2>
-            <p className="text-xs text-gray-500 mb-6">Wszystkie zamówienia z Europy spływające bezpośrednio z koszyka.</p>
+            <p className="text-xs text-gray-500 mb-6">
+              Wszystkie zamówienia z Europy spływające bezpośrednio z koszyka.
+            </p>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
@@ -353,10 +528,9 @@ export default function AdminPage() {
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
             <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl relative border">
-              
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="absolute top-4 right-4 p-2 text-gray-400 hover:text-black transition-colors"
+                className="absolute top-4 right-4 p-2 text-gray-400 hover:text-black transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -371,7 +545,9 @@ export default function AdminPage() {
               <form onSubmit={handleFormSubmit} className="space-y-4 text-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">Nazwa Produktu (PL)</label>
+                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">
+                      Nazwa Produktu (PL)
+                    </label>
                     <input
                       type="text"
                       required
@@ -383,7 +559,9 @@ export default function AdminPage() {
                   </div>
 
                   <div>
-                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">Nazwa Produktu (EN)</label>
+                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">
+                      Nazwa Produktu (EN)
+                    </label>
                     <input
                       type="text"
                       value={nameEn}
@@ -396,7 +574,9 @@ export default function AdminPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">Cena (PLN)</label>
+                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">
+                      Cena (PLN)
+                    </label>
                     <input
                       type="number"
                       step="0.01"
@@ -409,7 +589,9 @@ export default function AdminPage() {
                   </div>
 
                   <div>
-                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">Kategoria</label>
+                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">
+                      Kategoria
+                    </label>
                     <select
                       value={category}
                       onChange={(e) => setCategory(e.target.value as any)}
@@ -424,7 +606,9 @@ export default function AdminPage() {
                   </div>
 
                   <div>
-                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">Slug SEO (URL)</label>
+                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">
+                      Slug SEO (URL)
+                    </label>
                     <input
                       type="text"
                       value={slug}
@@ -437,7 +621,9 @@ export default function AdminPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">Etykieta Kategorii</label>
+                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">
+                      Etykieta Kategorii
+                    </label>
                     <input
                       type="text"
                       value={categoryLabel}
@@ -448,7 +634,9 @@ export default function AdminPage() {
                   </div>
 
                   <div>
-                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">Skład Materiału</label>
+                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">
+                      Skład Materiału
+                    </label>
                     <input
                       type="text"
                       value={material}
@@ -460,7 +648,9 @@ export default function AdminPage() {
                 </div>
 
                 <div>
-                  <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">Opis SEO & Historia Marki</label>
+                  <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">
+                    Opis SEO & Historia Marki
+                  </label>
                   <textarea
                     rows={3}
                     required
@@ -473,8 +663,10 @@ export default function AdminPage() {
 
                 {/* Images Manager */}
                 <div className="bg-gray-50 p-4 border rounded space-y-3">
-                  <label className="block font-semibold uppercase text-[10px] text-gray-600">Zdjęcia Produktu (Galeria)</label>
-                  
+                  <label className="block font-semibold uppercase text-[10px] text-gray-600">
+                    Zdjęcia Produktu (Galeria)
+                  </label>
+
                   <div className="flex gap-2">
                     <input
                       type="text"
@@ -486,7 +678,7 @@ export default function AdminPage() {
                     <button
                       type="button"
                       onClick={handleAddImage}
-                      className="bg-[#0D0D0B] text-white px-3 py-2 rounded text-xs font-semibold hover:bg-[#734C1D] transition-colors"
+                      className="bg-[#0D0D0B] text-white px-3 py-2 rounded text-xs font-semibold hover:bg-[#734C1D] transition-colors cursor-pointer"
                     >
                       + Dodaj zdjęcie
                     </button>
@@ -494,12 +686,15 @@ export default function AdminPage() {
 
                   <div className="flex flex-wrap gap-3 pt-2">
                     {images.map((img, idx) => (
-                      <div key={idx} className="relative w-16 h-16 border rounded overflow-hidden bg-white group">
+                      <div
+                        key={idx}
+                        className="relative w-16 h-16 border rounded overflow-hidden bg-white group"
+                      >
                         <img src={img} alt="" className="w-full h-full object-cover" />
                         <button
                           type="button"
                           onClick={() => handleRemoveImage(idx)}
-                          className="absolute inset-0 bg-black/70 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="absolute inset-0 bg-black/70 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                         >
                           <X className="w-4 h-4" />
                         </button>
@@ -511,7 +706,9 @@ export default function AdminPage() {
                 {/* Color Variant */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50 p-4 border rounded">
                   <div>
-                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">Nazwa Koloru Wariantu</label>
+                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">
+                      Nazwa Koloru Wariantu
+                    </label>
                     <input
                       type="text"
                       value={colorName}
@@ -522,7 +719,9 @@ export default function AdminPage() {
                   </div>
 
                   <div>
-                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">Kod Koloru HEX</label>
+                    <label className="block font-semibold uppercase text-[10px] text-gray-600 mb-1">
+                      Kod Koloru HEX
+                    </label>
                     <div className="flex gap-2 items-center">
                       <input
                         type="color"
@@ -544,24 +743,21 @@ export default function AdminPage() {
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2.5 border rounded text-xs font-semibold text-gray-600 hover:bg-gray-100 transition-colors"
+                    className="px-5 py-2.5 border rounded text-xs font-semibold text-gray-600 hover:bg-gray-100 transition-colors cursor-pointer"
                   >
                     Anuluj
                   </button>
                   <button
                     type="submit"
-                    className="bg-[#0D0D0B] text-white px-6 py-2.5 rounded text-xs font-semibold uppercase tracking-wider hover:bg-[#734C1D] transition-colors shadow-md"
+                    className="bg-[#0D0D0B] text-white px-6 py-2.5 rounded text-xs font-semibold uppercase tracking-wider hover:bg-[#734C1D] transition-colors shadow-md cursor-pointer"
                   >
                     {editingProductId ? 'Zapisz Zmiany' : 'Opublikuj w Sklepie'}
                   </button>
                 </div>
-
               </form>
-
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

@@ -1,53 +1,97 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import TrustBanner from '@/components/TrustBanner';
-import ProductCard from '@/components/ProductCard';
-import NewsletterForm from '@/components/NewsletterForm';
-import { getAllProducts, CATEGORY_DESCRIPTIONS } from '@/lib/products';
-import { Feather, ShieldCheck, Sparkles, ArrowRight, Play, Heart, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import HomeProductCatalog from '@/components/HomeProductCatalog';
+import AboutStoryCarousel from '@/components/AboutStoryCarousel';
+import { fetchServerProducts } from '@/lib/supabase';
+import { Feather, ShieldCheck, Sparkles, Star } from 'lucide-react';
 
-export default function HomePage() {
-  const products = getAllProducts();
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [carouselIndex, setCarouselIndex] = useState(0);
+export const revalidate = 60; // SSR / Incremental Static Regeneration every 60 seconds
 
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
-    : products.filter(p => p.category === selectedCategory);
+export const metadata: Metadata = {
+  title: 'Warsaw Durag Store — Ręcznie Szyte Duragi Jedwabne, Satynowe i Welurowe',
+  description:
+    'Pierwszy polski sklep z duragami z prawdziwego jedwabiu morwowego 19 Momme, luksusowej satyny i weluru. Ręczne pakowanie w Warszawie, darmowa wysyłka i profesjonalne poradniki 360 waves.',
+  alternates: {
+    canonical: 'https://warsawduragstore.pl',
+  },
+  openGraph: {
+    title: 'Warsaw Durag Store — Ręcznie Szyte Duragi z Warszawy',
+    description:
+      'Odkryj kolekcję ręcznie szytych duragów z czystego jedwabiu morwowego 19 Momme, satyny i aksamitu. Polski butik streetwear.',
+    url: 'https://warsawduragstore.pl',
+    siteName: 'Warsaw Durag Store',
+    images: [
+      {
+        url: 'https://warsawduragstore.pl/assets/lookbook_editorial.png',
+        width: 1200,
+        height: 630,
+        alt: 'Warsaw Durag Store Editorial',
+      },
+    ],
+    locale: 'pl_PL',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Warsaw Durag Store — Duragi Jedwabne i Satynowe',
+    description: 'Ręcznie szyte duragi w Warszawie. 100% naturalny jedwab morwowy i luksusowa satyna.',
+    images: ['https://warsawduragstore.pl/assets/lookbook_editorial.png'],
+  },
+};
 
-  const aboutCarouselImages = [
-    {
-      src: "/media/wds/att.mogDC6RrCftjHA9YjiKSvpu79xCgSnYrsr0NvgP4KSc.JPG",
-      title: "Ręczne pakowanie w Warszawie",
-      desc: "Każde zamówienie przechodzi przez nasze ręce i jest starannie przygotowane do wysyłki."
-    },
-    {
-      src: "/assets/lookbook_editorial.png",
-      title: "Kuba i Brat — Właściciele Warsaw Durag Store",
-      desc: "Mały butik z pasją stworzony w 2020 roku w odpowiedzi na potrzebę prawdziwej jakości."
-    },
-    {
-      src: "/assets/durag_silk_black.png",
-      title: "Opinie naszej społeczności na IG",
-      desc: "Setki udostępnień i pozytywnych reakcji od waverów, artystów i sportowców z całej Polski."
-    }
-  ];
+export default async function HomePage() {
+  // SSR: Fetch products dynamically from Supabase database CMS
+  const products = await fetchServerProducts();
 
-  const handleNextCarousel = () => {
-    setCarouselIndex((prev) => (prev + 1) % aboutCarouselImages.length);
-  };
-
-  const handlePrevCarousel = () => {
-    setCarouselIndex((prev) => (prev - 1 + aboutCarouselImages.length) % aboutCarouselImages.length);
+  // JSON-LD Schema: WebSite, Store, ItemList
+  const jsonLdData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Store',
+        '@id': 'https://warsawduragstore.pl/#store',
+        name: 'Warsaw Durag Store',
+        url: 'https://warsawduragstore.pl',
+        image: 'https://warsawduragstore.pl/assets/lookbook_editorial.png',
+        description: 'Ekskluzywny polski butik z duragami z naturalnego jedwabiu morwowego 19 Momme, satyny i weluru.',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'ul. Włodarzewska 4',
+          addressLocality: 'Warszawa',
+          postalCode: '02-384',
+          addressCountry: 'PL',
+        },
+        telephone: '+48 500 000 000',
+        priceRange: '79.00 - 149.00 PLN',
+      },
+      {
+        '@type': 'ItemList',
+        itemListElement: products.slice(0, 10).map((product, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          url: `https://warsawduragstore.pl/produkt/${product.slug}`,
+          name: product.name,
+          image: product.images[0]?.startsWith('http')
+            ? product.images[0]
+            : `https://warsawduragstore.pl${product.images[0]}`,
+        })),
+      },
+    ],
   };
 
   return (
     <div>
+      {/* Rich Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
+      />
+
       {/* Hero Section with Video */}
-      <section className="relative bg-[#0D0D0B] text-white min-h-[88vh] flex items-center justify-center overflow-hidden">
+      <section className="relative bg-[#0D0D0B] text-white min-h-[85vh] sm:min-h-[88vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-40">
           <video
             src="/assets/hero_video.mp4"
@@ -62,29 +106,29 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0B] via-[#0D0D0B]/30 to-[#0D0D0B]/70" />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center py-20">
-          <span className="text-[#D9A87E] text-xs uppercase tracking-[0.3em] font-semibold block mb-4 animate-fade-in">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center py-16 sm:py-24">
+          <span className="text-[#D9A87E] text-[10px] sm:text-xs uppercase tracking-[0.3em] font-semibold block mb-3 animate-fade-in">
             [ Duragi Najlepszej Jakości ]
           </span>
-          <span className="text-sm sm:text-base font-light uppercase tracking-[0.2em] text-gray-200 block mb-6">
+          <span className="text-xs sm:text-sm md:text-base font-light uppercase tracking-[0.18em] text-gray-200 block mb-6 px-2">
             Jedyne duragi szyte w Polsce — Made in Warszawa
           </span>
-          
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl font-medium tracking-tight text-white leading-tight mb-8">
+
+          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white leading-tight mb-6 sm:mb-8">
             Ręcznie szyte duragi.<br />
             <span className="italic text-[#D9A87E]">Bo styl rodzi się na głowie</span>.
           </h1>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md mx-auto sm:max-w-none">
             <Link
               href="#kolekcja"
-              className="bg-white text-[#0D0D0B] hover:bg-[#D9A87E] hover:text-white px-9 py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-full shadow-lg"
+              className="w-full sm:w-auto bg-white text-[#0D0D0B] hover:bg-[#D9A87E] hover:text-white px-8 py-3.5 sm:px-9 sm:py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-full shadow-lg text-center"
             >
               Odkryj kolekcję
             </Link>
             <Link
               href="/poradnik/wave-guide"
-              className="border border-white/40 text-white hover:border-[#D9A87E] hover:text-[#D9A87E] px-9 py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-full backdrop-blur-sm"
+              className="w-full sm:w-auto border border-white/40 text-white hover:border-[#D9A87E] hover:text-[#D9A87E] px-8 py-3.5 sm:px-9 sm:py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-full backdrop-blur-sm text-center"
             >
               Zobacz 360 Wave Guide
             </Link>
@@ -95,96 +139,12 @@ export default function HomePage() {
       {/* Trust Banner */}
       <TrustBanner />
 
-      {/* Products Collection Section */}
-      <section className="py-20 max-w-7xl mx-auto px-6" id="kolekcja">
-        <div className="text-center mb-10">
-          <span className="text-[#734C1D] text-xs uppercase tracking-[0.25em] font-semibold block mb-2">
-            [ Durag Activity ]
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#0D0D0B] font-medium">
-            Unikalny styl
-          </h2>
-          <p className="text-sm text-[#3B3C40] font-light max-w-xl mx-auto mt-3">
-            {CATEGORY_DESCRIPTIONS[selectedCategory] || CATEGORY_DESCRIPTIONS['all']}
-          </p>
-        </div>
+      {/* Dynamic Products Catalog (Responsive Grid with SSR Data) */}
+      <HomeProductCatalog initialProducts={products} />
 
-        {/* Filter Navigation Links in requested order */}
-        <div className="flex justify-center gap-2 sm:gap-3 mb-12 flex-wrap text-xs uppercase tracking-wider font-semibold">
-          <button
-            onClick={() => setSelectedCategory('all')}
-            className={`px-5 py-2.5 rounded-full transition-all duration-200 ${
-              selectedCategory === 'all'
-                ? 'bg-[#0D0D0B] text-white shadow-md'
-                : 'bg-[#F7F5F2] text-[#3B3C40] hover:bg-[#0D0D0B] hover:text-white'
-            }`}
-          >
-            Wszystko ({products.length})
-          </button>
-          <button
-            onClick={() => setSelectedCategory('silk')}
-            className={`px-5 py-2.5 rounded-full transition-all duration-200 ${
-              selectedCategory === 'silk'
-                ? 'bg-[#0D0D0B] text-white shadow-md'
-                : 'bg-[#F7F5F2] text-[#3B3C40] hover:bg-[#0D0D0B] hover:text-white'
-            }`}
-          >
-            Jedwabne
-          </button>
-          <button
-            onClick={() => setSelectedCategory('satin')}
-            className={`px-5 py-2.5 rounded-full transition-all duration-200 ${
-              selectedCategory === 'satin'
-                ? 'bg-[#0D0D0B] text-white shadow-md'
-                : 'bg-[#F7F5F2] text-[#3B3C40] hover:bg-[#0D0D0B] hover:text-white'
-            }`}
-          >
-            Satynowe
-          </button>
-          <button
-            onClick={() => setSelectedCategory('velvet')}
-            className={`px-5 py-2.5 rounded-full transition-all duration-200 ${
-              selectedCategory === 'velvet'
-                ? 'bg-[#0D0D0B] text-white shadow-md'
-                : 'bg-[#F7F5F2] text-[#3B3C40] hover:bg-[#0D0D0B] hover:text-white'
-            }`}
-          >
-            Welurowe
-          </button>
-          <button
-            onClick={() => setSelectedCategory('seasonal')}
-            className={`px-5 py-2.5 rounded-full transition-all duration-200 ${
-              selectedCategory === 'seasonal'
-                ? 'bg-[#0D0D0B] text-white shadow-md'
-                : 'bg-[#F7F5F2] text-[#3B3C40] hover:bg-[#0D0D0B] hover:text-white'
-            }`}
-          >
-            Sezonowe materiały
-          </button>
-          <button
-            onClick={() => setSelectedCategory('accessories')}
-            className={`px-5 py-2.5 rounded-full transition-all duration-200 ${
-              selectedCategory === 'accessories'
-                ? 'bg-[#0D0D0B] text-white shadow-md'
-                : 'bg-[#F7F5F2] text-[#3B3C40] hover:bg-[#0D0D0B] hover:text-white'
-            }`}
-          >
-            Akcesoria
-          </button>
-        </div>
-
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </section>
-
-      {/* Jedwab w Mieście Showcase Section */}
-      <section className="bg-[#0D0D0B] text-white py-24 border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
+      {/* Jedwab w Mieście Editorial Showcase */}
+      <section className="bg-[#0D0D0B] text-white py-16 sm:py-24 border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Editorial Image Showcase */}
           <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-[#111111] shadow-2xl border border-white/10 group">
             <Image
@@ -196,8 +156,8 @@ export default function HomePage() {
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0B]/80 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute bottom-6 left-6 right-6">
-              <span className="text-[11px] text-[#D9A87E] uppercase tracking-widest font-semibold block mb-1">
+            <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6">
+              <span className="text-[10px] sm:text-[11px] text-[#D9A87E] uppercase tracking-widest font-semibold block mb-1">
                 Process & Craftsmanship
               </span>
               <p className="text-xs text-gray-300 font-light">
@@ -206,180 +166,125 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="space-y-6 lg:pl-6">
-            <span className="text-[#D9A87E] text-xs uppercase tracking-[0.3em] font-semibold block">
+          <div className="space-y-4 sm:space-y-6 lg:pl-6">
+            <span className="text-[#D9A87E] text-[10px] sm:text-xs uppercase tracking-[0.3em] font-semibold block">
               [ pure silk 19 momme ]
             </span>
-            <h2 className="font-serif text-3xl sm:text-5xl text-white font-medium leading-tight">
+            <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl text-white font-medium leading-tight">
               Jedwab w Mieście.
             </h2>
-            
-            <p className="text-sm text-gray-300 font-light leading-relaxed">
+
+            <p className="text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
               W miejskim rytmie nasz Durag Milanówek to coś więcej niż dodatek — chroni, podkreśla styl i wyróżnia nas na tle innych. Wykonany z naturalnego jedwabiu o gramaturze 19 momme — oznaczającej wysoką gęstość, trwałość i jakość materiału — łączy lekkość z wyjątkową wytrzymałością, a jego gładka struktura ogranicza tarcie, pomaga chronić włosy przed łamaniem i puszeniem oraz jest delikatna dla skóry głowy.
             </p>
 
-            <p className="text-sm text-gray-300 font-light leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
               Jedwabny durag to unikatowy modowy hidden gem, który w przeciwieństwie do chusty czy czepka wyróżnia Cię na tle innych zarówno jakością wykonania, jak i subtelną elegancją w stylizacji. Jego lekka tkanina osłania głowę przed wiatrem i promieniowaniem UV, a niepodrabialny, głęboki połysk zmienia światło miasta w część stylizacji. To jedyny w Polsce durag wykonany z prawdziwego jedwabiu — bo styl rodzi się na głowie.
             </p>
 
-            <div className="pt-4">
+            <div className="pt-2 sm:pt-4">
               <Link
                 href="/kolekcja/silk"
-                className="inline-block bg-[#D9A87E] text-[#0D0D0B] hover:bg-white px-9 py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-full shadow-lg"
+                className="inline-block bg-[#D9A87E] text-[#0D0D0B] hover:bg-white px-7 py-3 sm:px-9 sm:py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-full shadow-lg"
               >
-                Sprawdź
+                Sprawdź kolekcję jedwabną
               </Link>
             </div>
           </div>
-
         </div>
       </section>
 
       {/* Brand Materials Philosophy Section */}
-      <section className="py-24 max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <span className="text-[#734C1D] text-xs uppercase tracking-[0.25em] font-semibold block mb-2">
+      <section className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-10 sm:mb-16">
+          <span className="text-[#734C1D] text-[10px] sm:text-xs uppercase tracking-[0.25em] font-semibold block mb-2">
             Nasze standardy tkanin
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#0D0D0B] font-medium">
+          <h2 className="font-serif text-2xl sm:text-4xl text-[#0D0D0B] font-medium">
             Filozofia naszych materiałów
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
-          <div className="bg-[#F7F5F2] p-8 border border-[#CFCFCF]/50 rounded-xl space-y-4 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-12 h-12 rounded-full bg-white border border-[#CFCFCF] flex items-center justify-center text-[#734C1D]">
-              <Feather className="w-6 h-6 stroke-[1.5]" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+          <div className="bg-[#F7F5F2] p-6 sm:p-8 border border-[#CFCFCF]/50 rounded-xl space-y-3 sm:space-y-4 shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border border-[#CFCFCF] flex items-center justify-center text-[#734C1D]">
+              <Feather className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.5]" />
             </div>
-            <h3 className="font-serif text-2xl text-[#0D0D0B]">Jedwab stworzony dla włosów</h3>
+            <h3 className="font-serif text-xl sm:text-2xl text-[#0D0D0B]">Jedwab stworzony dla włosów</h3>
             <p className="text-xs sm:text-sm text-[#3B3C40] font-light leading-relaxed">
-              Użyta przy produkcji Durag Milanówek satyna jedwabna ma naturalnie gładką powierzchnię ograniczającą tarcie, dzięki czemu pozwala chronić włosy przed puszeniem, łamaniem i nadmiernym przesuszaniem. Delikatny dla skóry głowy materiał pozwala włosom zachować naturalną miękkość i zdrowy wygląd, nie odbierając nam komfortu nawet podczas dłuższego noszenia. W przeciwieństwie do syntetycznych tkanin jedwab nie tylko otula włosy, lecz także pomaga ograniczać utratę ich naturalnego nawilżenia. Zastosowany tutaj jedwab o gramaturze 19 momme jest odpowiednio lekki i elastyczny a zarazem odpowiednio gęsty oraz trwały.
+              Użyta przy produkcji Durag Milanówek satyna jedwabna ma naturalnie gładką powierzchnię ograniczającą tarcie, dzięki czemu pozwala chronić włosy przed puszeniem, łamaniem i nadmiernym przesuszaniem. Zastosowany tutaj jedwab o gramaturze 19 momme jest odpowiednio lekki i elastyczny a zarazem odpowiednio gęsty oraz trwały.
             </p>
           </div>
 
-          <div className="bg-[#F7F5F2] p-8 border border-[#CFCFCF]/50 rounded-xl space-y-4 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-12 h-12 rounded-full bg-white border border-[#CFCFCF] flex items-center justify-center text-[#734C1D]">
-              <Sparkles className="w-6 h-6 stroke-[1.5]" />
+          <div className="bg-[#F7F5F2] p-6 sm:p-8 border border-[#CFCFCF]/50 rounded-xl space-y-3 sm:space-y-4 shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border border-[#CFCFCF] flex items-center justify-center text-[#734C1D]">
+              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.5]" />
             </div>
-            <h3 className="font-serif text-2xl text-[#0D0D0B]">Satyna stworzona dla codzienności</h3>
+            <h3 className="font-serif text-xl sm:text-2xl text-[#0D0D0B]">Satyna stworzona dla codzienności</h3>
             <p className="text-xs sm:text-sm text-[#3B3C40] font-light leading-relaxed">
-              Satyna poliestrowa to materiał, który idealnie łączy gładkość, lekkość i trwałość — właśnie dlatego tak dobrze sprawdza się w szyciu duragów i to właśnie z niej korzysta zdecydowana większość klientów. Podobnie jak jedwab satyna poliestrowa jest śliska, przyjemna w dotyku co ogranicza tarcie, pomagając zmniejszyć puszenie i chronić włosy przed niepotrzebnym łamaniem. W przeciwieństwie do naturalnego jedwabiu jest materiałem syntetycznym, bardziej odpornym na codzienne użytkowanie i znacznie łatwiejszym w pielęgnacji oraz tańszym, a równocześnie zachowującym przy tym charakterystyczną gładkość oraz połysk.
+              Satyna poliestrowa to materiał, który idealnie łączy gładkość, lekkość i trwałość — właśnie dlatego tak dobrze sprawdza się w szyciu duragów i to właśnie z niej korzysta zdecydowana większość klientów. Zachowuje przy tym charakterystyczną gładkość oraz połysk.
             </p>
           </div>
 
-          <div className="bg-[#F7F5F2] p-8 border border-[#CFCFCF]/50 rounded-xl space-y-4 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-12 h-12 rounded-full bg-white border border-[#CFCFCF] flex items-center justify-center text-[#734C1D]">
-              <ShieldCheck className="w-6 h-6 stroke-[1.5]" />
+          <div className="bg-[#F7F5F2] p-6 sm:p-8 border border-[#CFCFCF]/50 rounded-xl space-y-3 sm:space-y-4 shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border border-[#CFCFCF] flex items-center justify-center text-[#734C1D]">
+              <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.5]" />
             </div>
-            <h3 className="font-serif text-2xl text-[#0D0D0B]">Welur na co dzień</h3>
+            <h3 className="font-serif text-xl sm:text-2xl text-[#0D0D0B]">Welur na co dzień</h3>
             <p className="text-xs sm:text-sm text-[#3B3C40] font-light leading-relaxed">
-              Welur poliestrowy to miękki, gęsty materiał o charakterystycznej, delikatnie włoskowatej powierzchni, która nadaje duragowi wyrazistą strukturę i głębię koloru. Wykonany z włókien poliestrowych jest trwały, odporny na częste użytkowanie. Jego przyjemna w dotyku faktura sprawia, że materiał dobrze układa się na głowie, a jednocześnie jest bardziej mięsisty i otulający niż lekki jedwab czy gładka satyna. Welur poliestrowy nie gniecie się łatwo, szybko schnie i jest prosty w codziennej pielęgnacji.
+              Welur poliestrowy to miękki, gęsty materiał o charakterystycznej, delikatnie włoskowatej powierzchni, która nadaje duragowi wyrazistą strukturę i głębię koloru. Wykonany z włókien poliestrowych jest trwały, odporny na częste użytkowanie i zapewnia doskonałą kompresję fal.
             </p>
           </div>
 
-          <div className="bg-[#F7F5F2] p-8 border border-[#CFCFCF]/50 rounded-xl space-y-4 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-12 h-12 rounded-full bg-white border border-[#CFCFCF] flex items-center justify-center text-[#734C1D]">
-              <Star className="w-6 h-6 stroke-[1.5]" />
+          <div className="bg-[#F7F5F2] p-6 sm:p-8 border border-[#CFCFCF]/50 rounded-xl space-y-3 sm:space-y-4 shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border border-[#CFCFCF] flex items-center justify-center text-[#734C1D]">
+              <Star className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.5]" />
             </div>
-            <h3 className="font-serif text-2xl text-[#0D0D0B]">Sezonowe materiały</h3>
+            <h3 className="font-serif text-xl sm:text-2xl text-[#0D0D0B]">Sezonowe materiały</h3>
             <p className="text-xs sm:text-sm text-[#3B3C40] font-light leading-relaxed">
-              Nie każdy materiał sprawdza się tak samo o każdej porze roku. Dlatego tworzymy serię duragów wykonanych z sezonowych tkanin, które odpowiadają na zmieniającą się pogodę, temperaturę i sposób noszenia. W tej kolekcji znalazł się Durag Bydgoszcz wykonany z cupro — lekkiej, gładkiej tkaniny o subtelnym połysku, Durag Żyrardów uszyty z naturalnego, przewiewnego lnu oraz Durag Stalowa Wola wykonany z krepy satynowej, która łączy mocniejszą strukturę z eleganckim połyskiem.
+              Tworzymy serie duragów wykonanych z sezonowych tkanin dopasowanych do pogody: Durag Bydgoszcz z przewiewnego cupro, Durag Żyrardów z naturalnego polskiego lnu oraz Durag Stalowa Wola z krepy satynowej Mirella.
             </p>
           </div>
-
         </div>
       </section>
 
-      {/* "O NAS" Section under material philosophy with photo carousel */}
-      <section className="bg-[#0D0D0B] text-white py-24 border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
-            {/* Image Carousel */}
-            <div className="relative rounded-xl overflow-hidden bg-[#111111] aspect-[4/3] border border-white/10 group shadow-2xl">
-              <Image
-                src={aboutCarouselImages[carouselIndex].src}
-                alt={aboutCarouselImages[carouselIndex].title}
-                fill
-                className="object-cover transition-all duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0B] via-transparent to-transparent" />
-              
-              <div className="absolute bottom-6 left-6 right-6 z-10">
-                <h4 className="font-serif text-xl text-white font-medium mb-1">
-                  {aboutCarouselImages[carouselIndex].title}
-                </h4>
-                <p className="text-xs text-gray-300 font-light">
-                  {aboutCarouselImages[carouselIndex].desc}
-                </p>
-              </div>
-
-              {/* Carousel Controls */}
-              <button
-                onClick={handlePrevCarousel}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-[#D9A87E] text-white hover:text-[#0D0D0B] flex items-center justify-center transition-colors"
-                aria-label="Poprzednie zdjęcie"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={handleNextCarousel}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-[#D9A87E] text-white hover:text-[#0D0D0B] flex items-center justify-center transition-colors"
-                aria-label="Następne zdjęcie"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
+      {/* "O NAS" Section with photo carousel */}
+      <section className="bg-[#0D0D0B] text-white py-16 sm:py-24 border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Interactive Image Carousel */}
+            <AboutStoryCarousel />
 
             {/* Content Text */}
-            <div className="space-y-6">
-              <span className="text-[#D9A87E] text-xs uppercase tracking-[0.3em] font-semibold block">
+            <div className="space-y-4 sm:space-y-6">
+              <span className="text-[#D9A87E] text-[10px] sm:text-xs uppercase tracking-[0.3em] font-semibold block">
                 [ nasza historia ]
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl text-white font-medium">
+              <h2 className="font-serif text-2xl sm:text-4xl text-white font-medium">
                 O nas — Warsaw Durag Store
               </h2>
-              
-              <div className="space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+
+              <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
                 <p>
-                  Warsaw Durag Store powstał w 2020 roku z potrzeby stworzenia miejsca, które przybliży duragi polskiej społeczności i pokaże ich różnorodność — nie tylko jako elementu stylu, ale również praktycznego dodatku z własną historią i charakterem. Od tego czasu stale rozwijamy naszą ofertę, poszerzając ją o kolejne materiały, kolory i modele, szukając nowych sposobów na pokazanie, czym może być współczesny durag.
+                  Warsaw Durag Store powstał w 2020 roku z potrzeby stworzenia miejsca, które przybliży duragi polskiej społeczności i pokaże ich różnorodność — nie tylko jako elementu stylu, ale również praktycznego dodatku z własną historią i charakterem.
                 </p>
                 <p>
-                  Jesteśmy małym butikiem prowadzonym przez dwóch braci, którym często pomagają również nasi znajomi. Dzięki temu każdy produkt przechodzi przez nasze ręce — od wyboru materiału, przez przygotowanie zamówienia, aż po kontakt z klientem. Dokładamy wszelkich starań, aby każda klientka i każdy klient otrzymywali nie tylko świetny produkt, lecz także dobrą i indywidualną obsługę.
+                  Jesteśmy małym butikiem prowadzonym przez dwóch braci. Każdy produkt przechodzi przez nasze ręce — od wyboru materiału, przez przygotowanie zamówienia, aż po kontakt z klientem.
                 </p>
-                <p>
-                  Chcemy, aby Warsaw Durag Store był wsparciem dla artystów, sportowców i wszystkich osób, które poprzez swój styl wyrażają siebie, dlatego chętnie nawiązujemy z nimi współprace - robisz coś w sporcie, modzie lub muzyce pisz do nas po paczkę niespodziankę.
-                </p>
-                <p className="text-[#D9A87E] font-medium pt-2">
-                  Na razie nie prowadzimy własnego sklepu stacjonarnego, jednak nasze duragi można odebrać osobiście przy ul. Włodarzewskiej 4 lub w centrum Warszawy — po wcześniejszym umówieniu. Z informacji praktycznych to najłatwiej dorwać nas przez Instagram, dla oldschoolowców mamy mail support@warsawduragstore.pl
+                <p className="text-[#D9A87E] font-medium pt-1">
+                  Odbiór osobisty w Warszawie: przy ul. Włodarzewskiej 4 lub w centrum po umówieniu. Kontakt: Instagram @warsawduragstore lub support@warsawduragstore.pl.
                 </p>
               </div>
 
-              <div className="pt-4">
+              <div className="pt-2 sm:pt-4">
                 <Link
                   href="/strona/o-nas"
-                  className="inline-block border border-[#D9A87E] text-[#D9A87E] hover:bg-[#D9A87E] hover:text-[#0D0D0B] px-8 py-3.5 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-full"
+                  className="inline-block border border-[#D9A87E] text-[#D9A87E] hover:bg-[#D9A87E] hover:text-[#0D0D0B] px-7 py-3 sm:px-8 sm:py-3.5 text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-full"
                 >
                   Dowiedz się więcej o nas
                 </Link>
               </div>
             </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="bg-[#F7F5F2] py-20">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className="bg-[#0D0D0B] text-white p-12 sm:p-16 rounded-xl relative overflow-hidden shadow-2xl border border-white/10">
-            <h2 className="font-serif text-3xl sm:text-4xl font-medium mb-4">Dołącz do Klubu WDS</h2>
-            <p className="text-xs sm:text-sm text-gray-300 font-light max-w-lg mx-auto mb-8 leading-relaxed">
-              Zapisz się do naszego ekskluzywnego klubu. Zyskaj 10% rabatu na pierwsze zakupy, wczesny dostęp do limitowanych kolekcji oraz poradników 360 waves.
-            </p>
-
-            <NewsletterForm />
           </div>
         </div>
       </section>
