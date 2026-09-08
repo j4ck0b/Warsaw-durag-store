@@ -15,6 +15,7 @@ export const isSupabaseConfigured = Boolean(
 
 // Global singleton client for browser
 let browserClient: SupabaseClient | null = null;
+let serverClient: SupabaseClient | null = null;
 
 export function getSupabaseBrowserClient(): SupabaseClient | null {
   if (!isSupabaseConfigured) return null;
@@ -32,12 +33,19 @@ export function getSupabaseBrowserClient(): SupabaseClient | null {
 // Client for Server-Side Rendering (SSR)
 export function getSupabaseServerClient(): SupabaseClient | null {
   if (!isSupabaseConfigured) return null;
-  return createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-    },
-  });
+  // If invoked in browser context, reuse the browser singleton to avoid multiple GoTrueClient instances
+  if (typeof window !== 'undefined') {
+    return getSupabaseBrowserClient();
+  }
+  if (!serverClient) {
+    serverClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    });
+  }
+  return serverClient;
 }
 
 // Slug generator helper
@@ -322,7 +330,10 @@ export interface SupabaseOrder {
   discount_pct?: number;
   discount_val?: number;
   total: number;
-  status: 'new' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  stripe_session_id?: string | null;
+  payment_status?: 'pending' | 'paid' | 'failed' | 'refunded';
+  payment_method?: string | null;
+  status: 'pending_payment' | 'new' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 }
 
 export async function createOrderInSupabase(order: Omit<SupabaseOrder, 'id' | 'created_at'>): Promise<{ success: boolean; orderNo?: string; error?: string }> {
@@ -381,6 +392,68 @@ export async function updateOrderStatusInSupabase(
     return { success: true };
   } catch (err: any) {
     return { success: false, error: err?.message || 'Błąd aktualizacji' };
+  }
+}
+
+export async function fetchOrderByOrderNo(orderNo: string): Promise<SupabaseOrder | null> {
+  const client = getSupabaseServerClient() || getSupabaseBrowserClient();
+  if (!client) return null;
+
+  try {
+    const { data, error } = await client
+      .from('orders')
+      .select('*')
+      .eq('order_no', orderNo)
+      .maybeSingle();
+
+    if (error || !data) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+export async function fetchOrderBySessionId(sessionId: string): Promise<SupabaseOrder | null> {
+  const client = getSupabaseServerClient() || getSupabaseBrowserClient();
+  if (!client) return null;
+
+  try {
+    const { data, error } = await client
+      .from('orders')
+      .select('*')
+      .eq('stripe_session_id', sessionId)
+      .maybeSingle();
+
+    if (error || !data) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+export async function updateOrderPaymentBySessionId(
+  sessionId: string,
+  updates: {
+    payment_status?: SupabaseOrder['payment_status'];
+    status?: SupabaseOrder['status'];
+    payment_method?: string;
+  }
+): Promise<{ success: boolean; order?: SupabaseOrder; error?: string }> {
+  const client = getSupabaseServerClient() || getSupabaseBrowserClient();
+  if (!client) return { success: false, error: 'Brak klienta Supabase' };
+
+  try {
+    const { data, error } = await client
+      .from('orders')
+      .update(updates)
+      .eq('stripe_session_id', sessionId)
+      .select()
+      .maybeSingle();
+
+    if (error) return { success: false, error: error.message };
+    return { success: true, order: data };
+  } catch (err: any) {
+    return { success: false, error: err?.message || 'Błąd aktualizacji płatności' };
   }
 }
 
@@ -476,7 +549,7 @@ export const DEFAULT_SITE_SETTINGS: Record<string, string> = {
 };
 
 export async function fetchSiteSettings(): Promise<Record<string, string>> {
-  const client = getSupabaseServerClient() || getSupabaseBrowserClient();
+  const client = typeof window !== 'undefined' ? getSupabaseBrowserClient() : (getSupabaseServerClient() || getSupabaseBrowserClient());
   if (!client) return DEFAULT_SITE_SETTINGS;
 
   try {
@@ -517,7 +590,12 @@ export async function saveSiteSetting(
         { onConflict: 'key' }
       );
 
-    if (error) return { success: false, error: error.message };
+    if (error) {
+      if (error.code === 'PGRST204' || error.message?.includes('does not exist') || error.code === '42P01') {
+        return { success: false, error: "Tabela 'site_settings' nie istnieje w bazie danych. Wklej i uruchom skrypt 002_site_settings.sql w Supabase SQL Editor." };
+      }
+      return { success: false, error: error.message };
+    }
     return { success: true };
   } catch (err: any) {
     return { success: false, error: err?.message || 'Błąd zapisu ustawienia' };
