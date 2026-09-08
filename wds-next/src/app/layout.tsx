@@ -5,11 +5,12 @@ import { LanguageProvider } from '@/context/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
+import { SITE_URL } from '@/lib/siteConfig';
 
-const isProduction = process.env.VERCEL_ENV === 'production';
+const isProduction = process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://warsawduragstore.pl'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Warsaw Durag Store — Jedyne duragi szyte w Polsce | 100% Jedwab Morwowy',
     template: '%s | Warsaw Durag Store',
@@ -27,20 +28,20 @@ export const metadata: Metadata = {
     'warsaw durag store',
     'duragi sklep'
   ],
-  authors: [{ name: 'Warsaw Durag Store', url: 'https://warsawduragstore.pl' }],
+  authors: [{ name: 'Warsaw Durag Store', url: SITE_URL }],
   creator: 'Warsaw Durag Store',
   publisher: 'Warsaw Durag Store',
   alternates: {
-    canonical: 'https://warsawduragstore.pl',
+    canonical: SITE_URL,
     languages: {
-      'pl': 'https://warsawduragstore.pl',
-      'en': 'https://warsawduragstore.pl?lang=EN',
-      'de': 'https://warsawduragstore.pl?lang=DE',
-      'fr': 'https://warsawduragstore.pl?lang=FR',
-      'es': 'https://warsawduragstore.pl?lang=ES',
-      'cs': 'https://warsawduragstore.pl?lang=CZ',
-      'lt': 'https://warsawduragstore.pl?lang=LT',
-      'x-default': 'https://warsawduragstore.pl',
+      'pl': SITE_URL,
+      'en': `${SITE_URL}?lang=EN`,
+      'de': `${SITE_URL}?lang=DE`,
+      'fr': `${SITE_URL}?lang=FR`,
+      'es': `${SITE_URL}?lang=ES`,
+      'cs': `${SITE_URL}?lang=CZ`,
+      'lt': `${SITE_URL}?lang=LT`,
+      'x-default': SITE_URL,
     },
   },
   robots: isProduction
@@ -66,13 +67,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Warsaw Durag Store — Jedyne duragi szyte w Polsce',
     description: 'Jedyne duragi szyte w Polsce z prawdziwego jedwabiu morwowego 19 Momme i aksamitu. Darmowa dostawa, wysyłka 1 dzień z Warszawy.',
-    url: 'https://warsawduragstore.pl',
+    url: SITE_URL,
     siteName: 'Warsaw Durag Store',
     locale: 'pl_PL',
     type: 'website',
     images: [
       {
-        url: 'https://warsawduragstore.pl/assets/logo_black.png',
+        url: `${SITE_URL}/assets/logo_black.png`,
         width: 800,
         height: 600,
         alt: 'Warsaw Durag Store Logo',
@@ -83,7 +84,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Warsaw Durag Store — Jedyne duragi szyte w Polsce',
     description: 'Ręcznie szyte duragi z jedwabiu morwowego 19 Momme i aksamitu. Darmowa dostawa w Polsce.',
-    images: ['https://warsawduragstore.pl/assets/logo_black.png'],
+    images: [`${SITE_URL}/assets/logo_black.png`],
   },
 };
 
@@ -92,10 +93,10 @@ const jsonLdOrg = {
   '@graph': [
     {
       '@type': 'Organization',
-      '@id': 'https://warsawduragstore.pl/#organization',
+      '@id': `${SITE_URL}/#organization`,
       'name': 'Warsaw Durag Store',
-      'url': 'https://warsawduragstore.pl',
-      'logo': 'https://warsawduragstore.pl/assets/logo_black.png',
+      'url': SITE_URL,
+      'logo': `${SITE_URL}/assets/logo_black.png`,
       'contactPoint': {
         '@type': 'ContactPoint',
         'email': 'support@warsawduragstore.pl',
@@ -106,9 +107,9 @@ const jsonLdOrg = {
     },
     {
       '@type': 'LocalBusiness',
-      '@id': 'https://warsawduragstore.pl/#localbusiness',
+      '@id': `${SITE_URL}/#localbusiness`,
       'name': 'Warsaw Durag Store',
-      'image': 'https://warsawduragstore.pl/assets/logo_black.png',
+      'image': `${SITE_URL}/assets/logo_black.png`,
       'priceRange': '79 - 149 PLN',
       'address': {
         '@type': 'PostalAddress',
@@ -122,7 +123,7 @@ const jsonLdOrg = {
         'latitude': 52.2052,
         'longitude': 20.9634,
       },
-      'url': 'https://warsawduragstore.pl',
+      'url': SITE_URL,
       'telephone': '+48700000000',
       'openingHoursSpecification': [
         {

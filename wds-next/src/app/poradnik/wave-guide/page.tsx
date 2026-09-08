@@ -3,14 +3,18 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import TrustBanner from '@/components/TrustBanner';
 import { CheckCircle2, Sparkles, BookOpen } from 'lucide-react';
+import { SITE_URL } from '@/lib/siteConfig';
 
 export const metadata: Metadata = {
   title: 'Kompletny Poradnik 360 Waves (Wave Guide) | Warsaw Durag Store',
   description: 'Dowiedz się jak robić i pielęgnować fale 360 waves. Wiązanie duraga, technika szczotkowania, jedwab morwowy 19 Momme i profesjonalny rytuał pielęgnacji.',
+  alternates: {
+    canonical: `${SITE_URL}/poradnik/wave-guide`,
+  },
   openGraph: {
     title: 'Kompletny Poradnik 360 Waves (Wave Guide) | Warsaw Durag Store',
     description: 'Kompletny przewodnik krok po kroku po pielęgnacji fal 360 waves i wiązaniu jedwabnego duraga.',
-    url: 'https://warsaw-durag-store.vercel.app/poradnik/wave-guide',
+    url: `${SITE_URL}/poradnik/wave-guide`,
   },
 };
 

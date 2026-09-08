@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import TrustBanner from '@/components/TrustBanner';
 import Image from 'next/image';
 import Link from 'next/link';
+import { SITE_URL } from '@/lib/siteConfig';
 
 interface PageProps {
   params: Promise<{
@@ -381,7 +382,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const pageData = PAGES_DATA[slug];
   if (!pageData) return { title: 'Strona | Warsaw Durag Store' };
-  const canonicalUrl = `https://warsawduragstore.pl/strona/${slug}`;
+  const canonicalUrl = `${SITE_URL}/strona/${slug}`;
 
   return {
     title: `${pageData.title} | Warsaw Durag Store`,
@@ -405,7 +406,7 @@ export default async function StaticInfoPage({ params }: PageProps) {
     notFound();
   }
 
-  const pageUrl = `https://warsawduragstore.pl/strona/${slug}`;
+  const pageUrl = `${SITE_URL}/strona/${slug}`;
 
   const jsonLdBreadcrumb = {
     '@context': 'https://schema.org',
@@ -415,7 +416,7 @@ export default async function StaticInfoPage({ params }: PageProps) {
         '@type': 'ListItem',
         position: 1,
         name: 'Strona Główna',
-        item: 'https://warsawduragstore.pl/',
+        item: `${SITE_URL}/`,
       },
       {
         '@type': 'ListItem',

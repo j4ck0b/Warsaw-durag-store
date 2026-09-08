@@ -10,8 +10,8 @@
   const createClient = window.supabase ? window.supabase.createClient : null;
 
   // 🔑 TWOJE KLUCZE SUPABASE — wklej tutaj wartości z dashboardu
-  const SUPABASE_URL = 'https://icvgsnenbgyvpwmsccym.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImljdmdzbmVuYmd5dnB3bXNjY3ltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTIyMjgsImV4cCI6MjA5NjU4ODIyOH0.ls3_Echd4hZkDYJcwr4Wx0YT2gnG36-Me76fwqIMd2I';
+  const SUPABASE_URL = 'https://jjljaljfmrqocnfglrij.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqbGphbGpmbXJxb2NuZmdscmlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4MTE2NTMsImV4cCI6MjEwNDM4NzY1M30.ITrdxfCFOfQMmSPPBq8w0MPTzgaGqC2Qy8xdvWSX7Bk';
 
   // 🔗 URL Twojej Edge Function do wysyłki maili
   const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/send-order-email`;

@@ -289,7 +289,7 @@
       <p class="auth-desc">Zarządzanie produktami, magazynem i zamówieniami WDS</p>
       
       <form id="authForm">
-        <input type="password" id="adminPassword" class="input-field" placeholder="Hasło dostępowe (wds2026)" required autofocus>
+        <input type="password" id="adminPassword" class="input-field" placeholder="Hasło dostępowe administratora..." required autofocus>
         <button type="submit" class="btn-primary">Zaloguj do Panelu</button>
       </form>
       <p id="authError" style="color: var(--danger); font-size: 12px; margin-top: 12px; display: none;"></p>
@@ -497,10 +497,22 @@
     const exportJsonBtn = document.getElementById('exportJsonBtn');
 
     // Auth Logic
-    authForm.addEventListener('submit', (e) => {
+    async function sha256(str) {
+      const buffer = new TextEncoder().encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+      return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    const VALID_ADMIN_HASHES = [
+      'ada6db8281f41d496a7cbf9be6e507d71e850802b2398e97cce70baa93b42107', // wds-warszawa-2026!
+      '1356580c01ee7cee8a03d2dc73792ec0165796b10947f81bcc57659fb7dc1799'  // wds2026
+    ];
+
+    authForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const pwd = adminPassword.value.trim();
-      if (pwd === 'wds2026' || pwd === 'admin' || pwd === 'warsaw') {
+      const hash = await sha256(pwd);
+      if (VALID_ADMIN_HASHES.includes(hash)) {
         sessionStorage.setItem('wds_admin_auth', 'true');
         showDashboard();
       } else {

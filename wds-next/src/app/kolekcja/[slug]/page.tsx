@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
 import TrustBanner from '@/components/TrustBanner';
-import { fetchServerProducts, fetchServerProductsByCategory } from '@/lib/supabase';
+import { fetchProducts } from '@/lib/products-db';
+import { SITE_URL } from '@/lib/siteConfig';
 
-export const revalidate = 60;
+export const revalidate = 60; // ISR cache 60s
 
 interface CategoryPageProps {
   params: Promise<{
@@ -42,21 +43,10 @@ const CATEGORY_NAMES: Record<string, { title: string; desc: string; label: strin
   },
   accessories: {
     title: 'Akcesoria do Fal 360 Waves & Pielęgnacja',
-    desc: 'Profesjonalne szczotki z naturalnego włosia dzika, wave capy i niezbędne akcesoria wspomagające codzienną rutynę pielęgnacji.',
+    desc: 'Ręcznie profilowane szczotki z naturalnego włosia dzika oraz oddychające wave capy. Niezbędne do utrzymania fal.',
     label: 'Akcesoria',
   },
 };
-
-export async function generateStaticParams() {
-  return [
-    { slug: 'all' },
-    { slug: 'silk' },
-    { slug: 'satin' },
-    { slug: 'velvet' },
-    { slug: 'seasonal' },
-    { slug: 'accessories' },
-  ];
-}
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -64,7 +54,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   if (!categoryInfo) {
     return { title: 'Kolekcja | Warsaw Durag Store' };
   }
-  const canonicalUrl = `https://warsawduragstore.pl/kolekcja/${slug}`;
+  const canonicalUrl = `${SITE_URL}/kolekcja/${slug}`;
 
   return {
     title: `${categoryInfo.title} | Warsaw Durag Store`,
@@ -93,13 +83,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     notFound();
   }
 
-  // SSR: Fetch products and all products from Supabase
+  // Fetch products and all products from database
   const [products, allProducts] = await Promise.all([
-    fetchServerProductsByCategory(slug),
-    fetchServerProducts(),
+    fetchProducts({ category: slug }),
+    fetchProducts(),
   ]);
 
-  const categoryUrl = `https://warsawduragstore.pl/kolekcja/${slug}`;
+  const categoryUrl = `${SITE_URL}/kolekcja/${slug}`;
 
   const jsonLdBreadcrumb = {
     '@context': 'https://schema.org',
@@ -109,7 +99,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         '@type': 'ListItem',
         position: 1,
         name: 'Strona Główna',
-        item: 'https://warsawduragstore.pl/',
+        item: `${SITE_URL}/`,
       },
       {
         '@type': 'ListItem',
@@ -127,11 +117,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     itemListElement: products.map((prod, idx) => ({
       '@type': 'ListItem',
       position: idx + 1,
-      url: `https://warsawduragstore.pl/produkt/${prod.slug}`,
+      url: `${SITE_URL}/produkt/${prod.slug}`,
       name: prod.name,
       image: prod.images[0]?.startsWith('http')
         ? prod.images[0]
-        : `https://warsawduragstore.pl${prod.images[0] || '/assets/durag_silk_black.png'}`,
+        : `${SITE_URL}${prod.images[0] || '/assets/durag_silk_black.png'}`,
     })),
   };
 

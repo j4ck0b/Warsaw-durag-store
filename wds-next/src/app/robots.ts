@@ -1,14 +1,14 @@
 import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/siteConfig';
 
 export default function robots(): MetadataRoute.Robots {
-  const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
-
   return {
     rules: {
       userAgent: '*',
       allow: '/',
       disallow: ['/admin', '/api/'],
     },
-    sitemap: 'https://warsawduragstore.pl/sitemap.xml',
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }
+

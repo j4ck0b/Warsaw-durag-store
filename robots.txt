@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /admin.html
 
-Sitemap: https://warsawduragstore.pl/sitemap.xml
+Sitemap: https://warsaw-durag-store.vercel.app/sitemap.xml

@@ -2,11 +2,12 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { fetchServerProducts, fetchServerProductBySlug } from '@/lib/supabase';
+import { fetchProducts, fetchProductBySlug } from '@/lib/products-db';
+import { SITE_URL } from '@/lib/siteConfig';
 import ProductDetailsClient from '@/components/ProductDetailsClient';
 import ProductCard from '@/components/ProductCard';
 
-export const revalidate = 60;
+export const revalidate = 60; // ISR cache 60s
 
 interface ProductPageProps {
   params: Promise<{
@@ -14,16 +15,10 @@ interface ProductPageProps {
   }>;
 }
 
-export async function generateStaticParams() {
-  const products = await fetchServerProducts();
-  return products.map((p) => ({
-    slug: p.slug,
-  }));
-}
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = await fetchServerProductBySlug(slug);
+  const product = await fetchProductBySlug(slug);
 
   if (!product) {
     return { title: 'Produkt | Warsaw Durag Store' };
@@ -31,10 +26,10 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
   const title = `${product.name} — ${product.material} | Warsaw Durag Store`;
   const description = `${product.name}. ${product.description.slice(0, 150)}... Darmowa dostawa w Polsce. Zamów teraz na Warsaw Durag Store.`;
-  const canonicalUrl = `https://warsawduragstore.pl/produkt/${product.slug}`;
+  const canonicalUrl = `${SITE_URL}/produkt/${product.slug}`;
   const imageUrl = product.images[0]?.startsWith('http')
     ? product.images[0]
-    : `https://warsawduragstore.pl${product.images[0] || '/assets/durag_silk_black.png'}`;
+    : `${SITE_URL}${product.images[0] || '/assets/durag_silk_black.png'}`;
 
   return {
     title,
@@ -64,19 +59,19 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = await fetchServerProductBySlug(slug);
+  const product = await fetchProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
 
-  const allProducts = await fetchServerProducts();
+  const allProducts = await fetchProducts();
   const relatedProducts = allProducts.filter((p) => p.id !== product.id).slice(0, 4);
 
-  const productUrl = `https://warsawduragstore.pl/produkt/${product.slug}`;
+  const productUrl = `${SITE_URL}/produkt/${product.slug}`;
   const imageUrl = product.images[0]?.startsWith('http')
     ? product.images[0]
-    : `https://warsawduragstore.pl${product.images[0] || '/assets/durag_silk_black.png'}`;
+    : `${SITE_URL}${product.images[0] || '/assets/durag_silk_black.png'}`;
 
   // Schema.org Product JSON-LD with reviews and offer
   const jsonLdProduct = {
@@ -161,13 +156,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
         '@type': 'ListItem',
         position: 1,
         name: 'Strona Główna',
-        item: 'https://warsawduragstore.pl/',
+        item: `${SITE_URL}/`,
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: product.categoryLabel,
-        item: `https://warsawduragstore.pl/kolekcja/${product.category}`,
+        item: `${SITE_URL}/kolekcja/${product.category}`,
       },
       {
         '@type': 'ListItem',
