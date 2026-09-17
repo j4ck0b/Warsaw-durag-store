@@ -10,7 +10,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Sanchez:ital@0;1&display=swap" rel="stylesheet">
 
   <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -22,8 +22,8 @@
       --bg: #090908;
       --card-bg: #141412;
       --card-border: rgba(255, 255, 255, 0.08);
-      --gold: #D9A87E;
-      --gold-hover: #e8bfa0;
+      --gold: #F37021; /* Hermès Signature Orange */
+      --gold-hover: #DB5E13;
       --text: #FAF8F5;
       --text-muted: #8E8D8A;
       --danger: #EF4444;
@@ -277,6 +277,98 @@
     select.input-field { appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D9A87E%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 10px; }
     textarea.input-field { resize: vertical; min-height: 80px; }
     .image-preview { width: 60px; height: 75px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); margin-top: 8px; }
+
+    /* CMS Editor Specific Styling */
+    .cms-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .cms-header-bar {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .cms-header-title {
+      font-family: 'Sanchez', 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: var(--gold);
+    }
+    .cms-header-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .cms-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .cms-card-title {
+      font-family: 'Sanchez', 'Cormorant Garamond', serif;
+      font-size: 19px;
+      color: #fff;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cms-card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .cms-toggle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
+    .cms-toggle-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    .status-badge.active { background: rgba(16, 185, 129, 0.2); color: #10B981; }
+    .status-badge.inactive { background: rgba(239, 68, 68, 0.2); color: #EF4444; }
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10B981;
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 9999;
+      animation: slideUpToast 0.3s ease;
+    }
+    @keyframes slideUpToast {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -334,6 +426,7 @@
       <div class="toolbar">
         <div class="tabs">
           <button class="tab-btn active" id="tabProductsBtn">📦 Katalog Produktów</button>
+          <button class="tab-btn" id="tabCmsBtn">🎨 Edycja Strony (CMS)</button>
           <button class="tab-btn" id="tabOrdersBtn">🚚 Zamówienia & Dostawy</button>
         </div>
         <div class="action-buttons">
@@ -352,6 +445,8 @@
                 <th>Nazwa Produktu</th>
                 <th>Kategoria</th>
                 <th>Cena (PLN)</th>
+                <th>Status</th>
+                <th>Magazyn</th>
                 <th>Materiał</th>
                 <th>Akcje</th>
               </tr>
@@ -360,6 +455,258 @@
               <!-- Rendered Dynamically -->
             </tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- CMS Site Editor View -->
+      <div id="cmsView" style="display: none;">
+        <div class="cms-container">
+          <!-- CMS Action Header -->
+          <div class="cms-header-bar">
+            <div>
+              <h2 class="cms-header-title">🎨 Edytor Całej Strony Głównej (Hermès Atelier CMS)</h2>
+              <p class="cms-header-desc">Wszystkie teksty, nagłówki, banery i dane kontaktowe. Zmiany zapisują się do bazy Supabase i są widoczne w sklepie natychmiast.</p>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <button type="button" class="btn-ghost" id="resetCmsDefaultsBtn">🔄 Przywróć Domyślne</button>
+              <button type="button" class="btn-primary" id="saveCmsBtn" style="width: auto; padding: 10px 24px;">💾 Zapisz Zmiany na Stronie</button>
+            </div>
+          </div>
+
+          <!-- 1. Pasek Ogłoszeń (Announcement Bar) -->
+          <div class="cms-card">
+            <h3 class="cms-card-title">📢 Górny Pasek Ogłoszeń (Ticker)</h3>
+            <p class="cms-card-subtitle">Wąski pasek na samej górze strony z przewijanym tekstem i informacjami o wysyłce.</p>
+            <label class="cms-toggle-label">
+              <input type="checkbox" id="cmsAnnouncementActive" checked>
+              <span>Wyświetlaj pasek ogłoszeń na stronie głównej</span>
+            </label>
+            <div class="form-group full">
+              <label class="form-label">Treść ogłoszenia (tekst przewijany)</label>
+              <input type="text" id="cmsAnnouncementText" class="input-field" placeholder="Wysyłamy z Warszawy w 1 dzień • Kup dwa a trzeci otrzymasz gratis • Darmowa wysyłka •">
+            </div>
+          </div>
+
+          <!-- 2. Sekcja Hero -->
+          <div class="cms-card">
+            <h3 class="cms-card-title">🏛️ Sekcja Główna (Hero Atelier)</h3>
+            <p class="cms-card-subtitle">Pierwsze wrażenie klienta po wejściu na stronę. Tło wideo/zdjęcie, główny tytuł oraz przycisk.</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Górny akcent (Eyebrow)</label>
+                <input type="text" id="cmsHeroAccent" class="input-field" placeholder="Warsaw Atelier / 52.2297° N">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Podtytuł Hero</label>
+                <input type="text" id="cmsHeroSubtitle" class="input-field" placeholder="Jedyne duragi szyte w Polsce">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Tytuł Główny (Obsługuje tagi &lt;br&gt; oraz &lt;span&gt; dla akcentu)</label>
+                <input type="text" id="cmsHeroTitle" class="input-field" placeholder="Ręcznie szyte.<br><span>Stworzone do ruchu</span>.">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tekst Przycisku CTA</label>
+                <input type="text" id="cmsHeroCtaText" class="input-field" placeholder="Odkryj kolekcję">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Link Przycisku CTA</label>
+                <input type="text" id="cmsHeroCtaLink" class="input-field" placeholder="#kolekcja">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Ścieżka / URL Wideo w tle</label>
+                <input type="text" id="cmsHeroVideo" class="input-field" placeholder="./assets/hero_video.mp4">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Zdjęcie Okładkowe Poster</label>
+                <input type="text" id="cmsHeroPoster" class="input-field" placeholder="./assets/durag_silk_black.png">
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Filary Zaufania (Trust Banner) -->
+          <div class="cms-card">
+            <h3 class="cms-card-title">🛡️ Filary Jakości i Zaufania (4 Kafelki)</h3>
+            <p class="cms-card-subtitle">Pasek informacyjny gwarancji, wysyłki i odbioru osobistego.</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Filar 1 — Tytuł (Wysyłka)</label>
+                <input type="text" id="cmsTrust1Title" class="input-field" placeholder="Wysyłka 1–2 Dni">
+                <label class="form-label" style="margin-top:4px;">Filar 1 — Opis</label>
+                <input type="text" id="cmsTrust1Desc" class="input-field" placeholder="Ekspresowa realizacja z Warszawy">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Filar 2 — Tytuł (Dostawa)</label>
+                <input type="text" id="cmsTrust2Title" class="input-field" placeholder="Darmowa Dostawa">
+                <label class="form-label" style="margin-top:4px;">Filar 2 — Opis</label>
+                <input type="text" id="cmsTrust2Desc" class="input-field" placeholder="InPost & Kurier w PL dla każdego zamówienia">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Filar 3 — Tytuł (Zwroty)</label>
+                <input type="text" id="cmsTrust3Title" class="input-field" placeholder="14 Dni na Zwrot">
+                <label class="form-label" style="margin-top:4px;">Filar 3 — Opis</label>
+                <input type="text" id="cmsTrust3Desc" class="input-field" placeholder="Gwarancja bezproblemowego zwrotu">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Filar 4 — Tytuł (Odbiór w Warszawie)</label>
+                <input type="text" id="cmsTrust4Title" class="input-field" placeholder="Odbiór w Warszawie">
+                <label class="form-label" style="margin-top:4px;">Filar 4 — Opis</label>
+                <input type="text" id="cmsTrust4Desc" class="input-field" placeholder="ul. Włodarzewska 4 lub Centrum">
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Nagłówek Kolekcji -->
+          <div class="cms-card">
+            <h3 class="cms-card-title">📦 Nagłówek Katalogu Produktów</h3>
+            <p class="cms-card-subtitle">Etykieta i opis nad siatką produktów sklepu.</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Etykieta Sekcji (Tag)</label>
+                <input type="text" id="cmsCatalogTag" class="input-field" placeholder="01 — Kolekcja">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tytuł Sekcji</label>
+                <input type="text" id="cmsCatalogTitle" class="input-field" placeholder="Wybierz swój materiał">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Opis pod filtrami</label>
+                <textarea id="cmsCatalogDesc" class="input-field" placeholder="Kompletna kolekcja ręcznie szytych duragów w Warszawie..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Sekcja Lookbook / Editorial -->
+          <div class="cms-card">
+            <h3 class="cms-card-title">✨ Sekcja Editorial / Lookbook ("Jedwab w Mieście")</h3>
+            <p class="cms-card-subtitle">Ekskluzywna sekcja opowiadająca o jedwabiu morwowym 19 Momme.</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Etykieta (Tag)</label>
+                <input type="text" id="cmsLookbookTag" class="input-field" placeholder="[ pure silk 19 momme ]">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tytuł Sekcji</label>
+                <input type="text" id="cmsLookbookTitle" class="input-field" placeholder="Jedwab w Mieście.">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Akapit 1</label>
+                <textarea id="cmsLookbookP1" class="input-field" rows="3"></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Akapit 2</label>
+                <textarea id="cmsLookbookP2" class="input-field" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tekst Przycisku</label>
+                <input type="text" id="cmsLookbookBtnText" class="input-field" placeholder="Sprawdź">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Link Przycisku</label>
+                <input type="text" id="cmsLookbookBtnLink" class="input-field" placeholder="#kolekcja">
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Filozofia Materiałów -->
+          <div class="cms-card">
+            <h3 class="cms-card-title">🧵 Filozofia Naszych Materiałów</h3>
+            <p class="cms-card-subtitle">Opis standardów rzemiosła dla czterech kluczowych tkanin.</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Etykieta (Tag)</label>
+                <input type="text" id="cmsPhilTag" class="input-field" placeholder="[ Standardy rzemiosła ]">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tytuł Główny</label>
+                <input type="text" id="cmsPhilTitle" class="input-field" placeholder="Filozofia naszych materiałów">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Jedwab — Tytuł i Opis</label>
+                <input type="text" id="cmsPhilSilkT" class="input-field" style="margin-bottom:6px;" placeholder="Jedwab stworzony dla włosów">
+                <textarea id="cmsPhilSilkD" class="input-field" rows="3"></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Satyna — Tytuł i Opis</label>
+                <input type="text" id="cmsPhilSatinT" class="input-field" style="margin-bottom:6px;" placeholder="Satyna stworzona dla codzienności">
+                <textarea id="cmsPhilSatinD" class="input-field" rows="3"></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Welur — Tytuł i Opis</label>
+                <input type="text" id="cmsPhilVelvetT" class="input-field" style="margin-bottom:6px;" placeholder="Welur na co dzień">
+                <textarea id="cmsPhilVelvetD" class="input-field" rows="3"></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Materiały Sezonowe — Tytuł i Opis</label>
+                <input type="text" id="cmsPhilSeasonT" class="input-field" style="margin-bottom:6px;" placeholder="Sezonowe materiały">
+                <textarea id="cmsPhilSeasonD" class="input-field" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Sekcja O Nas -->
+          <div class="cms-card">
+            <h3 class="cms-card-title">📖 O Nas — Historia Założycieli</h3>
+            <p class="cms-card-subtitle">Autentyczna opowieść o powstaniu marki, braciach bliźniakach i odbiorze w Warszawie.</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Etykieta (Tag)</label>
+                <input type="text" id="cmsAboutTag" class="input-field" placeholder="[ Warsaw Durag Store ]">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tytuł Sekcji</label>
+                <input type="text" id="cmsAboutTitle" class="input-field" placeholder="O nas">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Akapit 1 (Początek pomysłu)</label>
+                <textarea id="cmsAboutP1" class="input-field" rows="2"></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Akapit 2 (Historia rozwoju)</label>
+                <textarea id="cmsAboutP2" class="input-field" rows="2"></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Akapit 3 (Współprace)</label>
+                <textarea id="cmsAboutP3" class="input-field" rows="2"></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Akapit 4 (Odbiór stacjonarny i kontakt)</label>
+                <textarea id="cmsAboutP4" class="input-field" rows="2"></textarea>
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Zdjęcie Założycieli (URL)</label>
+                <input type="text" id="cmsAboutImg" class="input-field" placeholder="./assets/founders.jpg">
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. Stopka i Kontakt -->
+          <div class="cms-card">
+            <h3 class="cms-card-title">🏛️ Stopka & Dane Kontaktowe</h3>
+            <p class="cms-card-subtitle">Informacje prawne, atelier i obsługa klienta.</p>
+            <div class="form-grid">
+              <div class="form-group full">
+                <label class="form-label">Krótki opis w stopce</label>
+                <textarea id="cmsFooterAbout" class="input-field" rows="2"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email kontaktowy</label>
+                <input type="email" id="cmsFooterEmail" class="input-field" placeholder="support@warsawduragstore.pl">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Link do Instagrama</label>
+                <input type="text" id="cmsFooterInstagram" class="input-field" placeholder="https://instagram.com/warsawduragstore">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Adres Atelier w Warszawie</label>
+                <input type="text" id="cmsFooterAddress" class="input-field" placeholder="ul. Włodarzewska 4, 02-384 Warszawa">
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Save Actions -->
+          <div style="display: flex; justify-content: flex-end; gap: 12px; margin-bottom: 40px;">
+            <button type="button" class="btn-primary" id="saveCmsBtnBottom" style="width: auto; padding: 12px 36px; font-size: 14px;">💾 Zapisz Zmiany na Stronie Głównej</button>
+          </div>
         </div>
       </div>
 
@@ -457,10 +804,27 @@
             <textarea id="formDescription" class="input-field" placeholder="Szczegółowy opis, przeznaczenie do pielęgnacji 360 waves..."></textarea>
           </div>
 
-          <div class="form-group full">
-            <label class="form-label">Główne Zdjęcie (URL lub ścieżka względna)</label>
+          <div class="form-group">
+            <label class="form-label">Stan magazynowy (sztuki)</label>
+            <input type="number" id="formStock" class="input-field" placeholder="10" value="10" min="0">
+          </div>
+
+          <div class="form-group" style="justify-content: center;">
+            <label class="cms-toggle-label" style="margin-top: 20px;">
+              <input type="checkbox" id="formVisible" checked>
+              <span>Widoczny w sklepie online</span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Główne Zdjęcie (URL lub ścieżka)</label>
             <input type="text" id="formImage" class="input-field" placeholder="./assets/durag_silk_black.png">
             <img id="formImagePreview" src="./assets/durag_silk_black.png" class="image-preview" alt="Preview">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Drugie Zdjęcie Detali (Hover)</label>
+            <input type="text" id="formImageSecondary" class="input-field" placeholder="./assets/durag_silk_champagne.png">
           </div>
         </div>
 
@@ -468,6 +832,9 @@
       </form>
     </div>
   </div>
+
+  <!-- FLOATING TOAST NOTIFICATION -->
+  <div id="toastMsg" class="toast-msg"></div>
 
   <script>
     // In-memory catalog state with fallback from products.js
@@ -484,8 +851,10 @@
     const statProductsCount = document.getElementById('statProductsCount');
     const statSilkCount = document.getElementById('statSilkCount');
     const tabProductsBtn = document.getElementById('tabProductsBtn');
+    const tabCmsBtn = document.getElementById('tabCmsBtn');
     const tabOrdersBtn = document.getElementById('tabOrdersBtn');
     const productsView = document.getElementById('productsView');
+    const cmsView = document.getElementById('cmsView');
     const ordersView = document.getElementById('ordersView');
     const productModal = document.getElementById('productModal');
     const modalHeading = document.getElementById('modalHeading');
@@ -494,7 +863,23 @@
     const productForm = document.getElementById('productForm');
     const formImage = document.getElementById('formImage');
     const formImagePreview = document.getElementById('formImagePreview');
+    const formImageSecondary = document.getElementById('formImageSecondary');
+    const formStock = document.getElementById('formStock');
+    const formVisible = document.getElementById('formVisible');
     const exportJsonBtn = document.getElementById('exportJsonBtn');
+    const saveCmsBtn = document.getElementById('saveCmsBtn');
+    const saveCmsBtnBottom = document.getElementById('saveCmsBtnBottom');
+    const resetCmsDefaultsBtn = document.getElementById('resetCmsDefaultsBtn');
+    const toastMsg = document.getElementById('toastMsg');
+
+    function showToast(text, isError = false) {
+      toastMsg.innerText = text;
+      toastMsg.style.background = isError ? '#EF4444' : '#10B981';
+      toastMsg.style.display = 'block';
+      setTimeout(() => {
+        toastMsg.style.display = 'none';
+      }, 3500);
+    }
 
     // Auth Logic
     async function sha256(str) {
@@ -536,11 +921,11 @@
       authScreen.style.display = 'none';
       adminDashboard.style.display = 'flex';
       loadProducts();
+      loadCmsData();
     }
 
     // Load and Render Products
     async function loadProducts() {
-      // Try loading from Supabase if connected
       if (window.supabaseClient) {
         try {
           const { data, error } = await window.supabaseClient.from('products').select('*').order('id', { ascending: true });
@@ -563,6 +948,8 @@
       currentCatalog.forEach(prod => {
         const tr = document.createElement('tr');
         const imgUrl = (prod.images && prod.images[0]) ? prod.images[0] : './assets/durag_silk_black.png';
+        const isVis = prod.visible !== false;
+        const stockCount = typeof prod.stock === 'number' ? prod.stock : 10;
 
         tr.innerHTML = `
           <td><img src="${imgUrl}" class="product-thumb" alt="${prod.name}"></td>
@@ -571,7 +958,13 @@
             <span style="font-size: 11px; color: var(--text-muted);">${prod.nameEn || prod.name}</span>
           </td>
           <td><span class="category-badge">${prod.categoryLabel || prod.category}</span></td>
-          <td><strong style="color: var(--gold); font-size: 15px;">${prod.price} PLN</strong></td>
+          <td><strong style="color: var(--gold); font-size: 15px;">${parseFloat(prod.price).toFixed(2)} PLN</strong></td>
+          <td>
+            <button class="status-badge ${isVis ? 'active' : 'inactive'}" style="border:none; cursor:pointer;" onclick="toggleProductVisibility(${prod.id})">
+              ${isVis ? '● Widoczny' : '○ Ukryty'}
+            </button>
+          </td>
+          <td style="font-weight: 600;">${stockCount} szt.</td>
           <td style="color: #aaa; font-size: 12px;">${prod.material || '-'}</td>
           <td>
             <div class="table-actions">
@@ -584,19 +977,48 @@
       });
     }
 
+    window.toggleProductVisibility = async function(id) {
+      const prod = currentCatalog.find(p => p.id === id);
+      if (!prod) return;
+      prod.visible = !(prod.visible !== false);
+
+      if (window.supabaseClient) {
+        try {
+          await window.supabaseClient.from('products').update({ visible: prod.visible }).eq('id', id);
+        } catch (e) {
+          console.warn('Supabase visibility update note:', e);
+        }
+      }
+      renderProductsTable();
+      showToast(prod.visible ? `Produkt "${prod.name}" jest teraz widoczny w sklepie.` : `Produkt "${prod.name}" został ukryty.`);
+    };
+
     // Tabs
     tabProductsBtn.addEventListener('click', () => {
       tabProductsBtn.classList.add('active');
+      tabCmsBtn.classList.remove('active');
       tabOrdersBtn.classList.remove('active');
       productsView.style.display = 'block';
+      cmsView.style.display = 'none';
+      ordersView.style.display = 'none';
+    });
+
+    tabCmsBtn.addEventListener('click', () => {
+      tabCmsBtn.classList.add('active');
+      tabProductsBtn.classList.remove('active');
+      tabOrdersBtn.classList.remove('active');
+      cmsView.style.display = 'block';
+      productsView.style.display = 'none';
       ordersView.style.display = 'none';
     });
 
     tabOrdersBtn.addEventListener('click', () => {
       tabOrdersBtn.classList.add('active');
       tabProductsBtn.classList.remove('active');
-      productsView.style.display = 'none';
+      tabCmsBtn.classList.remove('active');
       ordersView.style.display = 'block';
+      productsView.style.display = 'none';
+      cmsView.style.display = 'none';
     });
 
     // Modal Handling
@@ -604,6 +1026,8 @@
       document.getElementById('editProductId').value = '';
       modalHeading.innerText = 'Dodaj Nowy Produkt';
       productForm.reset();
+      formVisible.checked = true;
+      formStock.value = '10';
       formImagePreview.src = './assets/durag_silk_black.png';
       productModal.style.display = 'flex';
     });
@@ -627,17 +1051,23 @@
       document.getElementById('formCategory').value = prod.category;
       document.getElementById('formMaterial').value = prod.material || '';
       document.getElementById('formDescription').value = prod.description || '';
+      formStock.value = typeof prod.stock === 'number' ? prod.stock : 10;
+      formVisible.checked = prod.visible !== false;
       
-      const img = (prod.images && prod.images[0]) ? prod.images[0] : './assets/durag_silk_black.png';
-      document.getElementById('formImage').value = img;
-      formImagePreview.src = img;
+      const img1 = (prod.images && prod.images[0]) ? prod.images[0] : './assets/durag_silk_black.png';
+      const img2 = (prod.images && prod.images[1]) ? prod.images[1] : '';
+      document.getElementById('formImage').value = img1;
+      formImageSecondary.value = img2;
+      formImagePreview.src = img1;
 
       modalHeading.innerText = `Edytuj: ${prod.name}`;
       productModal.style.display = 'flex';
     };
 
     window.deleteProduct = async function(id) {
-      if (!confirm('Czy na pewno chcesz usunąć ten produkt z katalogu?')) return;
+      const prod = currentCatalog.find(p => p.id === id);
+      const name = prod ? prod.name : 'ten produkt';
+      if (!confirm(`Czy na pewno chcesz bezpowrotnie usunąć "${name}" z katalogu bazy danych?`)) return;
       currentCatalog = currentCatalog.filter(p => p.id !== id);
       
       if (window.supabaseClient) {
@@ -647,6 +1077,7 @@
       }
 
       renderProductsTable();
+      showToast(`✓ Usunięto produkt z bazy danych.`);
     };
 
     productForm.addEventListener('submit', async (e) => {
@@ -658,7 +1089,11 @@
       const category = document.getElementById('formCategory').value;
       const material = document.getElementById('formMaterial').value.trim();
       const description = document.getElementById('formDescription').value.trim();
-      const img = document.getElementById('formImage').value.trim() || './assets/durag_silk_black.png';
+      const stock = parseInt(formStock.value, 10) || 10;
+      const visible = formVisible.checked;
+      const img1 = document.getElementById('formImage').value.trim() || './assets/durag_silk_black.png';
+      const img2 = formImageSecondary.value.trim();
+      const images = img2 ? [img1, img2] : [img1];
 
       const catLabels = {
         silk: '100% Jedwab Morwowy (19 Momme)',
@@ -681,13 +1116,16 @@
             categoryLabel: catLabels[category],
             material,
             description,
-            images: [img]
+            stock,
+            visible,
+            images
           };
 
           if (window.supabaseClient) {
             try {
               await window.supabaseClient.from('products').update({
-                name, name_en: nameEn, price, category, category_label: catLabels[category], material, description, images: [img]
+                name, name_en: nameEn, price, category, category_label: catLabels[category],
+                material, description, stock, visible, images
               }).eq('id', parseInt(editId));
             } catch (err) { console.warn('Supabase update', err); }
           }
@@ -705,7 +1143,9 @@
           categoryLabel: catLabels[category],
           material,
           description,
-          images: [img],
+          stock,
+          visible,
+          images,
           colors: [{ name: 'Classic', hex: '#0A0A0A' }],
           reviews: []
         };
@@ -720,7 +1160,257 @@
 
       productModal.style.display = 'none';
       renderProductsTable();
-      alert('✓ Katalog został pomyślnie zaktualizowany!');
+      showToast('✓ Produkt zapisany i zsynchronizowany z bazą Supabase!');
+    });
+
+    // ========================================================================
+    // CMS DATA SYNC (EDYCJA CAŁEJ STRONY)
+    // ========================================================================
+    const CMS_DEFAULTS = {
+      announcement: {
+        text: "Wysyłamy z Warszawy w 1 dzień • Kup dwa a trzeci otrzymasz gratis • Darmowa wysyłka w Polsce • Ręcznie szyte duragi atelier",
+        isActive: true
+      },
+      hero: {
+        accent: "Warsaw Atelier / 52.2297° N",
+        title: "Ręcznie szyte.<br><span>Stworzone do ruchu</span>.",
+        subtitle: "Jedyne duragi szyte w Polsce z naturalnego jedwabiu morwowego 19 Momme",
+        ctaText: "Odkryj kolekcję",
+        ctaLink: "#kolekcja",
+        videoUrl: "./assets/hero_video.mp4",
+        posterUrl: "./assets/durag_silk_black.png"
+      },
+      trust_bar: {
+        item1_title: "Wysyłka 1–2 Dni",
+        item1_desc: "Ekspresowa realizacja z warszawskiego atelier",
+        item2_title: "Darmowa Dostawa",
+        item2_desc: "Paczkomaty InPost i kurier dla każdego zamówienia w PL",
+        item3_title: "14 Dni na Zwrot",
+        item3_desc: "Gwarancja bezproblemowego zwrotu i wymiany",
+        item4_title: "Odbiór w Warszawie",
+        item4_desc: "ul. Włodarzewska 4, Śródmieście lub salon Eclipse"
+      },
+      collection_header: {
+        tag: "01 — Kolekcja",
+        title: "Wybierz swój materiał",
+        description: "Kompletna kolekcja ręcznie szytych duragów w Warszawie — z czystego jedwabiu morwowego 19 Momme, satyny, weluru oraz materiałów sezonowych."
+      },
+      lookbook: {
+        tag: "[ pure silk 19 momme ]",
+        title: "Jedwab w Mieście.",
+        p1: "W miejskim rytmie nasz Durag Milanówek to coś więcej niż dodatek — chroni, podkreśla styl i wyróżnia nas na tle innych. Wykonany z naturalnego jedwabiu o gramaturze 19 momme — oznaczającej wysoką gęstość, trwałość i jakość materiału — łączy lekkość z wyjątkową wytrzymałością, a jego gładka struktura ogranicza tarcie, pomaga chronić włosy przed łamaniem i puszeniem oraz jest delikatna dla skóry głowy.",
+        p2: "Jedwabny durag to unikatowy modowy hidden gem, który w przeciwieństwie do chusty czy czepka wyróżnia Cię na tle innych zarówno jakością wykonania, jak i subtelną elegancją w stylizacji. Jego lekka tkanina osłania głowę przed wiatrem i promieniowaniem UV, a niepodrabialny, głęboki połysk zmienia światło miasta w część stylizacji. To jedyny w Polsce durag wykonany z prawdziwego jedwabiu — bo styl rodzi się na głowie.",
+        ctaText: "Sprawdź kolekcję jedwabiu",
+        ctaLink: "#kolekcja"
+      },
+      philosophy: {
+        tag: "[ Standardy rzemiosła ]",
+        title: "Filozofia naszych materiałów",
+        silk_title: "Jedwab stworzony dla włosów",
+        silk_desc: "Użyta przy produkcji Durag Milanówek satyna jedwabna ma naturalnie gładką powierzchnię ograniczającą tarcie, dzięki czemu pozwala chronić włosy przed puszeniem, łamaniem i nadmiernym przesuszaniem. Zastosowany tutaj jedwab o gramaturze 19 momme jest odpowiednio lekki i elastyczny a zarazem gęsty oraz trwały.",
+        satin_title: "Satyna stworzona dla codzienności",
+        satin_desc: "Satyna poliestrowa to materiał, który idealnie łączy gładkość, lekkość i trwałość — właśnie dlatego tak dobrze sprawdza się w szyciu duragów. Ogranicza tarcie, jest odporna na codzienne użytkowanie i prosta w pielęgnacji.",
+        velvet_title: "Welur na co dzień",
+        velvet_desc: "Welur poliestrowy to miękki, gęsty materiał o charakterystycznej strukturze nadający głębię koloru. Bardziej mięsisty i otulający niż lekki jedwab czy gładka satyna.",
+        seasonal_title: "Sezonowe materiały",
+        seasonal_desc: "Seria duragów wykonanych z sezonowych tkanin — cupro, przewiewny len z Żyrardowa oraz krepa satynowa, odpowiadające na zmieniającą się pogodę i indywidualny styl."
+      },
+      about: {
+        tag: "[ Warsaw Durag Store ]",
+        title: "O nas",
+        p1: "Opowiadamy tę historię każdemu, kto zapyta, skąd wziął się pomysł na Warsaw Durag Store. Wracając z Częstochowy, w drodze powrotnej z Jasnej Góry słuchaliśmy utworu Baby Keema Durag Activity i olśniło nas, że w Polsce nie ma gdzie kupić porządnego duraga.",
+        p2: "Wspólnie z bratem bliźniakiem zaczęliśmy od totalnego zera. Dziś realizujemy dziesiątki zamówień tygodniowo, a każdy durag przechodzi przez nasze ręce: od doboru naturalnego jedwabiu morwowego 19 Momme, przez szycie, aż po staranne pakowanie.",
+        p3: "Jesteśmy marką otwartą na współprace — robisz coś w sporcie, modzie lub muzyce? Pisz do nas, w zamian za solidne promo wysyłamy pakę z duragiem!",
+        p4: "Darmowy odbiór osobisty w Warszawie: przy ul. Włodarzewskiej 4 (Ochota), w Centrum oraz stacjonarnie w salonie barberskim Eclipse pod Rondem Waszyngtona. Piszcie śmiało na Instagramie @warsawduragstore lub mailowo support@warsawduragstore.pl.",
+        image: "./assets/founders.jpg"
+      },
+      footer: {
+        about: "Jedyne duragi szyte w Polsce. Warszawskie atelier rzemieślnicze dostarczające najwyższej klasy duragi z jedwabiu 19 Momme oraz akcesoria do pielęgnacji fal 360.",
+        email: "support@warsawduragstore.pl",
+        instagram: "https://instagram.com/warsawduragstore",
+        address: "ul. Włodarzewska 4, 02-384 Warszawa"
+      }
+    };
+
+    async function loadCmsData() {
+      let data = { ...CMS_DEFAULTS };
+      if (typeof window.fetchSiteContent === 'function') {
+        try {
+          const remote = await window.fetchSiteContent();
+          if (remote && Object.keys(remote).length > 0) {
+            data = { ...CMS_DEFAULTS, ...remote };
+          }
+        } catch (e) {
+          console.warn('CMS fetch error, using defaults', e);
+        }
+      }
+
+      // Fill Announcement
+      if (data.announcement) {
+        document.getElementById('cmsAnnouncementActive').checked = data.announcement.isActive !== false;
+        document.getElementById('cmsAnnouncementText').value = data.announcement.text || '';
+      }
+
+      // Fill Hero
+      if (data.hero) {
+        document.getElementById('cmsHeroAccent').value = data.hero.accent || '';
+        document.getElementById('cmsHeroSubtitle').value = data.hero.subtitle || '';
+        document.getElementById('cmsHeroTitle').value = data.hero.title || '';
+        document.getElementById('cmsHeroCtaText').value = data.hero.ctaText || '';
+        document.getElementById('cmsHeroCtaLink').value = data.hero.ctaLink || '';
+        document.getElementById('cmsHeroVideo').value = data.hero.videoUrl || '';
+        document.getElementById('cmsHeroPoster').value = data.hero.posterUrl || '';
+      }
+
+      // Fill Trust Bar
+      if (data.trust_bar) {
+        document.getElementById('cmsTrust1Title').value = data.trust_bar.item1_title || '';
+        document.getElementById('cmsTrust1Desc').value = data.trust_bar.item1_desc || '';
+        document.getElementById('cmsTrust2Title').value = data.trust_bar.item2_title || '';
+        document.getElementById('cmsTrust2Desc').value = data.trust_bar.item2_desc || '';
+        document.getElementById('cmsTrust3Title').value = data.trust_bar.item3_title || '';
+        document.getElementById('cmsTrust3Desc').value = data.trust_bar.item3_desc || '';
+        document.getElementById('cmsTrust4Title').value = data.trust_bar.item4_title || '';
+        document.getElementById('cmsTrust4Desc').value = data.trust_bar.item4_desc || '';
+      }
+
+      // Fill Collection Header
+      if (data.collection_header) {
+        document.getElementById('cmsCatalogTag').value = data.collection_header.tag || '';
+        document.getElementById('cmsCatalogTitle').value = data.collection_header.title || '';
+        document.getElementById('cmsCatalogDesc').value = data.collection_header.description || '';
+      }
+
+      // Fill Lookbook
+      if (data.lookbook) {
+        document.getElementById('cmsLookbookTag').value = data.lookbook.tag || '';
+        document.getElementById('cmsLookbookTitle').value = data.lookbook.title || '';
+        document.getElementById('cmsLookbookP1').value = data.lookbook.p1 || '';
+        document.getElementById('cmsLookbookP2').value = data.lookbook.p2 || '';
+        document.getElementById('cmsLookbookBtnText').value = data.lookbook.ctaText || '';
+        document.getElementById('cmsLookbookBtnLink').value = data.lookbook.ctaLink || '';
+      }
+
+      // Fill Philosophy
+      if (data.philosophy) {
+        document.getElementById('cmsPhilTag').value = data.philosophy.tag || '';
+        document.getElementById('cmsPhilTitle').value = data.philosophy.title || '';
+        document.getElementById('cmsPhilSilkT').value = data.philosophy.silk_title || '';
+        document.getElementById('cmsPhilSilkD').value = data.philosophy.silk_desc || '';
+        document.getElementById('cmsPhilSatinT').value = data.philosophy.satin_title || '';
+        document.getElementById('cmsPhilSatinD').value = data.philosophy.satin_desc || '';
+        document.getElementById('cmsPhilVelvetT').value = data.philosophy.velvet_title || '';
+        document.getElementById('cmsPhilVelvetD').value = data.philosophy.velvet_desc || '';
+        document.getElementById('cmsPhilSeasonT').value = data.philosophy.seasonal_title || '';
+        document.getElementById('cmsPhilSeasonD').value = data.philosophy.seasonal_desc || '';
+      }
+
+      // Fill About
+      if (data.about) {
+        document.getElementById('cmsAboutTag').value = data.about.tag || '';
+        document.getElementById('cmsAboutTitle').value = data.about.title || '';
+        document.getElementById('cmsAboutP1').value = data.about.p1 || '';
+        document.getElementById('cmsAboutP2').value = data.about.p2 || '';
+        document.getElementById('cmsAboutP3').value = data.about.p3 || '';
+        document.getElementById('cmsAboutP4').value = data.about.p4 || '';
+        document.getElementById('cmsAboutImg').value = data.about.image || '';
+      }
+
+      // Fill Footer
+      if (data.footer) {
+        document.getElementById('cmsFooterAbout').value = data.footer.about || '';
+        document.getElementById('cmsFooterEmail').value = data.footer.email || '';
+        document.getElementById('cmsFooterInstagram').value = data.footer.instagram || '';
+        document.getElementById('cmsFooterAddress').value = data.footer.address || '';
+      }
+    }
+
+    async function saveAllCmsData() {
+      const payload = {
+        announcement: {
+          text: document.getElementById('cmsAnnouncementText').value.trim(),
+          isActive: document.getElementById('cmsAnnouncementActive').checked
+        },
+        hero: {
+          accent: document.getElementById('cmsHeroAccent').value.trim(),
+          subtitle: document.getElementById('cmsHeroSubtitle').value.trim(),
+          title: document.getElementById('cmsHeroTitle').value.trim(),
+          ctaText: document.getElementById('cmsHeroCtaText').value.trim(),
+          ctaLink: document.getElementById('cmsHeroCtaLink').value.trim(),
+          videoUrl: document.getElementById('cmsHeroVideo').value.trim(),
+          posterUrl: document.getElementById('cmsHeroPoster').value.trim()
+        },
+        trust_bar: {
+          item1_title: document.getElementById('cmsTrust1Title').value.trim(),
+          item1_desc: document.getElementById('cmsTrust1Desc').value.trim(),
+          item2_title: document.getElementById('cmsTrust2Title').value.trim(),
+          item2_desc: document.getElementById('cmsTrust2Desc').value.trim(),
+          item3_title: document.getElementById('cmsTrust3Title').value.trim(),
+          item3_desc: document.getElementById('cmsTrust3Desc').value.trim(),
+          item4_title: document.getElementById('cmsTrust4Title').value.trim(),
+          item4_desc: document.getElementById('cmsTrust4Desc').value.trim()
+        },
+        collection_header: {
+          tag: document.getElementById('cmsCatalogTag').value.trim(),
+          title: document.getElementById('cmsCatalogTitle').value.trim(),
+          description: document.getElementById('cmsCatalogDesc').value.trim()
+        },
+        lookbook: {
+          tag: document.getElementById('cmsLookbookTag').value.trim(),
+          title: document.getElementById('cmsLookbookTitle').value.trim(),
+          p1: document.getElementById('cmsLookbookP1').value.trim(),
+          p2: document.getElementById('cmsLookbookP2').value.trim(),
+          ctaText: document.getElementById('cmsLookbookBtnText').value.trim(),
+          ctaLink: document.getElementById('cmsLookbookBtnLink').value.trim()
+        },
+        philosophy: {
+          tag: document.getElementById('cmsPhilTag').value.trim(),
+          title: document.getElementById('cmsPhilTitle').value.trim(),
+          silk_title: document.getElementById('cmsPhilSilkT').value.trim(),
+          silk_desc: document.getElementById('cmsPhilSilkD').value.trim(),
+          satin_title: document.getElementById('cmsPhilSatinT').value.trim(),
+          satin_desc: document.getElementById('cmsPhilSatinD').value.trim(),
+          velvet_title: document.getElementById('cmsPhilVelvetT').value.trim(),
+          velvet_desc: document.getElementById('cmsPhilVelvetD').value.trim(),
+          seasonal_title: document.getElementById('cmsPhilSeasonT').value.trim(),
+          seasonal_desc: document.getElementById('cmsPhilSeasonD').value.trim()
+        },
+        about: {
+          tag: document.getElementById('cmsAboutTag').value.trim(),
+          title: document.getElementById('cmsAboutTitle').value.trim(),
+          p1: document.getElementById('cmsAboutP1').value.trim(),
+          p2: document.getElementById('cmsAboutP2').value.trim(),
+          p3: document.getElementById('cmsAboutP3').value.trim(),
+          p4: document.getElementById('cmsAboutP4').value.trim(),
+          image: document.getElementById('cmsAboutImg').value.trim()
+        },
+        footer: {
+          about: document.getElementById('cmsFooterAbout').value.trim(),
+          email: document.getElementById('cmsFooterEmail').value.trim(),
+          instagram: document.getElementById('cmsFooterInstagram').value.trim(),
+          address: document.getElementById('cmsFooterAddress').value.trim()
+        }
+      };
+
+      if (typeof window.saveSiteContent === 'function') {
+        for (const [secKey, secContent] of Object.entries(payload)) {
+          await window.saveSiteContent(secKey, secContent);
+        }
+      } else {
+        localStorage.setItem('wds_site_content_cache', JSON.stringify(payload));
+      }
+
+      showToast('✓ Pomyślnie zapisano całą treść strony! Zmiany są widoczne w sklepie.');
+    }
+
+    saveCmsBtn.addEventListener('click', saveAllCmsData);
+    saveCmsBtnBottom.addEventListener('click', saveAllCmsData);
+
+    resetCmsDefaultsBtn.addEventListener('click', () => {
+      if (!confirm('Czy na pewno chcesz przywrócić domyślne teksty dla wszystkich sekcji?')) return;
+      localStorage.removeItem('wds_site_content_cache');
+      loadCmsData();
+      showToast('Przywrócono domyślne teksty.');
     });
 
     // Export JSON

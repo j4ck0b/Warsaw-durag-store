@@ -41,35 +41,37 @@ async function loadProductsFromSupabase() {
       const { data, error } = await window.supabaseClient
         .from('products')
         .select('*')
-        .eq('visible', true)
         .order('id', { ascending: true });
 
       if (!error && data && data.length > 0) {
-        products = data.map(p => {
+        // Filtrujemy tylko widoczne produkty dla klientów sklepu
+        const visibleProducts = data.filter(p => p.visible !== false);
+        
+        products = visibleProducts.map(p => {
           const localItem = localMap.get(p.id);
-          // If Supabase has old mock images or empty images, prioritize authentic local images
-          const hasOldMockImage = !p.images || p.images.length === 0 || p.images[0].includes('durag_silk_') || p.images[0].includes('durag_velvet_');
-          const finalImages = (hasOldMockImage && localItem && localItem.images && localItem.images.length > 0) 
-            ? localItem.images 
-            : (p.images || (localItem ? localItem.images : []));
+          const finalImages = (p.images && p.images.length > 0) 
+            ? p.images 
+            : (localItem && localItem.images && localItem.images.length > 0 ? localItem.images : ['./assets/durag_silk_black.png']);
 
           return {
             id: p.id,
             name: p.name,
-            nameEn: p.name_en,
+            nameEn: p.name_en || p.name,
             price: parseFloat(p.price),
             category: p.category,
-            categoryLabel: p.category_label,
-            material: p.material,
-            description: p.description,
+            categoryLabel: p.category_label || p.category,
+            material: p.material || '',
+            description: p.description || '',
             images: finalImages,
-            colors: p.colors || (localItem ? localItem.colors : []),
+            colors: p.colors && p.colors.length > 0 ? p.colors : (localItem && localItem.colors ? localItem.colors : [{ name: 'Classic', hex: '#0A0A0A' }]),
             reviews: p.reviews || (localItem ? localItem.reviews : []),
-            stock: p.stock,
-            visible: p.visible
+            stock: typeof p.stock === 'number' ? p.stock : 10,
+            visible: p.visible !== false
           };
         });
-        console.log(`[WDS] ✓ Załadowano ${products.length} produktów z Supabase z autentycznymi zdjęciami.`);
+
+        window.wdsActiveProducts = products;
+        console.log(`[WDS] ✓ Załadowano ${products.length} produktów z bazy danych Supabase.`);
         renderProductGrid();
         return;
       }
@@ -83,6 +85,177 @@ async function loadProductsFromSupabase() {
   }
   renderProductGrid();
 }
+
+// --- Dynamic Site Content CMS Loader ---
+async function loadSiteContent() {
+  try {
+    // 1. Natychmiastowe zastosowanie z cache lokalnego dla braku opóźnienia
+    let localCache = null;
+    try {
+      const stored = localStorage.getItem('wds_site_content_cache');
+      if (stored) localCache = JSON.parse(stored);
+    } catch (e) {}
+    if (localCache) applySiteContent(localCache);
+
+    // 2. Pobranie najnowszej zawartości z bazy Supabase
+    if (typeof window.fetchSiteContent === 'function') {
+      const freshContent = await window.fetchSiteContent();
+      if (freshContent && Object.keys(freshContent).length > 0) {
+        applySiteContent(freshContent);
+      }
+    }
+  } catch (err) {
+    console.warn('[WDS CMS] Błąd inicjalizacji treści CMS:', err);
+  }
+}
+
+function applySiteContent(content) {
+  if (!content) return;
+
+  // 1. Announcement bar
+  if (content.announcement) {
+    const banner = document.querySelector('.marquee-banner');
+    const contentSpan = document.querySelector('.marquee-content');
+    if (banner && contentSpan) {
+      if (content.announcement.isActive === false) {
+        banner.style.display = 'none';
+      } else {
+        banner.style.display = 'block';
+        if (content.announcement.text) {
+          const t = content.announcement.text + ' • ';
+          contentSpan.innerHTML = `<span>${t}</span><span>${t}</span><span>${t}</span>`;
+        }
+      }
+    }
+  }
+
+  // 2. Hero
+  if (content.hero) {
+    const h = content.hero;
+    const accent = document.getElementById('heroAccent');
+    const title = document.getElementById('heroTitle');
+    const subtitle = document.getElementById('heroSubtitle');
+    const cta = document.getElementById('heroCtaBtn');
+    const heroVideo = document.querySelector('.hero-bg video');
+
+    if (accent && h.accent) accent.innerHTML = h.accent;
+    if (title && h.title) title.innerHTML = h.title;
+    if (subtitle && h.subtitle) subtitle.innerHTML = h.subtitle;
+    if (cta) {
+      if (h.ctaText) cta.innerHTML = `${h.ctaText} <span aria-hidden="true">↘</span>`;
+      if (h.ctaLink) cta.setAttribute('href', h.ctaLink);
+    }
+    if (heroVideo) {
+      if (h.videoUrl) heroVideo.src = h.videoUrl;
+      if (h.posterUrl) heroVideo.poster = h.posterUrl;
+    }
+  }
+
+  // 3. Trust Bar
+  if (content.trust_bar) {
+    const tb = content.trust_bar;
+    const tShipT = document.getElementById('trustShippingTitle');
+    const tShipD = document.getElementById('trustShippingDesc');
+    const tDelT = document.getElementById('trustDeliveryTitle');
+    const tDelD = document.getElementById('trustDeliveryDesc');
+    const tRetT = document.getElementById('trustReturnsTitle');
+    const tRetD = document.getElementById('trustReturnsDesc');
+    const tPickT = document.getElementById('trustPickupTitle');
+    const tPickD = document.getElementById('trustPickupDesc');
+
+    if (tShipT && tb.item1_title) tShipT.textContent = tb.item1_title;
+    if (tShipD && tb.item1_desc) tShipD.textContent = tb.item1_desc;
+    if (tDelT && tb.item2_title) tDelT.textContent = tb.item2_title;
+    if (tDelD && tb.item2_desc) tDelD.textContent = tb.item2_desc;
+    if (tRetT && tb.item3_title) tRetT.textContent = tb.item3_title;
+    if (tRetD && tb.item3_desc) tRetD.textContent = tb.item3_desc;
+    if (tPickT && tb.item4_title) tPickT.textContent = tb.item4_title;
+    if (tPickD && tb.item4_desc) tPickD.textContent = tb.item4_desc;
+  }
+
+  // 4. Collection Header
+  if (content.collection_header) {
+    const ch = content.collection_header;
+    const tag = document.getElementById('catalogSectionTag');
+    const title = document.getElementById('catalogSectionTitle');
+    const desc = document.getElementById('categoryDescBox');
+    if (tag && ch.tag) tag.textContent = ch.tag;
+    if (title && ch.title) title.textContent = ch.title;
+    if (desc && ch.description) desc.textContent = ch.description;
+  }
+
+  // 5. Lookbook
+  if (content.lookbook) {
+    const lb = content.lookbook;
+    const tag = document.getElementById('lookbookTag');
+    const title = document.getElementById('lookbookTitle');
+    const p1 = document.getElementById('lookbookP1');
+    const p2 = document.getElementById('lookbookP2');
+    const btn = document.getElementById('lookbookBtn');
+    if (tag && lb.tag) tag.textContent = lb.tag;
+    if (title && lb.title) title.textContent = lb.title;
+    if (p1 && lb.p1) p1.textContent = lb.p1;
+    if (p2 && lb.p2) p2.textContent = lb.p2;
+    if (btn) {
+      if (lb.ctaText) btn.textContent = lb.ctaText;
+      if (lb.ctaLink) btn.setAttribute('href', lb.ctaLink);
+    }
+  }
+
+  // 6. Philosophy
+  if (content.philosophy) {
+    const ph = content.philosophy;
+    const tag = document.getElementById('philosophyTag');
+    const title = document.getElementById('philosophyTitle');
+    const sT = document.getElementById('philSilkTitle');
+    const sD = document.getElementById('philSilkDesc');
+    const satT = document.getElementById('philSatinTitle');
+    const satD = document.getElementById('philSatinDesc');
+    const vT = document.getElementById('philVelvetTitle');
+    const vD = document.getElementById('philVelvetDesc');
+    const seaT = document.getElementById('philSeasonalTitle');
+    const seaD = document.getElementById('philSeasonalDesc');
+
+    if (tag && ph.tag) tag.textContent = ph.tag;
+    if (title && ph.title) title.textContent = ph.title;
+    if (sT && ph.silk_title) sT.textContent = ph.silk_title;
+    if (sD && ph.silk_desc) sD.textContent = ph.silk_desc;
+    if (satT && ph.satin_title) satT.textContent = ph.satin_title;
+    if (satD && ph.satin_desc) satD.textContent = ph.satin_desc;
+    if (vT && ph.velvet_title) vT.textContent = ph.velvet_title;
+    if (vD && ph.velvet_desc) vD.textContent = ph.velvet_desc;
+    if (seaT && ph.seasonal_title) seaT.textContent = ph.seasonal_title;
+    if (seaD && ph.seasonal_desc) seaD.textContent = ph.seasonal_desc;
+  }
+
+  // 7. About
+  if (content.about) {
+    const ab = content.about;
+    const tag = document.getElementById('aboutTag');
+    const title = document.getElementById('aboutTitle');
+    const p1 = document.getElementById('aboutP1');
+    const p2 = document.getElementById('aboutP2');
+    const p3 = document.getElementById('aboutP3');
+    const p4 = document.getElementById('aboutP4');
+    const img = document.getElementById('aboutCarouselImg');
+
+    if (tag && ab.tag) tag.textContent = ab.tag;
+    if (title && ab.title) title.textContent = ab.title;
+    if (p1 && ab.p1) p1.innerHTML = ab.p1;
+    if (p2 && ab.p2) p2.innerHTML = ab.p2;
+    if (p3 && ab.p3) p3.innerHTML = ab.p3;
+    if (p4 && ab.p4) p4.innerHTML = ab.p4;
+    if (img && ab.image) img.src = ab.image;
+  }
+
+  // 8. Footer
+  if (content.footer) {
+    const ft = content.footer;
+    const ftText = document.getElementById('footerAboutText');
+    if (ftText && ft.about) ftText.textContent = ft.about;
+  }
+}
+window.applySiteContent = applySiteContent;
 
 // --- DOM Elements Cache ---
 const DOM = {
@@ -203,6 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Async load from Supabase in background
   loadProductsFromSupabase();
+  loadSiteContent();
 });
 
 // Run hidePreloader immediately & safety fallbacks

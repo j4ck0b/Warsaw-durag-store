@@ -5,57 +5,60 @@
 ========================================================================
 */
 
-/* --- Google Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@500;700;800&display=swap');
+/* --- Google Fonts (Hermès Memphis-inspired Sanchez, Cormorant Garamond, Plus Jakarta Sans) --- */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sanchez:ital@0;1&family=Syne:wght@500;700;800&display=swap');
 
-/* --- Design Tokens / Variables --- */
+/* --- Design Tokens / Variables (Hermès Paris Luxury Aesthetic) --- */
 :root {
-  /* Rich Aesthetic Colors */
-  --bg-primary: #FFFFFF;        /* Crisp luxury white */
-  --bg-secondary: #FAF8F5;      /* Warm ivory / pearl canvas */
-  --bg-dark: #090908;           /* Deep velvet obsidian black */
-  --bg-dark-card: #141412;      /* Elevated dark card */
-  --color-primary: #0D0D0B;     /* Obsidian typography */
-  --color-secondary: #4A4B50;   /* Refined charcoal text */
-  --color-accent: #C59B27;      /* Gilded luxury gold */
-  --color-accent-rgb: 197, 155, 39;
-  --color-sand: #D9A87E;        /* Warm champagne / sand */
-  --color-sand-light: #F4E8DC;
+  /* Hermès Luxury Canvas & Tone */
+  --bg-primary: #FAF8F5;        /* Warm luxury ecru / atelier parchment */
+  --bg-secondary: #F4EFE6;      /* Muted stone / raw silk */
+  --bg-dark: #121211;           /* Deep editorial noir */
+  --bg-dark-card: #181816;      /* Elevated velvet noir */
+  --color-primary: #121211;     /* Primary typography noir */
+  --color-secondary: #565654;   /* Refined charcoal text */
+  --color-hermes-orange: #F37021; /* Iconic Hermès orange */
+  --color-hermes-orange-hover: #DB5E13;
+  --color-accent: #F37021;      /* Refined orange accent */
+  --color-accent-rgb: 243, 112, 33;
+  --color-sand: #D5B495;        /* Warm champagne / sand */
+  --color-sand-light: #F4EBE1;
   --color-white: #FFFFFF;
-  --color-black: #090908;
-  --glass-bg: rgba(255, 255, 255, 0.88);
-  --glass-dark: rgba(9, 9, 8, 0.85);
+  --color-black: #121211;
+  --glass-bg: rgba(250, 248, 245, 0.94);
+  --glass-dark: rgba(18, 18, 17, 0.92);
   
-  /* Borders & Glows */
-  --border-color: rgba(0, 0, 0, 0.08);
-  --border-color-light: rgba(0, 0, 0, 0.04);
-  --border-color-dark: rgba(255, 255, 255, 0.10);
-  --border-gold: rgba(217, 168, 126, 0.35);
-  --shadow-subtle: 0 4px 24px rgba(0, 0, 0, 0.04);
-  --shadow-luxury: 0 16px 48px rgba(0, 0, 0, 0.09);
-  --shadow-gold: 0 8px 30px rgba(217, 168, 126, 0.22);
+  /* Borders & Separation — Razor sharp hairline */
+  --border-color: rgba(18, 18, 17, 0.10);
+  --border-color-light: rgba(18, 18, 17, 0.05);
+  --border-color-dark: rgba(255, 255, 255, 0.12);
+  --border-hermes: rgba(243, 112, 33, 0.35);
+  --shadow-subtle: 0 2px 14px rgba(0, 0, 0, 0.03);
+  --shadow-luxury: 0 16px 40px rgba(0, 0, 0, 0.06);
+  --shadow-orange: 0 6px 24px rgba(243, 112, 33, 0.20);
   
-  /* Border Radius */
-  --border-radius-lg: 20px;
-  --border-radius-md: 14px;
-  --border-radius-sm: 8px;
-  --border-radius-pill: 9999px;
+  /* Border Radius — Architectural strict geometry */
+  --border-radius-lg: 0px;
+  --border-radius-md: 0px;
+  --border-radius-sm: 0px;
+  --border-radius-pill: 0px;
   
   /* UI Dimensions */
-  --header-height: 100px;
-  --header-height-scrolled: 80px;
+  --header-height: 80px;
+  --header-height-scrolled: 72px;
   
   /* Typography */
+  --font-display: 'Sanchez', 'Cormorant Garamond', Georgia, serif;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-display: 'Syne', sans-serif;
+  --font-slab: 'Sanchez', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-script: 'Cormorant Garamond', serif;
-  --font-script-accent: 'Cormorant Garamond', serif;
+  --font-script-accent: 'Sanchez', serif;
   
   /* Transitions */
-  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-fast: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-bounce: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 /* --- Base & Reset --- */
@@ -2875,6 +2878,167 @@ a {
   background-color: var(--bg-secondary);
 }
 
+/* ======================================================================
+   2026 EDITORIAL RESET
+   A quieter, more ownable visual language: paper, ink and photography.
+   ====================================================================== */
+:root {
+  --bg-primary: #FAF8F5;
+  --bg-secondary: #F4EFE6;
+  --bg-dark: #121211;
+  --color-primary: #121211;
+  --color-secondary: #565654;
+  --color-accent: #F37021;
+  --color-sand: #E2A06F;
+  --border-color: rgba(18, 18, 17, .12);
+  --header-height: 80px;
+  --header-height-scrolled: 72px;
+}
+
+body { background: var(--bg-primary); }
+
+/* Navigation is a precise utility bar instead of a floating glass card. */
+.marquee-banner {
+  background: var(--color-accent) !important;
+  color: #fff !important;
+  height: 30px !important;
+  font-size: 10px !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+}
+.site-header,
+.site-header.scrolled {
+  top: 30px !important;
+  height: var(--header-height) !important;
+  background: rgba(250, 248, 245, .97) !important;
+  backdrop-filter: blur(8px);
+  box-shadow: none !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+.site-header.scrolled .logo-img-dark { display: inline-block !important; }
+.site-header.scrolled .logo-img-light { display: none !important; }
+.site-header.scrolled .nav-links a,
+.site-header.scrolled .action-btn { color: var(--color-primary) !important; }
+.site-header.scrolled .hamburger span { background: var(--color-primary) !important; }
+.nav-container { max-width: 1680px; padding: 0 3vw; }
+.site-header .logo-img-dark, .site-header .logo-img-light { height: 38px !important; max-height: 38px !important; }
+.nav-links { gap: clamp(16px, 2vw, 34px); }
+.nav-links a { font-size: 10px; letter-spacing: .12em; font-weight: 700; }
+.nav-links a::after { background: var(--color-accent); }
+.nav-actions { gap: 14px; }
+.action-btn { border-radius: 0 !important; }
+.lang-selector-wrapper .action-btn { border-radius: 0 !important; padding: 5px 8px !important; }
+
+/* Hero: typographic masthead and deliberate, off-centre framing. */
+.hero-section { height: min(780px, calc(100vh - 30px)) !important; min-height: 620px !important; background: var(--bg-dark); }
+.hero-bg video { filter: saturate(.76) contrast(1.08); object-position: 62% center; }
+.hero-overlay { background: linear-gradient(90deg, rgba(16,16,14,.88) 0%, rgba(16,16,14,.61) 36%, rgba(16,16,14,.1) 78%) !important; }
+.hero-section .container { width: 100%; max-width: 1680px; padding: 0 7vw; }
+.hero-content { max-width: 730px; padding-top: 40px; text-shadow: none; }
+.script-accent { font-family: var(--font-display); color: var(--color-sand); text-transform: uppercase; font-size: 10px; font-weight: 700; letter-spacing: .17em; }
+.hero-subtitle { margin: 19px 0 18px; font-size: 10px; letter-spacing: .17em !important; font-weight: 700; }
+.hero-title { font-size: clamp(3.5rem, 7.1vw, 7.5rem) !important; line-height: .88 !important; letter-spacing: -.055em; text-transform: none; font-weight: 500; margin-bottom: 39px; }
+.hero-title span { color: #edceb1 !important; letter-spacing: -.06em; }
+.hero-actions .btn-minimal, .btn-minimal {
+  border: 1px solid currentColor !important; border-radius: 0 !important; padding: 14px 18px !important;
+  font-size: 10px !important; letter-spacing: .13em !important; font-weight: 800 !important; background: transparent !important;
+}
+.hero-actions .btn-minimal { color: #fff !important; }
+.hero-actions .btn-minimal:hover { color: var(--color-primary) !important; }
+.hero-actions .btn-minimal span { margin-left: 24px; font-size: 17px; line-height: 0; }
+
+/* Benefits have the character of a newspaper information strip. */
+.trust-banner { background: var(--bg-primary); padding: 0; border-color: var(--border-color); }
+.trust-banner .container { max-width: none; padding: 0; }
+.trust-grid { grid-template-columns: repeat(4, 1fr); gap: 0; }
+.trust-item { min-height: 120px; padding: 24px clamp(18px, 3vw, 54px); background: transparent; border: 0; border-right: 1px solid var(--border-color); border-radius: 0; box-shadow: none; }
+.trust-item:last-child { border-right: 0; }
+.trust-item:hover { transform: none; border-color: var(--border-color); box-shadow: none; }
+.trust-icon { width: auto; height: auto; border: 0; border-radius: 0; background: transparent; color: var(--color-accent); }
+.trust-icon svg { width: 20px; height: 20px; }
+.trust-text strong { font-family: var(--font-display); font-size: 10px; letter-spacing: .12em; }
+.trust-text span { font-size: 12px; color: var(--color-secondary); }
+
+/* Catalog becomes an editorial sheet — strict grid, no ecommerce-card furniture. */
+#kolekcja { padding: 130px 0 150px; }
+.container { max-width: 1680px; padding: 0 5vw; }
+.section-header { display: grid; grid-template-columns: minmax(150px, .42fr) 1fr; align-items: end; text-align: left; margin-bottom: 46px; border-top: 1px solid var(--color-primary); padding-top: 13px; }
+.section-header .title { font-size: clamp(2.7rem, 5vw, 5.75rem); text-transform: none; letter-spacing: -.055em; line-height: .9; }
+.section-header .script-accent { padding-bottom: 5px; }
+.filter-tabs { justify-content: flex-start; gap: 0; margin-bottom: 20px; padding: 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+.filter-tabs li { border-right: 1px solid var(--border-color); }
+.filter-btn { padding: 12px 17px; font-size: 10px; letter-spacing: .1em; font-weight: 800; }
+.filter-btn::after { display: none; }
+.filter-btn.active { background: var(--color-primary); color: var(--bg-primary); }
+.category-desc-box { text-align: left !important; max-width: 570px !important; margin: 0 0 44px !important; font-family: var(--font-serif); font-size: 18px !important; color: var(--color-secondary) !important; }
+.product-grid { grid-template-columns: repeat(4, 1fr); gap: 54px 18px; }
+.product-card { background: transparent; border: 0; border-radius: 0; overflow: visible; box-shadow: none; }
+.product-card:hover { transform: none; border-color: transparent; box-shadow: none; }
+.product-image-container { aspect-ratio: 4/5; background: #ded9d0; }
+.product-card-img { transition: transform .65s cubic-bezier(.2,.8,.2,1), opacity .3s ease; }
+.product-card:hover .product-card-img.primary { opacity: 1; transform: scale(1.035); }
+.product-card:hover .product-card-img.secondary { opacity: 0; transform: none; }
+.product-badge, .product-badge.gold { top: auto; left: 0; bottom: 0; border: 0; border-radius: 0; padding: 7px 9px; background: var(--color-primary); color: #fff; font-size: 9px; }
+.product-info { padding: 14px 0 0; background: transparent; }
+.product-category { color: var(--color-accent); font-size: 9px; letter-spacing: .13em; margin-bottom: 7px; }
+.product-title { font-size: 1.38rem; font-weight: 600; line-height: 1.05; margin: 0 0 12px; }
+.product-card-desc { display: none; }
+.product-meta-row { padding-top: 10px; border-top: 1px solid var(--border-color); }
+.product-price { font-size: .9rem; }
+.deal-badge { background: transparent; padding: 0; border-radius: 0; color: var(--color-secondary); font-size: 9px; letter-spacing: .08em; }
+.btn-card-add { background: transparent; color: var(--color-primary); border: 0; border-radius: 0; padding: 4px 0 4px 14px; box-shadow: none; font-size: 9px; letter-spacing: .1em; }
+.btn-card-add::after { content: ' ↗'; color: var(--color-accent); font-size: 14px; }
+.btn-card-add:hover { background: transparent; color: var(--color-accent); border-color: transparent; box-shadow: none; transform: none; }
+
+/* A hard, quiet feature panel rather than an ornamental lookbook card. */
+.lookbook-section { background: var(--bg-dark) !important; padding: 0 !important; }
+.lookbook-section .container { max-width: none; padding: 0; }
+.lookbook-container { grid-template-columns: 1.15fr .85fr; gap: 0; min-height: 700px; }
+.lookbook-media { aspect-ratio: auto; height: 100%; border: 0; border-radius: 0; }
+.lookbook-media video { filter: grayscale(.25) contrast(1.12); }
+.lookbook-content { padding: clamp(48px, 8vw, 150px) clamp(30px, 8vw, 140px); justify-content: center; }
+.lookbook-content .title { font-size: clamp(3.1rem, 5vw, 6rem); letter-spacing: -.06em; text-transform: none; line-height: .9; margin: 22px 0 30px; }
+.lookbook-content .desc { font-family: var(--font-sans) !important; font-size: 13px !important; line-height: 1.75 !important; margin-bottom: 15px; }
+.lookbook-content .btn-minimal { margin-top: 22px !important; color: #fff !important; background: transparent !important; border-color: rgba(255,255,255,.65) !important; }
+
+.philosophy-grid { gap: 0; border-top: 1px solid var(--color-primary); border-left: 1px solid var(--color-primary); }
+.philosophy-card { min-height: 310px; padding: 30px; border: 0; border-right: 1px solid var(--color-primary); border-bottom: 1px solid var(--color-primary); border-radius: 0; box-shadow: none; background: transparent; }
+.philosophy-card::before { display: none; }
+.philosophy-card:hover { background: var(--color-primary); color: #fff; transform: none; }
+.philosophy-card:hover .philosophy-card-desc, .philosophy-card:hover .philosophy-card-title { color: #fff; }
+
+@media (max-width: 992px) {
+  .hero-section { min-height: 590px !important; }
+  .trust-grid { grid-template-columns: repeat(2, 1fr); }
+  .trust-item:nth-child(2) { border-right: 0; }
+  .trust-item:nth-child(-n+2) { border-bottom: 1px solid var(--border-color); }
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 38px 16px; }
+  .lookbook-container { grid-template-columns: 1fr; }
+  .lookbook-media { height: 67vw; min-height: 410px; }
+}
+
+@media (max-width: 768px) {
+  .site-header, .site-header.scrolled { height: 66px !important; }
+  .hero-section { min-height: 560px !important; height: calc(100svh - 30px) !important; }
+  .hero-section .container { padding: 0 6vw; }
+  .hero-title { font-size: clamp(3.15rem, 15vw, 5.25rem) !important; }
+  .section-padding, #kolekcja { padding: 82px 0; }
+  .section-header { grid-template-columns: 1fr; gap: 18px; margin-bottom: 28px; }
+  .section-header .title { font-size: clamp(2.8rem, 13vw, 4.5rem); }
+  .filter-tabs { overflow-x: auto; }
+  .filter-btn { padding: 12px 14px; }
+  .category-desc-box { font-size: 16px !important; margin-bottom: 30px !important; }
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .product-title { font-size: 1.1rem; }
+  .product-meta-row { align-items: flex-end; }
+  .btn-card-add { font-size: 0; padding-left: 5px; }
+  .btn-card-add::after { font-size: 19px; }
+  .lookbook-media { min-height: 370px; height: 115vw; }
+  .lookbook-content { padding: 70px 6vw; }
+  .philosophy-grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 576px) {
   .info-modal-container {
     padding: 35px 20px;
@@ -2883,4 +3047,3 @@ a {
     font-size: 1.5rem;
   }
 }
-

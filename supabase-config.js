@@ -27,8 +27,8 @@
   window.supabaseClient = supabase;
 
   // ========================================================================
-  // SEED FUNCTION — wykonuje się raz przy pustej bazie
-  // Importuje produkty z window.products do Supabase
+  // SEED FUNCTION — wykonuje się TYLKO RAZ przy całkowicie pustej bazie
+  // Nie nadpisuje żadnych zmian wprowadzonych w bazie przez administratora!
   // ========================================================================
   async function seedProductsIfEmpty() {
     if (!supabase) {
@@ -36,22 +36,28 @@
       return false;
     }
     try {
-      // Check if products table is empty
+      // Check if products table has any products
       const { count, error } = await supabase
         .from('products')
         .select('*', { count: 'exact', head: true });
 
       if (error) {
-        console.warn('Supabase products check error:', error.message);
+        console.warn('Supabase products check note:', error.message);
         return false;
+      }
+
+      // Jeśli w bazie są już jakiekolwiek produkty, nie nadpisujemy ich! Baza to źródło prawdy.
+      if (count && count > 0) {
+        console.log(`[WDS] ✓ Baza Supabase zawiera już ${count} produktów. Baza jest nadrzędnym źródłem prawdy.`);
+        return true;
       }
 
       if (!window.products || window.products.length === 0) {
-        console.warn('[WDS] Brak produktów do seedowania.');
+        console.warn('[WDS] Brak produktów do początkowego seedowania.');
         return false;
       }
 
-      // Upsert products to ensure authentic images are always updated in Supabase
+      // Initial insert for clean empty database only
       const rows = window.products.map(p => ({
         id: p.id,
         name: p.name,
@@ -68,14 +74,14 @@
         visible: true
       }));
 
-      const { error: upsertError } = await supabase
+      const { error: insertError } = await supabase
         .from('products')
-        .upsert(rows, { onConflict: 'id' });
+        .insert(rows);
 
-      if (upsertError) {
-        console.warn('[WDS] Supabase upsert note:', upsertError.message);
+      if (insertError) {
+        console.warn('[WDS] Supabase initial seed note:', insertError.message);
       } else {
-        console.log(`[WDS] ✓ Zsynchronizowano ${rows.length} produktów z autentycznymi zdjęciami w Supabase.`);
+        console.log(`[WDS] ✓ Zainicjalizowano bazę danych Supabase ${rows.length} produktami.`);
       }
       return true;
     } catch (err) {
@@ -84,6 +90,81 @@
     }
   }
   window.seedProductsIfEmpty = seedProductsIfEmpty;
+
+  // ========================================================================
+  // CMS SITE CONTENT HELPERS — Zarządzanie treścią strony głównej
+  // ========================================================================
+  const CMS_STORAGE_KEY = 'wds_site_content_cache';
+
+  // Pobieranie całej treści lub sekcji (z fallbackiem do localStorage i domyślnych)
+  async function fetchSiteContent() {
+    let cached = {};
+    try {
+      const local = localStorage.getItem(CMS_STORAGE_KEY);
+      if (local) cached = JSON.parse(local);
+    } catch (e) {}
+
+    if (!supabase) {
+      return cached;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('site_content')
+        .select('*');
+
+      if (!error && data && data.length > 0) {
+        const result = { ...cached };
+        data.forEach(item => {
+          result[item.section_key] = item.content;
+        });
+        try {
+          localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(result));
+        } catch (e) {}
+        return result;
+      }
+    } catch (err) {
+      console.warn('[WDS] Nie udało się pobrać site_content z Supabase, używam cache lokalnego:', err);
+    }
+
+    return cached;
+  }
+  window.fetchSiteContent = fetchSiteContent;
+
+  // Zapisywanie sekcji treści do Supabase i cache lokalnego
+  async function saveSiteContent(sectionKey, content) {
+    try {
+      // 1. Zapisz natychmiast w localStorage dla zerowego opóźnienia
+      let localCache = {};
+      try {
+        const local = localStorage.getItem(CMS_STORAGE_KEY);
+        if (local) localCache = JSON.parse(local);
+      } catch (e) {}
+      localCache[sectionKey] = content;
+      localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(localCache));
+
+      // 2. Jeśli Supabase jest dostępne, zapisz w bazie
+      if (supabase) {
+        const { error } = await supabase
+          .from('site_content')
+          .upsert({
+            section_key: sectionKey,
+            content: content,
+            updated_at: new Date().toISOString()
+          }, { onConflict: 'section_key' });
+
+        if (error) {
+          console.warn(`[WDS CMS] Błąd zapisu sekcji ${sectionKey} do Supabase:`, error.message);
+          return { success: false, error: error.message, cachedLocally: true };
+        }
+      }
+      return { success: true };
+    } catch (err) {
+      console.error(`[WDS CMS] Błąd zapisu sekcji ${sectionKey}:`, err);
+      return { success: false, error: err.message };
+    }
+  }
+  window.saveSiteContent = saveSiteContent;
 
   // ========================================================================
   // HELPER: Sprawdź czy użytkownik jest zalogowany jako admin
